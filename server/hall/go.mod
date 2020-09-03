@@ -15,4 +15,4 @@ require (
 	github.com/micro/go-plugins/registry/etcdv3/v2 v2.0.2
 )
 
-//replace laya-go/ship => ./../../ship
+//replace laya-go/base => ./../../ship

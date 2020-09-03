@@ -14,9 +14,6 @@ const (
     RedisIdleTimeout = 10 * time.Second // 空闲链接超时时间
 
     // mysql配置
-    //MaxIdleConn     = 5  // mysql最大空闲链接数
-    //MaxOpenConn     = 50 // mysql最大连接数
-    //ConnMaxLifetime = time.Second * 10
     MaxIdleConn     = 10  // mysql最大空闲链接数
     MaxOpenConn     = 100 // mysql最大连接数
     ConnMaxLifetime = time.Hour * 6

@@ -59,7 +59,7 @@ func InitRedis(addr string, pwd string, rc RedisConf) {
 	})
 	pong, err := Redis.Ping().Result()
 	if err == redis.Nil {
-		log.Info("Redis异常")
+		log.Info("Nil reply returned by Redis when key does not exist.")
 	} else if err != nil {
 		panic(err)
 	} else {
@@ -77,6 +77,4 @@ func InitMysql(dsn string, mc MysqlConf) {
 	DB.DB().SetMaxIdleConns(mc.MaxIdleConn)
 	DB.DB().SetMaxOpenConns(mc.MaxOpenConn)
 	DB.DB().SetConnMaxLifetime(mc.ConnMaxLifetime)
-	// 设置全局表名禁用复数
-	DB.SingularTable(true)
 }
