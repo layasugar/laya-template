@@ -22,7 +22,7 @@ func GetLanguage(parameter string, language string) string {
 	}
 	var message string
 	var EntireLang = make(map[string]string)
-	config.Get(result[0]).Scan(&EntireLang)
+	_ = config.Get(result[0]).Scan(&EntireLang)
 	for k, v := range EntireLang {
 		if language == k {
 			message = v

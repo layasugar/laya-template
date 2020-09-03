@@ -29,11 +29,11 @@ func MD5(s string) string {
 // 获取随机字符串
 func GetRandomString(l int) string {
 	str := "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	bytes := []byte(str)
-	result := []byte{}
+	b := []byte(str)
+	var result []byte
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	for i := 0; i < l; i++ {
-		result = append(result, bytes[r.Intn(len(bytes))])
+		result = append(result, b[r.Intn(len(b))])
 	}
 	return string(result)
 }

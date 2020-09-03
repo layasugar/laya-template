@@ -3,7 +3,7 @@ module laya-go/server/hall
 go 1.13
 
 require (
-	//laya-go/ship v1.0.0
+	laya-go/ship v1.0.0
 	github.com/clevergo/captchas v0.3.2
 	github.com/clevergo/captchas/drivers v0.3.2
 	github.com/clevergo/captchas/stores/redisstore v0.1.2
@@ -15,4 +15,4 @@ require (
 	github.com/micro/go-plugins/registry/etcdv3/v2 v2.0.2
 )
 
-//replace laya-go/base => ./../../ship
+replace laya-go/ship => ./../../ship
