@@ -6,14 +6,14 @@ import (
 	"strings"
 )
 
-//取出头部language
+// 取出头部language
 func GetLang(Lang string) string {
 	rs := []rune(Lang)
 	result := string(rs[0:2])
 	return result
 }
 
-//获取对应语言信息
+// 获取对应语言信息
 func GetLanguage(parameter string, language string) string {
 	result := strings.Split(parameter, "|")
 	res := make([]interface{}, len(result))

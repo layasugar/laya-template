@@ -38,8 +38,8 @@ func AddJob(JobName string, body JobMessage, delayTime int64) string {
 
 // delayTime 执行时间秒
 func AddJobRule(JobName string, body JobMessageRule, delayTime int64) string {
-	id, boolen := JobPush(JobName, body, delayTime)
-	if boolen == true {
+	id, b := JobPush(JobName, body, delayTime)
+	if b == true {
 		return id
 	} else {
 		return ""
@@ -72,7 +72,7 @@ type QueuePush struct {
 type QueuePop struct {
 	Topic string `json:"topic"`
 }
-type QueueRemvoe struct {
+type QueueRemove struct {
 	Id string `json:"id"`
 }
 
@@ -133,7 +133,7 @@ func JobPop(topic string) (ResData, error) {
 }
 
 func JobFinish(id string) (string, error) {
-	msg := QueueRemvoe{Id: id}
+	msg := QueueRemove{Id: id}
 	msgJson, err := json.Marshal(msg)
 	urls := ship.DelayServer + "/finish"
 	client := &http.Client{}
@@ -155,7 +155,7 @@ func JobFinish(id string) (string, error) {
 
 // 移出任务
 func JobRemove(id string) (string, error) {
-	msg := QueueRemvoe{
+	msg := QueueRemove{
 		Id: id,
 	}
 	msgJson, err := json.Marshal(msg)
