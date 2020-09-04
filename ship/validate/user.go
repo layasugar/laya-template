@@ -4,7 +4,7 @@ package validate
 type LoginData struct {
 	Name     string `binding:"required"`
 	Zone     string `binding:"required"`
-	Password string `binding:"required,len=32"`
+	Password string `binding:"required"`
 }
 
 // TokenLoginData token登录参数验证器

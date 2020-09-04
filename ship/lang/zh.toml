@@ -1,0 +1,4 @@
+[PersonCats]
+description = "卧槽了"
+one = "{{.Name}} 你妹得 {{.Count}} 丢丢."
+other = "{{.Name}} 你妹得 {{.Count}} 丢丢."

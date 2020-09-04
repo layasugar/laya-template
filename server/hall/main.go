@@ -1,13 +1,11 @@
 package main
 
 import (
-	"laya-go/server/hall/middleware"
-	"laya-go/server/hall/router"
 	"github.com/gin-gonic/gin"
 	"github.com/micro/go-micro/v2/util/log"
 	"github.com/micro/go-micro/v2/web"
-	"io"
-	"os"
+	"laya-go/server/hall/router"
+	"laya-go/ship/middleware"
 )
 
 func main() {
@@ -15,6 +13,7 @@ func main() {
 	service := web.NewService(
 		web.Name("tb.server.hall"),
 		web.Version("1.0"),
+		web.Address(":8080"),
 	)
 
 	// initialise service
@@ -23,17 +22,15 @@ func main() {
 	}
 
 	gin.SetMode(gin.ReleaseMode)
-	_ = os.MkdirAll("logs", 777)
-	f, _ := os.Create("logs/hallServer.log")
-	gin.DisableConsoleColor()
-	gin.DefaultWriter = io.MultiWriter(f)
 	r := gin.Default()
-	r.Use(middleware.Sign())
+	r.Use(middleware.Sign(), middleware.Response())
+	//r.Use(middleware.Response())
 	service.Handle("/", r)
 
-	// main route
+	// initialise route
 	router.Init(r)
-	// main db
+
+	// initialise db
 	Init()
 
 	// run service

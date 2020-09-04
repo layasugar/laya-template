@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/micro/go-micro/v2/util/log"
 	"laya-go/ship"
+	r "laya-go/ship/response"
 	"laya-go/ship/utils"
-	"net/http"
 	"net/url"
 	"sort"
 	"strconv"
@@ -21,7 +21,7 @@ func SortParams(p url.Values) string {
 	for k, _ := range p {
 		lst = append(lst, k)
 	}
-	//sort.Strings(lst)
+	// ToLower sort
 	sort.Slice(lst, func(i, j int) bool { return strings.ToLower(lst[i]) < strings.ToLower(lst[j]) })
 	for _, v := range lst {
 		if v != "Sign" {
@@ -43,24 +43,22 @@ func GetParams(c *gin.Context) url.Values {
 func Validate(sign string, params url.Values, c *gin.Context) {
 	t := params.Get("Time")
 	intT, _ := strconv.ParseInt(t, 10, 64)
-	lang := c.GetHeader("Accept-Language")
-	language := utils.GetLang(lang)
 	uuid := params.Get("U")
 
 	exist, _ := ship.Redis.SIsMember("user:uuid", uuid).Result()
 	if exist {
-		c.AbortWithStatusJSON(http.StatusOK, utils.GetMessage("Err", 0, language, map[string]interface{}{}))
+		c.Set("$.crypt.code", r.RequestFrequentUuid)
 		return
 	}
 	ship.Redis.SAdd("user:uuid", uuid)
 	log.Info(time.Now().UnixNano()/1e6 - intT)
 	if time.Now().UnixNano()/1e6-intT > 3000 {
-		c.AbortWithStatusJSON(http.StatusOK, utils.GetMessage("Err", 0, language, map[string]interface{}{}))
+		c.Set("$.crypt.code", r.RequestFrequentTime)
 		return
 	}
 
 	if sign != params.Get("Sign") {
-		c.AbortWithStatusJSON(http.StatusOK, utils.GetMessage("Err", 0, language, map[string]interface{}{}))
+		c.Set("$.crypt.code", r.RequestFrequentSign)
 		return
 	}
 }
@@ -93,12 +91,11 @@ func New(c *gin.Context) {
 		sign := RunSign(str)
 		Validate(sign, params, c)
 	}
-
-	c.Next()
 }
 
 func Sign() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		New(c)
+		c.Next()
 	}
 }
