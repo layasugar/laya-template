@@ -1,10 +1,8 @@
 package middleware
 
 import (
-	"github.com/BurntSushi/toml"
 	"github.com/gin-gonic/gin"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
-	"golang.org/x/text/language"
 	"laya-go/ship"
 	"laya-go/ship/response"
 	"net/http"
@@ -58,19 +56,13 @@ func GetResponse(params map[string]interface{}, lang string) interface{} {
 }
 
 func GetMessage(lang string) string {
-	bundle := i18n.NewBundle(language.English)
-	bundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
-	bundle.LoadMessageFile("/ship/lang/zh.toml")
-	bundle.LoadMessageFile("/ship/lang/en.toml")
-
-
-	loc := i18n.NewLocalizer(bundle, lang)
+	loc := i18n.NewLocalizer(ship.I18nBundle, lang)
 
 	return loc.MustLocalize(&i18n.LocalizeConfig{
 		DefaultMessage: &i18n.Message{
 			ID:    "PersonCats",
-			One:   "{{.Name}} has {{.Count}} cat.",
-			Other: "{{.Name}} has {{.Count}} cats.",
+			One:   "{{.Name}}",
+			Other: "{{.Name}}",
 		},
 		TemplateData: map[string]interface{}{
 			"Name":  "Nick",

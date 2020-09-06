@@ -1,17 +1,21 @@
 package ship
 
 import (
+	"github.com/BurntSushi/toml"
 	"github.com/go-redis/redis/v7"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/micro/go-micro/v2/config"
 	"github.com/micro/go-micro/v2/util/log"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
+	"golang.org/x/text/language"
 	"time"
 )
 
-// 定义redis链接池,mysql连接池
+// 定义redis链接池,mysql连接池,初始化语言包
 var Redis *redis.Client
 var DB *gorm.DB
+var I18nBundle *i18n.Bundle
 
 type RedisConf struct {
 	Open        bool
@@ -45,6 +49,7 @@ func Init(rc RedisConf, mc MysqlConf) {
 	if mc.Open {
 		InitMysql(mysqlDsn, mc)
 	}
+	InitLang()
 }
 
 // 初始化redis
@@ -77,4 +82,17 @@ func InitMysql(dsn string, mc MysqlConf) {
 	DB.DB().SetMaxIdleConns(mc.MaxIdleConn)
 	DB.DB().SetMaxOpenConns(mc.MaxOpenConn)
 	DB.DB().SetConnMaxLifetime(mc.ConnMaxLifetime)
+}
+
+func InitLang() {
+	I18nBundle = i18n.NewBundle(language.English)
+	I18nBundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
+	_, err := I18nBundle.LoadMessageFile("./lang/zh.toml")
+	if err != nil {
+		panic(err)
+	}
+	_, err = I18nBundle.LoadMessageFile("./lang/en.toml")
+	if err != nil {
+		panic(err)
+	}
 }

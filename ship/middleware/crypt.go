@@ -47,7 +47,7 @@ func Validate(sign string, params url.Values, c *gin.Context) {
 
 	exist, _ := ship.Redis.SIsMember("user:uuid", uuid).Result()
 	if exist {
-		c.Set("$.crypt.code", r.RequestFrequentUuid)
+		c.Set("$.RequestFrequentUuid.code", r.RequestFrequentUuid)
 		return
 	}
 	ship.Redis.SAdd("user:uuid", uuid)
