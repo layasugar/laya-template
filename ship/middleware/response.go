@@ -31,6 +31,9 @@ func GetLang(lang string) string {
 	if lang == "" {
 		lang = ship.DefaultLang
 	}
+
+	rs := []rune(lang)
+	lang = string(rs[0:2])
 	return lang
 }
 
@@ -70,4 +73,5 @@ func GetMessage(lang string) string {
 		},
 		PluralCount: 1,
 	})
+
 }

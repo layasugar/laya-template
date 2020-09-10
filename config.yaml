@@ -1,6 +1,15 @@
-# 线上环境
-database:
-  dsn: "root:123456@tcp(127.0.0.1:3306)/laya_go?charset=utf8&parseTime=True&loc=Local"
-cache:
-  addr: "127.0.0.1:6379"
-  password: "123456"
+# 开发环境
+dev:
+  database:
+    dsn: "root:123456@tcp(127.0.0.1:3306)/laya_go?charset=utf8&parseTime=True&loc=Local"
+  cache:
+    addr: "127.0.0.1:6379"
+    password: "123456"
+
+# 生产环境
+prod:
+  database:
+    dsn: "root:123456@tcp(127.0.0.1:3306)/laya_go?charset=utf8&parseTime=True&loc=Local"
+  cache:
+    addr: "127.0.0.1:6379"
+    password: "123456"
