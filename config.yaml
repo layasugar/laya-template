@@ -1,19 +1,69 @@
 # 开发环境
 dev:
-  database:
+  database: # mysql 配置
+    # 是否开启mysql链接
+    open: true
+    # mysql DSN
     dsn: "root:123456@tcp(127.0.0.1:3306)/laya_go?charset=utf8&parseTime=True&loc=Local"
-  cache:
+    # mysql最大空闲链接数
+    maxIdleConn: 10
+    # mysql最大连接数
+    maxOpenConn: 100
+    # 连接池超时时间(单位: time.Hour)
+    connMaxLifetime: 6
+  cache: # redis 配置
+    # 是否开启redis链接
+    open: true
+    # 使用redis哪个库
+    db: 0
+    # redis链接DSN
     addr: "127.0.0.1:6379"
+    # redis链接密码
     password: "123456"
-  defaultLang: "zh"
+    # redis链接池大小
+    poolSize: 5
+    # redis链接最大重试次数
+    maxRetries: 3
+    # redis 空闲链接超时时间(单位：time.Second)
+    idleTimeout: 10
+  i18n: # 国际化配置
+    # 是否开启国际化配置
+    open: true
+    # 默认国际化语言包
+    defaultLang: "zh"
   delayServer: "http://127.0.0.1:9278"
 
-# 生产环境
-prod:
-  database:
+# hall-prod 生产环境
+hall-prod:
+  database: # mysql 配置
+    # 是否开启mysql链接
+    open: true
+    # mysql DSN
     dsn: "root:123456@tcp(127.0.0.1:3306)/laya_go?charset=utf8&parseTime=True&loc=Local"
-  cache:
+    # mysql最大空闲链接数
+    maxIdleConn: 10
+    # mysql最大连接数
+    maxOpenConn: 100
+    # 连接池超时时间(单位: time.Hour)
+    connMaxLifetime: 6
+  cache: # redis 配置
+    # 是否开启redis链接
+    open: true
+    # 使用redis哪个库
+    db: 0
+    # redis链接DSN
     addr: "127.0.0.1:6379"
+    # redis链接密码
     password: "123456"
-  defaultLang: "zh"
+    # redis链接池大小
+    poolSize: 5
+    # redis链接最大重试次数
+    maxRetries: 3
+    # redis 空闲链接超时时间(单位：time.Second)
+    idleTimeout: 10
+  i18n: # 国际化配置
+    # 是否开启国际化配置
+    open: true
+    # 默认国际化语言包
+    defaultLang: "zh"
   delayServer: "http://127.0.0.1:9278"
