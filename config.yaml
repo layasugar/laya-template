@@ -5,6 +5,8 @@ dev:
   cache:
     addr: "127.0.0.1:6379"
     password: "123456"
+  defaultLang: "zh"
+  delayServer: "http://127.0.0.1:9278"
 
 # 生产环境
 prod:
@@ -13,3 +15,5 @@ prod:
   cache:
     addr: "127.0.0.1:6379"
     password: "123456"
+  defaultLang: "zh"
+  delayServer: "http://127.0.0.1:9278"

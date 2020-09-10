@@ -5,17 +5,14 @@ import (
 	"github.com/go-redis/redis/v7"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/micro/cli/v2"
 	"github.com/micro/go-micro/v2/config"
+	"github.com/micro/go-micro/v2/config/cmd"
 	"github.com/micro/go-micro/v2/util/log"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"golang.org/x/text/language"
 	"time"
 )
-
-// 定义redis链接池,mysql连接池,初始化语言包
-var Redis *redis.Client
-var DB *gorm.DB
-var I18nBundle *i18n.Bundle
 
 type RedisConf struct {
 	Open        bool
@@ -32,24 +29,52 @@ type MysqlConf struct {
 	ConnMaxLifetime time.Duration
 }
 
-func Init(rc RedisConf, mc MysqlConf) {
-	_, _ = config.NewConfig()
-	err := config.LoadFile("config.yaml")
-	if err != nil {
-		log.Info(err)
-	}
-	mysqlDsn := config.Get("database", "dsn").String("root:123456@tcp(127.0.0.1:3306)/test?charset=utf8&parseTime=True&loc=Local")
-	redisAddr := config.Get("cache", "addr").String("127.0.0.1:6379")
-	redisPwd := config.Get("cache", "password").String("123456")
+func Before() {
+	app := cmd.App()
+	app.Flags = append(app.Flags, &cli.StringFlag{
+		Name:  "env",
+		Usage: "Path to config",
+	})
 
+	before := app.Before
+	app.Before = func(ctx *cli.Context) error {
+		if path := ctx.String("env"); len(path) > 0 {
+			// got config
+			// do stuff
+			ENV = path
+		} else {
+			ENV = "dev"
+		}
+		return before(ctx)
+	}
+}
+
+func Init(rc RedisConf, mc MysqlConf) {
+	InitEnv()
 	if rc.Open {
-		InitRedis(redisAddr, redisPwd, rc)
+		InitRedis(RedisAddr, RedisPwd, rc)
 	}
 
 	if mc.Open {
-		InitMysql(mysqlDsn, mc)
+		InitMysql(MysqlDsn, mc)
 	}
 	InitLang()
+}
+
+func InitEnv() {
+	_, err := config.NewConfig()
+	if err != nil {
+		panic(err)
+	}
+	err = config.LoadFile("config.yaml")
+	if err != nil {
+		panic(err)
+	}
+	MysqlDsn = config.Get(ENV, "database", "dsn").String("root:123456@tcp(127.0.0.1:3306)/test?charset=utf8&parseTime=True&loc=Local")
+	RedisAddr = config.Get(ENV, "cache", "addr").String("127.0.0.1:6379")
+	RedisPwd = config.Get(ENV, "cache", "password").String("123456")
+	DefaultLang = config.Get(ENV, "defaultLang").String("zh")
+	DelayServer = config.Get(ENV, "delayServer").String("http://127.0.0.1:9278")
 }
 
 // 初始化redis

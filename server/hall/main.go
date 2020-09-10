@@ -5,10 +5,14 @@ import (
 	"github.com/micro/go-micro/v2/util/log"
 	"github.com/micro/go-micro/v2/web"
 	"laya-go/server/hall/router"
+	"laya-go/ship"
 	"laya-go/ship/middleware"
 )
 
 func main() {
+	// before setting
+	ship.Before()
+
 	// create new web service
 	service := web.NewService(
 		web.Name("tb.server.hall"),
