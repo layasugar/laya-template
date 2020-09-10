@@ -33,7 +33,7 @@ func Before() {
 	app := cmd.App()
 	app.Flags = append(app.Flags, &cli.StringFlag{
 		Name:  "env",
-		Usage: "Path to config",
+		Usage: "environment to setting",
 	})
 
 	before := app.Before
@@ -43,7 +43,7 @@ func Before() {
 			// do stuff
 			ENV = path
 		} else {
-			ENV = "dev"
+			ENV = DefaultEnv
 		}
 		return before(ctx)
 	}
