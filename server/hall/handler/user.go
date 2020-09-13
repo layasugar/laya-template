@@ -2,11 +2,11 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
+	"laya-go/common/model"
+	"laya-go/common/validate"
 	"laya-go/ship"
-	"laya-go/ship/model"
 	r "laya-go/ship/response"
 	"laya-go/ship/utils"
-	"laya-go/ship/validate"
 	"strconv"
 )
 
