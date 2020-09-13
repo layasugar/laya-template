@@ -48,17 +48,20 @@ func Validate(sign string, params url.Values, c *gin.Context) {
 	exist, _ := ship.Redis.SIsMember("user:uuid", uuid).Result()
 	if exist {
 		c.Set("$.RequestFrequentUuid.code", r.RequestFrequentUuid)
+		c.Abort()
 		return
 	}
 	ship.Redis.SAdd("user:uuid", uuid)
 	log.Info(time.Now().UnixNano()/1e6 - intT)
 	if time.Now().UnixNano()/1e6-intT > 3000 {
 		c.Set("$.RequestFrequentTime.code", r.RequestFrequentTime)
+		c.Abort()
 		return
 	}
 
 	if sign != params.Get("Sign") {
 		c.Set("$.RequestFrequentSign.code", r.RequestFrequentSign)
+		c.Abort()
 		return
 	}
 }
