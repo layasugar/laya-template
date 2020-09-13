@@ -1,6 +1,6 @@
-[PersonCats]
-description = "The number of cats a person has"
-one = "{{.Name}} has {{.Count}} cat."
-other = "{{.Name}} has {{.Count}} cats."
 [RequestFrequentUuid]
-one = "The request is frequent"
+other = "The request is frequent."
+[RequestFrequentTime]
+other = "The request timeout."
+[RequestFrequentSign]
+other = "Your request is incorrect."

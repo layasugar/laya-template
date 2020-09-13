@@ -44,6 +44,7 @@ func GetResponse(params map[string]interface{}, lang string) interface{} {
 			continue
 		}
 		lastOne := strings.Split(name, ".")[len(strings.Split(name, "."))-1]
+		lastTwo := strings.Split(name, ".")[len(strings.Split(name, "."))-2]
 
 		switch lastOne {
 		case "code":
@@ -53,25 +54,19 @@ func GetResponse(params map[string]interface{}, lang string) interface{} {
 			resp = op
 		}
 		resp.Location = name
-		resp.Msg = GetMessage(lang)
+		resp.Msg = GetMessage(lang, lastTwo)
 	}
 	return resp
 }
 
-func GetMessage(lang string) string {
+func GetMessage(lang string, msg string) string {
 	loc := i18n.NewLocalizer(ship.I18nBundle, lang)
 
 	return loc.MustLocalize(&i18n.LocalizeConfig{
+		MessageID: msg,
 		DefaultMessage: &i18n.Message{
-			ID:    "PersonCats",
-			One:   "{{.Name}}",
-			Other: "{{.Name}}",
+			ID:    msg,
+			Other: "The translation could not be found.",
 		},
-		TemplateData: map[string]interface{}{
-			"Name":  "Nick",
-			"Count": 2,
-		},
-		PluralCount: 1,
 	})
-
 }

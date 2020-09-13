@@ -27,8 +27,8 @@ func main() {
 
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
-	r.Use(middleware.Sign(), middleware.Response())
-	//r.Use(middleware.Response())
+	//r.Use(middleware.Sign(), middleware.Response())
+	r.Use(middleware.Response())
 	service.Handle("/", r)
 
 	// initialise route

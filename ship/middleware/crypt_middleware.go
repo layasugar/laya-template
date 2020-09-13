@@ -41,7 +41,7 @@ func GetParams(c *gin.Context) url.Values {
 }
 
 func Validate(sign string, params url.Values, c *gin.Context) {
-	t := params.Get("Time")
+	t := params.Get("T")
 	intT, _ := strconv.ParseInt(t, 10, 64)
 	uuid := params.Get("U")
 
@@ -53,12 +53,12 @@ func Validate(sign string, params url.Values, c *gin.Context) {
 	ship.Redis.SAdd("user:uuid", uuid)
 	log.Info(time.Now().UnixNano()/1e6 - intT)
 	if time.Now().UnixNano()/1e6-intT > 3000 {
-		c.Set("$.crypt.code", r.RequestFrequentTime)
+		c.Set("$.RequestFrequentTime.code", r.RequestFrequentTime)
 		return
 	}
 
 	if sign != params.Get("Sign") {
-		c.Set("$.crypt.code", r.RequestFrequentSign)
+		c.Set("$.RequestFrequentSign.code", r.RequestFrequentSign)
 		return
 	}
 }

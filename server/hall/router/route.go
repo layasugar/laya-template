@@ -24,7 +24,7 @@ func Init(r *gin.Engine) {
 	//r.POST("/hall/notify/:channel", handler.Notify)
 
 	authorized := r.Group("/")
-	authorized.Use(middleware.Auth, middleware.Sign())
+	authorized.Use(middleware.Auth)
 	{
 		authorized.POST("/hall/user/getUserInfo", handler.GetUserInfo)
 		//authorized.POST("/hall/user/payOrder", handler.CreateOrder)

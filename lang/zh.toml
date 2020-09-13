@@ -1,6 +1,6 @@
-[PersonCats]
-description = "卧槽了"
-one = "{{.Name}} 你妹得 {{.Count}} 丢丢."
-other = "{{.Name}} 你妹得 {{.Count}} 丢丢."
 [RequestFrequentUuid]
-one = "请求频繁"
+other = "请求频繁！"
+[RequestFrequentTime]
+other = "请求超时！"
+[RequestFrequentSign]
+other = "您的请求有误！"

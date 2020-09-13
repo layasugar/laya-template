@@ -12,8 +12,8 @@ func Auth(c *gin.Context) {
 	token := c.GetHeader("Token")
 	uid, err := ship.Redis.Get("user:token:" + token).Result()
 	if err != nil {
-		c.Set("$.TokenErr.code", r.TokenErr)
-		//c.AbortWithStatusJSON(200, r.Response{})
+		//c.Set("$.TokenErr.code", r.TokenErr)
+		c.AbortWithStatusJSON(200, r.Response{})
 		return
 	}
 
