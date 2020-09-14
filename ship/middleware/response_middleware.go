@@ -3,6 +3,7 @@ package middleware
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
+	"golang.org/x/text/language"
 	"laya-go/ship"
 	"laya-go/ship/response"
 	"net/http"
@@ -29,7 +30,11 @@ func Response() gin.HandlerFunc {
 
 func GetLang(lang string) string {
 	if lang == "" {
-		lang = ship.DefaultLang
+		if ship.I18nConf.Open {
+			lang = ship.I18nConf.DefaultLang
+		} else {
+			lang = language.English.String()
+		}
 	}
 
 	rs := []rune(lang)

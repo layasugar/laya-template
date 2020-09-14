@@ -35,7 +35,7 @@ func main() {
 	router.Init(r)
 
 	// initialise db
-	ship.Init(RC, MC)
+	ship.Init()
 
 	// run service
 	if err := service.Run(); err != nil {

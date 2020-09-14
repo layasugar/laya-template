@@ -14,7 +14,6 @@ func Auth(c *gin.Context) {
 	if err != nil {
 		c.Set("$.TokenErr.code", r.TokenErr)
 		c.Abort()
-		//c.AbortWithStatusJSON(200, r.Response{})
 		return
 	}
 

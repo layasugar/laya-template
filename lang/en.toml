@@ -4,3 +4,5 @@ other = "The request is frequent."
 other = "The request timeout."
 [RequestFrequentSign]
 other = "Your request is incorrect."
+[TokenErr]
+other = "Permission authentication failed."

@@ -19,7 +19,7 @@ dev:
     # redis链接DSN
     addr: "127.0.0.1:6379"
     # redis链接密码
-    password: "123456"
+    pwd: "123456"
     # redis链接池大小
     poolSize: 5
     # redis链接最大重试次数
@@ -49,12 +49,10 @@ hall-prod:
   cache: # redis 配置
     # 是否开启redis链接
     open: true
-    # 使用redis哪个库
-    db: 0
     # redis链接DSN
     addr: "127.0.0.1:6379"
     # redis链接密码
-    password: "123456"
+    pwd: "123456"
     # redis链接池大小
     poolSize: 5
     # redis链接最大重试次数
