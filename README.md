@@ -1,8 +1,13 @@
-## Project Server
+# laya-go
+gin+gorm+go-redis为基本骨架打造的框架，方便开发，开箱即用
 
-### i18n
+i18n
+------------
+[i18n](https://github.com/LaYa-op/laya-go/wiki/i18n)
 
-### 接口签名
+
+
+接口签名
 
 ### 延时队列
 
