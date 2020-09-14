@@ -12,6 +12,7 @@ import (
 	"github.com/micro/go-micro/v2/util/log"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"golang.org/x/text/language"
+	"io/ioutil"
 	"time"
 )
 
@@ -115,13 +116,24 @@ func InitLang() {
 	if I18nConf.Open {
 		I18nBundle = i18n.NewBundle(language.English)
 		I18nBundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
-		_, err := I18nBundle.LoadMessageFile("./lang/zh.toml")
-		if err != nil {
-			panic(err)
-		}
-		_, err = I18nBundle.LoadMessageFile("./lang/en.toml")
+		err := LoadAllFile("./lang/")
 		if err != nil {
 			panic(err)
 		}
 	}
+}
+
+func LoadAllFile(pathname string) error {
+	rd, err := ioutil.ReadDir(pathname)
+	for _, fi := range rd {
+		if fi.IsDir() {
+			_ = LoadAllFile(pathname + fi.Name() + "\\")
+		} else {
+			_, err := I18nBundle.LoadMessageFile(pathname + fi.Name())
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return err
 }
