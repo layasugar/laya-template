@@ -6,3 +6,9 @@ other = "The request timeout."
 other = "Your request is incorrect."
 [TokenErr]
 other = "Permission authentication failed."
+[NoFile]
+other = "Please select the file after submission."
+[SaveUploadedFail]
+other = "Failed to save file."
+[NoFileType]
+other = "Please select the file type."

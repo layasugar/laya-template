@@ -6,3 +6,9 @@ other = "请求超时！"
 other = "您的请求有误！"
 [TokenErr]
 other = "权限验证失败！"
+[NoFile]
+other = "请选择文件后在提交！"
+[SaveUploadedFail]
+other = "保存文件失败！"
+[NoFileType]
+other = "请选择文件类型！"

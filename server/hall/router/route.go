@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"laya-go/server/hall/handler"
 	"laya-go/ship/middleware"
+	"net/http"
 )
 
 func Init(r *gin.Engine) {
@@ -14,10 +15,11 @@ func Init(r *gin.Engine) {
 	//r.POST("/hall/user/tLogin", handler.TokenLogin)
 	//r.POST("/hall/send/phone", handler.Phone)
 	//r.POST("/hall/user/pwd", handler.EditUserPwd)
-	//
-	//// 文件服务器
-	//r.POST("/hall/files/upload", handler.Upload)
-	//r.StaticFS("/hall/files", http.Dir("files"))
+
+
+	// 文件服务器
+	r.POST("/hall/files/upload", handler.Upload)
+	r.StaticFS("/hall/files", http.Dir("files"))
 
 	// 支付回调
 	//r.POST("/hall/cash/ttNotify", pay.TTNotify)

@@ -70,13 +70,10 @@ func RunSign(s string) string {
 	return utils.MD5(s)
 }
 
-// 这里对一些方法进行屏蔽
-// 文件上传不用接口签名和加密
+// Here are some methods to mask
+// File uploads do not require interface signatures or encryption
 func RunWithoutSign(c *gin.Context) bool {
 	var route = c.Request.URL.Path
-	if route == "/hall/files/upload" {
-		return false
-	}
 	if route == "/hall/user/pay/notify" {
 		return false
 	}
