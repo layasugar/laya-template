@@ -1,5 +1,5 @@
 # laya-go
-gin+gorm+go-redis为基本骨架打造的框架，方便开发，开箱即用，micro和etcd可选用，针对大项目微服务架构
+gin+gorm+go-redis为基本骨架打造的框架，方便开发，开箱即用，micro和etcd可选用，针对中小型项目微服务架构
 
 [目录结构介绍](https://github.com/LaYa-op/laya-go/wiki/%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E4%BB%8B%E7%BB%8D)
 [单个服务启动](https://github.com/LaYa-op/laya-go/wiki/%E5%8D%95%E4%B8%AA%E6%9C%8D%E5%8A%A1%E5%90%AF%E5%8A%A8)
