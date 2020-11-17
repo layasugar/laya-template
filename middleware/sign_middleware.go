@@ -1,11 +1,11 @@
 package middleware
 
 import (
+	"github.com/LaYa-op/laya"
+	"github.com/LaYa-op/laya/response"
+	"github.com/LaYa-op/laya/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/micro/go-micro/v2/util/log"
-	"github.com/LaYa-op/laya"
-	r "github.com/LaYa-op/laya/response"
-	"github.com/LaYa-op/laya/utils"
 	"net/url"
 	"sort"
 	"strconv"
@@ -45,22 +45,22 @@ func Validate(sign string, params url.Values, c *gin.Context) {
 	intT, _ := strconv.ParseInt(t, 10, 64)
 	uuid := params.Get("U")
 
-	exist, _ := ship.Redis.SIsMember("user:uuid", uuid).Result()
+	exist, _ := laya.Redis.SIsMember("user:uuid", uuid).Result()
 	if exist {
-		c.Set("$.RequestFrequentUuid.code", r.RequestFrequentUuid)
+		c.Set("$.RequestFrequentUuid.code", response.RequestFrequentUuid)
 		c.Abort()
 		return
 	}
-	ship.Redis.SAdd("user:uuid", uuid)
+	laya.Redis.SAdd("user:uuid", uuid)
 	log.Info(time.Now().UnixNano()/1e6 - intT)
 	if time.Now().UnixNano()/1e6-intT > 3000 {
-		c.Set("$.RequestFrequentTime.code", r.RequestFrequentTime)
+		c.Set("$.RequestFrequentTime.code", response.RequestFrequentTime)
 		c.Abort()
 		return
 	}
 
 	if sign != params.Get("Sign") {
-		c.Set("$.RequestFrequentSign.code", r.RequestFrequentSign)
+		c.Set("$.RequestFrequentSign.code", response.RequestFrequentSign)
 		c.Abort()
 		return
 	}

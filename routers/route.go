@@ -11,11 +11,11 @@ import (
 func Init(r *gin.Engine) {
 	// 登录注册
 	r.POST("/hall/user/rgt", hall.Ctrl.Register)
-	r.POST("/hall/captcha", hall.Ctrl.Captcha)
+	//r.POST("/hall/captcha", hall.Ctrl.Captcha)
 	r.POST("/hall/user/login", hall.Ctrl.Login)
 	r.POST("/hall/user/tLogin", hall.Ctrl.TokenLogin)
-	r.POST("/hall/send/phone", hall.Ctrl.Phone)
-	r.POST("/hall/user/pwd", hall.Ctrl.EditUserPwd)
+	//r.POST("/hall/send/phone", hall.Ctrl.Phone)
+	//r.POST("/hall/user/pwd", hall.Ctrl.EditUserPwd)
 
 	// 文件服务器
 	r.POST("/hall/files/upload", file.Ctrl.Upload)

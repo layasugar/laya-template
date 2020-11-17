@@ -1,0 +1,26 @@
+Name = "order"
+
+# 连接超时
+ConnTimeOut = 1500
+# 写数据超时
+WriteTimeOut = 1500
+# 读数据超时
+ReadTimeOut = 1500
+# 请求失败后的重试次数：总请求次数 = Retry + 1
+Retry = 2
+# 数据头协议
+Protocol = "http" # http / nshead
+#Protocol = "nshead" # http / nshead
+# 数据体格式
+Converter = "form"  # form / mcpack1 / mapack2 / string
+# 资源使用策略
+# random: 纯随机
+# round-robin: 依次轮询（未实现）
+# weight-random: 带权重随机（未实现）
+# hash: 使用hashid按范围访问（未实现）
+Strategy = "random" # random / round-robin / weight-random / hash
+# 资源定位：手动配置 - 使用IP、端口
+[Resource.Manual]
+[[Resource.Manual.tc]]
+Host = "127.0.0.1"
+Port = 80

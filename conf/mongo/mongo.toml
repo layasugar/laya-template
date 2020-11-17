@@ -1,0 +1,9 @@
+cluster_name = "mongo"
+username = "root"
+password = "123456"
+default_db = "log"
+param = "authSource=admin;wtimeoutMS=2000"
+
+[host.addr]
+ip = "127.0.0.1"
+port = 27017

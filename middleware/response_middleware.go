@@ -1,11 +1,11 @@
 package middleware
 
 import (
+	"github.com/LaYa-op/laya"
+	"github.com/LaYa-op/laya/response"
 	"github.com/gin-gonic/gin"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"golang.org/x/text/language"
-	"github.com/LaYa-op/laya"
-	"github.com/LaYa-op/laya/response"
 	"net/http"
 	"strings"
 )
@@ -30,8 +30,8 @@ func Response() gin.HandlerFunc {
 
 func GetLang(lang string) string {
 	if lang == "" {
-		if ship.I18nConf.Open {
-			lang = ship.I18nConf.DefaultLang
+		if laya.I18nConf.Open {
+			lang = laya.I18nConf.DefaultLang
 		} else {
 			lang = language.English.String()
 		}
@@ -65,7 +65,7 @@ func GetResponse(params map[string]interface{}, lang string) interface{} {
 }
 
 func GetMessage(lang string, msg string) string {
-	loc := i18n.NewLocalizer(ship.I18nBundle, lang)
+	loc := i18n.NewLocalizer(laya.I18nBundle, lang)
 
 	return loc.MustLocalize(&i18n.LocalizeConfig{
 		MessageID: msg,

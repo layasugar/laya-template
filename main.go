@@ -1,4 +1,4 @@
-package laya_go
+package main
 
 import (
 	"github.com/LaYa-op/laya"
@@ -32,7 +32,7 @@ func main() {
 	routers.Init(r)
 
 	// initialise db
-	ship.Init()
+	laya.Init()
 
 	// run service
 	if err := service.Run(); err != nil {
@@ -42,5 +42,6 @@ func main() {
 
 func init() {
 	// before setting
-	ship.Before()
+	laya.Before()
+	log.Info("init the server")
 }
