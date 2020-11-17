@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-//import "laya-go/main/cmd"
+//import "github.com/LaYa-op/laya-go/main/cmd"
 
 //func main() {
 //	//c := cmd.Cmd{}

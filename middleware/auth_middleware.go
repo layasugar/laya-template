@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"laya-go/ship"
-	r "laya-go/ship/response"
+	"github.com/LaYa-op/laya"
+	r "github.com/LaYa-op/laya/response"
 	"strconv"
 )
 

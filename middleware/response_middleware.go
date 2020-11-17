@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"golang.org/x/text/language"
-	"laya-go/ship"
-	"laya-go/ship/response"
+	"github.com/LaYa-op/laya"
+	"github.com/LaYa-op/laya/response"
 	"net/http"
 	"strings"
 )

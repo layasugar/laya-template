@@ -1,17 +1,15 @@
 package laya_go
 
 import (
+	"github.com/LaYa-op/laya"
+	"github.com/LaYa-op/laya-go/middleware"
+	"github.com/LaYa-op/laya-go/routers"
 	"github.com/gin-gonic/gin"
 	"github.com/micro/go-micro/v2/util/log"
 	"github.com/micro/go-micro/v2/web"
-	"laya-go/middleware"
-	"laya-go/ship"
 )
 
 func main() {
-	// before setting
-	ship.Before()
-
 	// create new web service
 	service := web.NewService(
 		web.Name("tb.controllers.hall"),
@@ -31,7 +29,7 @@ func main() {
 	service.Handle("/", r)
 
 	// initialise route
-	router.Init(r)
+	routers.Init(r)
 
 	// initialise db
 	ship.Init()
@@ -40,4 +38,9 @@ func main() {
 	if err := service.Run(); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func init() {
+	// before setting
+	ship.Before()
 }

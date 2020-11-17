@@ -1,4 +1,4 @@
-module laya-go/main
+module github.com/LaYa-op/laya-go/main
 
 go 1.14
 

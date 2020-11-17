@@ -3,9 +3,9 @@ package middleware
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/micro/go-micro/v2/util/log"
-	"laya-go/ship"
-	r "laya-go/ship/response"
-	"laya-go/ship/utils"
+	"github.com/LaYa-op/laya"
+	r "github.com/LaYa-op/laya/response"
+	"github.com/LaYa-op/laya/utils"
 	"net/url"
 	"sort"
 	"strconv"

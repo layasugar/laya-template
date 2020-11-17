@@ -1,11 +1,11 @@
-package hall
+package file
 
 import (
 	"crypto/rand"
 	"fmt"
+	"github.com/LaYa-op/laya"
+	"github.com/LaYa-op/laya/response"
 	"github.com/gin-gonic/gin"
-	"laya-go/ship"
-	r "laya-go/ship/response"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -19,28 +19,28 @@ type res struct {
 
 const uploadPath = "files"
 
-func Upload(c *gin.Context) {
+func (ctrl *controller) Upload(c *gin.Context) {
 	file, _ := c.FormFile("File")
 	if file == nil {
-		c.Set("$.Upload.NoFile.code", r.NoFile)
+		c.Set("$.Upload.NoFile.code", response.NoFile)
 		return
 	}
 	fileType := c.PostForm("FileType")
 	if fileType == "" {
-		c.Set("$.Upload.NoFileType.code", r.NoFileType)
+		c.Set("$.Upload.NoFileType.code", response.NoFileType)
 		return
 	}
 
 	token := c.GetHeader("Token")
 	var uid string
-	if fileType != ship.FileTypeAdmin {
+	if fileType != laya.FileTypeAdmin {
 		if token == "" {
-			c.Set("$.Upload.TokenErr.code", r.TokenErr)
+			c.Set("$.Upload.TokenErr.code", response.TokenErr)
 			return
 		}
-		uid, _ = ship.Redis.HGet("user:uid", token).Result()
+		uid, _ = laya.Redis.HGet("user:uid", token).Result()
 		if uid == "" {
-			c.Set("$.Upload.TokenErr.code", r.TokenErr)
+			c.Set("$.Upload.TokenErr.code", response.TokenErr)
 			return
 		}
 	} else {
@@ -50,20 +50,20 @@ func Upload(c *gin.Context) {
 	newPath := getNewPath(fileType, uid, file.Filename)
 
 	imgUrl := newPath
-	if fileType == ship.FileTypeAvatar {
+	if fileType == laya.FileTypeAvatar {
 		imgUrl += "?t=" + strconv.FormatInt(time.Now().Unix(), 10)
 	}
 	err := c.SaveUploadedFile(file, newPath)
 	if err != nil {
-		c.Set("$.Upload.SaveUploadedFail.code", r.SaveUploadedFail)
+		c.Set("$.Upload.SaveUploadedFail.code", response.SaveUploadedFail)
 		return
 	}
 
-	c.Set("$.Upload.Success.response", r.Response{Code: r.Success, Data: res{ImgUrl: imgUrl}})
+	c.Set("$.Upload.Success.response", response.Response{Code: response.Success, Data: res{ImgUrl: imgUrl}})
 	return
 }
 
-func getNewPath(fileType string, uid string, fileName string) string {
+func (ctrl *controller) getNewPath(fileType string, uid string, fileName string) string {
 	// initialize filepath
 	path := uploadPath
 	kv := strings.Split(fileName, ".")
@@ -71,15 +71,15 @@ func getNewPath(fileType string, uid string, fileName string) string {
 	newName := randToken(12)
 	newPath := filepath.Join(path, newName+"."+mimeType)
 	switch fileType {
-	case ship.FileTypeAvatar:
+	case laya.FileTypeAvatar:
 		path += "/" + uid + "/avatar"
 		_ = os.MkdirAll(path, 777)
 		newPath = filepath.Join(path, uid+"."+mimeType)
-	case ship.FileTypeUser:
+	case laya.FileTypeUser:
 		path += "/" + uid + "/other"
 		_ = os.MkdirAll(path, 777)
 		newPath = filepath.Join(path, newName+"."+mimeType)
-	case ship.FileTypeAdmin:
+	case laya.FileTypeAdmin:
 		path += "/admin"
 		_ = os.MkdirAll(path, 777)
 		newPath = filepath.Join(path, newName+"."+mimeType)

@@ -1,4 +1,4 @@
-package hall
+package worker
 
 import (
 	"github.com/LaYa-op/laya-go/controllers"

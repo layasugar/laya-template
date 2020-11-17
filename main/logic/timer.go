@@ -3,7 +3,7 @@ package logic
 import (
 	"fmt"
 	"github.com/gomodule/redigo/redis"
-	"laya-go/main/utils"
+	"github.com/LaYa-op/laya-go/main/utils"
 	"strings"
 	"time"
 )

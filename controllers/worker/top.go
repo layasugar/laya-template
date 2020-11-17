@@ -1,11 +1,10 @@
-package handler
+package worker
 
 import (
-	"github.com/robfig/cron/v3"
 	"log"
 )
 
-func Top10() {
+func (ctrl *controller) Top10() {
 	c := cron.New()
 	_, _ = c.AddFunc("@midnight", Top10Timer)
 	_, _ = c.AddFunc("@every 250s", Top10Timer)

@@ -1,8 +1,7 @@
 package controllers
 
 import (
-	"gitlab.xthktech.cn/bs/gxe"
-	"gitlab.xthktech.cn/xthk-online/xthk_student_center_pub/library/errno"
+	"github.com/gin-gonic/gin"
 	"strconv"
 )
 
@@ -23,7 +22,7 @@ type BaseController struct{}
 
 var zero = struct{}{}
 
-func (bc *BaseController) rspData(ctx *gxe.WebContext, err error, data interface{}, intErrno bool, extraInfo ...map[string]interface{}) interface{} {
+func (bc *BaseController) rspData(ctx *gin.Context, err error, data interface{}, intErrno bool, extraInfo ...map[string]interface{}) interface{} {
 	code, msg := "200", "succ"
 	var extra map[string]string
 	if err != nil {
@@ -62,12 +61,12 @@ func (bc *BaseController) rspData(ctx *gxe.WebContext, err error, data interface
 }
 
 // Succ it's ok, succ response
-func (bc *BaseController) Succ(ctx *gxe.WebContext, data interface{}, extraInfo ...map[string]interface{}) {
+func (bc *BaseController) Succ(ctx *gin.Context, data interface{}, extraInfo ...map[string]interface{}) {
 	ctx.JSON(200, bc.rspData(ctx, nil, data, true, extraInfo...))
 }
 
 // RawJSONString json 数据返回
-func (bc *BaseController) RawJSONString(ctx *gxe.WebContext, data string) {
+func (bc *BaseController) RawJSONString(ctx *gin.Context, data string) {
 	w := ctx.Writer
 	w.WriteHeader(200)
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
@@ -75,6 +74,6 @@ func (bc *BaseController) RawJSONString(ctx *gxe.WebContext, data string) {
 }
 
 // Fail response the error info
-func (bc *BaseController) Fail(ctx *gxe.WebContext, err error, extraInfo ...map[string]interface{}) {
+func (bc *BaseController) Fail(ctx *gin.Context, err error, extraInfo ...map[string]interface{}) {
 	ctx.AbortWithStatusJSON(200, bc.rspData(ctx, err, nil, true, extraInfo...))
 }
