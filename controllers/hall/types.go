@@ -1,4 +1,4 @@
-package validate
+package hall
 
 // loginData 登录数据验证器
 type LoginData struct {
@@ -31,3 +31,4 @@ type PhoneCodeData struct {
 	Value string `binding:"required"`
 	Type  int64  `binding:"required"`
 }
+

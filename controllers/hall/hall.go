@@ -1,4 +1,4 @@
-package main
+package hall
 
 //// 客户端心跳做在线处理
 //func Ping(c *gin.Context) {

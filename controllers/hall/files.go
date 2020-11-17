@@ -1,4 +1,4 @@
-package main
+package hall
 
 import (
 	"crypto/rand"

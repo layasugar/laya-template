@@ -2,9 +2,8 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"laya-go/server/hall"
+	"laya-go/middleware"
 	"laya-go/server/hall/handler"
-	"laya-go/ship/middleware"
 	"net/http"
 )
 
