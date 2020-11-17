@@ -32,6 +32,8 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/LaYa-op/laya v0.0.0-20201117074628-b1305d5d1d1a h1:tZ2KhulwfiEm3HsZ+xgbZQ+c37OdO56P8YLXeI/el0Q=
 github.com/LaYa-op/laya v0.0.0-20201117074628-b1305d5d1d1a/go.mod h1:RRQQT5CBrVVbKKP7a/REvxIAad5zsm3MyWp+xkTq32Q=
+github.com/LaYa-op/laya v0.0.0-20201117080511-5914fb21877f h1:vGSqlCNEoHQI7Vqk06QgRp5TDu51L3qU+QYo/8tiJ6s=
+github.com/LaYa-op/laya v0.0.0-20201117080511-5914fb21877f/go.mod h1:RRQQT5CBrVVbKKP7a/REvxIAad5zsm3MyWp+xkTq32Q=
 github.com/Microsoft/go-winio v0.4.15-0.20190919025122-fc70bd9a86b5/go.mod h1:tTuCMEN+UleMWgg9dVx4Hu52b1bJo+59jBh3ajtinzw=
 github.com/Microsoft/hcsshim v0.8.7-0.20191101173118-65519b62243c/go.mod h1:7xhjOwRV2+0HXGmM0jxaEu+ZiXJFoVZOTfL/dmqbrD8=
 github.com/OpenDNS/vegadns2client v0.0.0-20180418235048-a3fa4a771d87/go.mod h1:iGLljf5n9GjT6kc0HBvyI1nOKnGQbNB66VzSNbK5iks=

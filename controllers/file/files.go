@@ -47,7 +47,7 @@ func (ctrl *controller) Upload(c *gin.Context) {
 		uid = "0"
 	}
 	// initialize filepath
-	newPath := getNewPath(fileType, uid, file.Filename)
+	newPath := ctrl.getNewPath(fileType, uid, file.Filename)
 
 	imgUrl := newPath
 	if fileType == laya.FileTypeAvatar {
