@@ -1,4 +1,4 @@
-package model
+package db
 
 // 声明模型User
 type User struct {

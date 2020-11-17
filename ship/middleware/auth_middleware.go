@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-// implements the server.HandlerWrapper
+// implements the controllers.HandlerWrapper
 func Auth(c *gin.Context) {
 	token := c.GetHeader("Token")
 	uid, err := ship.Redis.Get("user:token:" + token).Result()

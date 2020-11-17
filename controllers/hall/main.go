@@ -15,7 +15,7 @@ func main() {
 
 	// create new web service
 	service := web.NewService(
-		web.Name("tb.server.hall"),
+		web.Name("tb.controllers.hall"),
 		web.Version("1.0"),
 		web.Address(":8080"),
 	)
