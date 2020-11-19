@@ -22,7 +22,7 @@ func Init(r *gin.Engine) {
 	r.StaticFS("/hall/files", http.Dir("files"))
 
 	authorized := r.Group("/")
-	authorized.Use(middleware.Auth)
+	authorized.Use(middleware.Base.Test)
 	{
 		authorized.POST("/hall/user/getUserInfo", hall.Ctrl.GetUserInfo)
 	}

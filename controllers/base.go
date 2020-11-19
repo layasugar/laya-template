@@ -1,11 +1,14 @@
 package controllers
 
 import (
+	"github.com/LaYa-op/laya/controller"
 	"github.com/gin-gonic/gin"
 )
 
 // BaseController the controller with some useful and common function
-type BaseController struct{}
+type BaseController struct {
+	controller.Base
+}
 
 // Suc it's ok, suc response
 func (bc *BaseController) Suc(ctx *gin.Context, data interface{}) {

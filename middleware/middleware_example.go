@@ -8,7 +8,7 @@ import (
 )
 
 // implements the controllers.HandlerWrapper
-func Auth(c *gin.Context) {
+func (*Middleware) Test(c *gin.Context) {
 	token := c.GetHeader("Token")
 	uid, err := laya.Redis.Get("user:token:" + token).Result()
 	if err != nil {
