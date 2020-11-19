@@ -1,14 +1,14 @@
-[RequestFrequentUuid]
+[40001]
 other = "请求频繁！"
-[RequestFrequentTime]
+[40002]
 other = "请求超时！"
-[RequestFrequentSign]
+[40003]
 other = "您的请求有误！"
-[TokenErr]
+[40004]
 other = "权限验证失败！"
-[NoFile]
+[50001]
 other = "请选择文件后在提交！"
-[SaveUploadedFail]
+[50002]
 other = "保存文件失败！"
-[NoFileType]
+[50003]
 other = "请选择文件类型！"
