@@ -1,6 +1,7 @@
 package hall
 
 import (
+	"fmt"
 	"github.com/LaYa-op/laya"
 	"github.com/LaYa-op/laya-go/models/dao/db"
 	"github.com/LaYa-op/laya/response"
@@ -56,8 +57,8 @@ func (ctrl *controller) Login(c *gin.Context) {
 	}
 
 	data := map[string]interface{}{"ID": user.ID, "UserName": user.UserName, "Phone": user.Phone, "Zone": user.Zone, "Token": token}
-
-	c.Set("$.Login.success.response", response.Response{Code: response.Success, Data: data})
+fmt.Println(data)
+	//c.Set("$.Login.success.response", response.Response{Code: response.Success, Data: data})
 }
 
 func (ctrl *controller) TokenLogin(c *gin.Context) {

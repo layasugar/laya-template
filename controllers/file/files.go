@@ -59,7 +59,7 @@ func (ctrl *controller) Upload(c *gin.Context) {
 		return
 	}
 
-	c.Set("$.Upload.Success.response", response.Response{Code: response.Success, Data: res{ImgUrl: imgUrl}})
+	//c.Set("$.Upload.Success.response", response.Response{Code: response.Success, Data: res{ImgUrl: imgUrl}})
 	return
 }
 

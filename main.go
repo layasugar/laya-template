@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/LaYa-op/laya"
+	_ "github.com/LaYa-op/laya"
 	"github.com/LaYa-op/laya-go/middleware"
 	"github.com/LaYa-op/laya-go/routers"
 	"github.com/gin-gonic/gin"
@@ -34,9 +34,6 @@ func main() {
 	// initialise route
 	routers.Init(r)
 
-	// initialise db
-	laya.Init()
-
 	// run service
 	if err := service.Run(); err != nil {
 		log.Fatal(err)
@@ -45,6 +42,6 @@ func main() {
 
 func init() {
 	// before setting
-	laya.Before()
-	log.Info("init the server")
+	// laya.Before()
+	// log.Info("init the server")
 }
