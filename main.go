@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/LaYa-op/laya"
+	"github.com/LaYa-op/laya-go/middleware"
 	"github.com/LaYa-op/laya-go/routers"
 	"github.com/gin-gonic/gin"
 	"github.com/micro/go-micro/v2/util/log"
@@ -21,11 +22,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	gin.SetMode(gin.ReleaseMode)
+	gin.SetMode(gin.DebugMode)
 	r := gin.Default()
 	//r.Use(middleware.Sign(), middleware.Response())
 	//r.Use(middleware.Base.Auth)
-	//r.Use(middleware.Base.Response)
+	r.Use(middleware.Base.Response)
 	//r.Use(middleware.Base.Sign)
 	//r.Use(middleware.Base.Test)
 	service.Handle("/", r)
