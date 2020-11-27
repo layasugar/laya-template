@@ -1,0 +1,7 @@
+# log config
+
+## log driver
+driver = "file"
+
+## path
+path = "./logs"

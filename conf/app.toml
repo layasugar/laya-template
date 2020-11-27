@@ -1,1 +1,10 @@
-# project config
+# app config
+
+## app_name
+app_name = "laya-go"
+
+## listen port
+http_listen = "0.0.0.0:10080"
+
+## mode debug or releases
+app_mode = "debug"
