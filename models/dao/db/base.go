@@ -1,5 +1,7 @@
 package db
 
-import "github.com/LaYa-op/laya"
+import (
+	"github.com/LaYa-op/laya/store/db"
+)
 
-var Dao = laya.DB
+var Dao = db.DB

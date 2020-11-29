@@ -1,57 +1,48 @@
 # usermod -aG docker gitlab-runner
 
 stages:
+  - test
   - build
   - deploy
 
 variables:
-  PROJECT_NAME: hyperf
-  REGISTRY_URL: registry-docker.org
+  PROJECT_NAME: "xxx"
+  PROJECT_VERSION: "1.0"
 
-build_test_docker:
-  stage: build
-  before_script:
-#    - git submodule sync --recursive
-#    - git submodule update --init --recursive
+test:
+  stage: test
   script:
-    - docker build . -t $PROJECT_NAME
-    - docker tag $PROJECT_NAME $REGISTRY_URL/$PROJECT_NAME:test
-    - docker push $REGISTRY_URL/$PROJECT_NAME:test
+    - echo "Clean up start"
+    - docker ps -a
+    - docker stop $PROJECT_NAME
+    - docker rm $PROJECT_NAME
+    - docker rmi $PROJECT_NAME:$PROJECT_VERSION
+    - echo "Clean up the end of the"
+    - sleep 5
   only:
-    - test
+    - master
   tags:
     - builder
 
-deploy_test_docker:
-  stage: deploy
-  script:
-    - docker stack deploy -c deploy.test.yml --with-registry-auth $PROJECT_NAME
-  only:
-    - test
-  tags:
-    - test
-
-build_docker:
+build:
   stage: build
-  before_script:
-#    - git submodule sync --recursive
-#    - git submodule update --init --recursive
   script:
-    - docker build . -t $PROJECT_NAME
-    - docker tag $PROJECT_NAME $REGISTRY_URL/$PROJECT_NAME:$CI_COMMIT_REF_NAME
-    - docker tag $PROJECT_NAME $REGISTRY_URL/$PROJECT_NAME:latest
-    - docker push $REGISTRY_URL/$PROJECT_NAME:$CI_COMMIT_REF_NAME
-    - docker push $REGISTRY_URL/$PROJECT_NAME:latest
+    - echo "build start"
+    - docker build . -t $PROJECT_NAME:$PROJECT_VERSION
+    - echo "build end"
   only:
-    - tags
+    - master  # 分支名或者触发器名字
   tags:
-    - builder
+    - builder    # 只有标签为builder的runner才会执行这个
 
-deploy_docker:
+deploy:
   stage: deploy
   script:
-    - echo SUCCESS
+    - echo "deploy"
+    - docker run -d -p 9501:9501 --network devops --network-alias $PROJECT_NAME --name $PROJECT_NAME $PROJECT_NAME:$PROJECT_VERSION
+    - docker ps -a
+    - sleep 5
   only:
-    - tags
+    - master
   tags:
     - builder

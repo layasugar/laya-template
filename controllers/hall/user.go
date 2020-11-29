@@ -1,12 +1,15 @@
 package hall
 
 import (
+	"context"
+	"errors"
 	"fmt"
-	"github.com/LaYa-op/laya"
 	"github.com/LaYa-op/laya-go/models/dao/db"
+	"github.com/LaYa-op/laya-go/models/dao/rdb"
 	"github.com/LaYa-op/laya/response"
 	"github.com/LaYa-op/laya/utils"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 	"strconv"
 	"time"
 )
@@ -20,7 +23,8 @@ func (ctrl *controller) Login(c *gin.Context) {
 	user := db.User{}
 
 	// 1.判断用户是否存在并取出用户信息
-	if db.Dao.Model(&user).Where("phone = ?", LoginRequestData.Name).Where("zone = ?", LoginRequestData.Zone).Find(&user).RecordNotFound() {
+	if result := db.Dao.Model(&user).Where("phone = ?", LoginRequestData.Name).Where("zone = ?", LoginRequestData.Zone).First(&user);
+		errors.Is(result.Error, gorm.ErrRecordNotFound) {
 		c.Set("$.Login.User.code", response.NotFoundUser)
 		return
 	}
@@ -40,24 +44,24 @@ func (ctrl *controller) Login(c *gin.Context) {
 	// 4.验证通过生成token,并写入redis
 	strUid := strconv.FormatInt(user.ID, 10)
 	token := utils.GetToken()
-	oldToken, err := laya.Redis.HGet("user:token", strUid).Result()
+	oldToken, err := rdb.Dao.HGet(context.Background(), "user:token", strUid).Result()
 	if err == nil {
-		if err := laya.Redis.HDel("user:uid", oldToken).Err(); err != nil {
+		if err := rdb.Dao.HDel(context.Background(), "user:uid", oldToken).Err(); err != nil {
 			c.Set("$.Login.Response.code", response.Err)
 			return
 		}
 	}
-	if err := laya.Redis.HSet("user:token", strUid, token).Err(); err != nil {
+	if err := rdb.Dao.HSet(context.Background(), "user:token", strUid, token).Err(); err != nil {
 		c.Set("$.Login.Response.code", response.Err)
 		return
 	}
-	if err := laya.Redis.HSet("user:uid", token, strUid).Err(); err != nil {
+	if err := rdb.Dao.HSet(context.Background(), "user:uid", token, strUid).Err(); err != nil {
 		c.Set("$.Login.Response.code", response.Err)
 		return
 	}
 
 	data := map[string]interface{}{"ID": user.ID, "UserName": user.UserName, "Phone": user.Phone, "Zone": user.Zone, "Token": token}
-fmt.Println(data)
+	fmt.Println(data)
 	//c.Set("$.Login.success.response", response.Response{Code: response.Success, Data: data})
 }
 
@@ -69,7 +73,7 @@ func (ctrl *controller) TokenLogin(c *gin.Context) {
 	}
 	token := tld.Token
 
-	uid, err := laya.Redis.HGet("user:uid", token).Result()
+	uid, err := rdb.Dao.HGet(context.Background(), "user:uid", token).Result()
 	if err != nil {
 		c.Set("$.Login.Params.code", response.ParamsValidateErr)
 		return
@@ -79,7 +83,8 @@ func (ctrl *controller) TokenLogin(c *gin.Context) {
 	user := db.User{ID: ID}
 
 	// 1.判断用户是否存在并取出用户信息
-	if laya.DB.Where(user).Find(&user).RecordNotFound() {
+	if result := db.Dao.Model(&user).Where(user).First(&user);
+		errors.Is(result.Error, gorm.ErrRecordNotFound) {
 		c.Set("$.Login.Params.code", response.ParamsValidateErr)
 		return
 	}
@@ -92,22 +97,22 @@ func (ctrl *controller) TokenLogin(c *gin.Context) {
 
 	// 2.刷新用户的token信息
 	newToken := utils.GetToken()
-	if err := laya.Redis.HDel("user:uid", token).Err(); err != nil {
+	if err := rdb.Dao.HDel(context.Background(), "user:uid", token).Err(); err != nil {
 		c.Set("$.Login.Params.code", response.ParamsValidateErr)
 		return
 	}
-	if err := laya.Redis.HSet("user:token", strconv.FormatInt(user.ID, 10), newToken).Err(); err != nil {
+	if err := rdb.Dao.HSet(context.Background(), "user:token", strconv.FormatInt(user.ID, 10), newToken).Err(); err != nil {
 		c.Set("$.Login.Params.code", response.ParamsValidateErr)
 		return
 	}
-	if err := laya.Redis.HSet("user:uid", newToken, strconv.FormatInt(user.ID, 10)).Err(); err != nil {
+	if err := rdb.Dao.HSet(context.Background(), "user:uid", newToken, strconv.FormatInt(user.ID, 10)).Err(); err != nil {
 		c.Set("$.Login.Params.code", response.ParamsValidateErr)
 		return
 	}
 
 	// 3. 更新登录时间以及ip
 	ip := utils.RemoteIp(c.Request)
-	laya.DB.Model(&user).Where("id = ?", user.ID).Updates(db.User{LastLoginIp: ip, LastLoginTime: time.Now()})
+	db.Dao.Model(&user).Where("id = ?", user.ID).Updates(db.User{LastLoginIp: ip, LastLoginTime: time.Now()})
 
 	data := map[string]interface{}{"ID": user.ID, "UserName": user.UserName, "Zone": user.Zone, "Phone": user.Phone, "InviteCode": user.InviteCode, "Token": newToken}
 
@@ -120,17 +125,11 @@ func (ctrl *controller) Register(c *gin.Context) {
 		c.Set("$.Login.TokenErr.code", response.ParamsValidateErr)
 		return
 	}
-	// 1. 用户名重复判断
-	// user := db.User{Account: rd.Username}
-	// if !laya.DB.Where(user).Find(&user).RecordNotFound() {
-	//	c.JSON(http.StatusOK, laya.UserExist)
-	//	return
-	// }
 
 	// 2.手机号重复判断
-	//user := db.User{Phone: rd.Phone, RegisterIp: laya.RemoteIp(c.Request)}
 	user := db.User{Phone: rd.Phone, Zone: rd.Zone}
-	if !laya.DB.Where(user).Find(&user).RecordNotFound() {
+	if result := db.Dao.Where(user).Find(&user);
+		!errors.Is(result.Error, gorm.ErrRecordNotFound) {
 		c.Set("$.Login.Params.code", response.ParamsValidateErr)
 		return
 	}
@@ -142,7 +141,7 @@ func (ctrl *controller) Register(c *gin.Context) {
 	}
 
 	// 5.短信验证码验证
-	//code, err := laya.Redis.Get("phone:code:" + rd.Zone + rd.Phone).Result()
+	//code, err := rdb.Dao.Get("phone:code:" + rd.Zone + rd.Phone).Result()
 	//
 	//if err != nil {
 	//	c.JSON(http.StatusOK, laya.GetMessage("CodeErr", 40008, language, map[string]interface{}{}))
@@ -154,11 +153,11 @@ func (ctrl *controller) Register(c *gin.Context) {
 	//}
 
 	// 6.写入数据库并初始化钱包等级和余额宝
-	tx := laya.DB.Begin()
+	tx := db.Dao.Begin()
 	nickname := rd.Phone
 
 	var insertID []int64
-	laya.DB.Raw("select max(id) as id from tb_user").Pluck("id", &insertID)
+	db.Dao.Raw("select max(id) as id from tb_user").Pluck("id", &insertID)
 	var ID int64
 	ID = insertID[0] + 137
 	user = db.User{ID: ID, UserName: nickname, Password: rd.Password, Phone: rd.Phone, CreatedAt: time.Now(), LastLoginTime: time.Now(), Status: 2, LastLoginIp: utils.RemoteIp(c.Request), Zone: rd.Zone}
@@ -196,7 +195,7 @@ func (ctrl *controller) Register(c *gin.Context) {
 	//// 4.邀请码判断
 	//if rd.InviteCode != "" {
 	//	agentUser := db.User{InviteCode: rd.InviteCode}
-	//	if laya.DB.Where(agentUser).Find(&agentUser).RecordNotFound() {
+	//	if rdb.Dao.Where(agentUser).Find(&agentUser).RecordNotFound() {
 	//		tx.Rollback()
 	//		c.JSON(http.StatusOK, laya.GetMessage("InviteCodeErr", 40010, language, map[string]interface{}{}))
 	//		return
@@ -239,7 +238,7 @@ func (ctrl *controller) Register(c *gin.Context) {
 //
 //func (ctrl *controller) getManager() *captchas.Manager {
 //	if manager == nil {
-//		store := redisstore.New(laya.Redis) // redis store
+//		store := redisstore.New(rdb.Dao) // rdb store
 //		driver := drivers.NewString([]drivers.StringOption{
 //			drivers.StringHeight(40),
 //			drivers.StringWidth(120),
@@ -282,13 +281,13 @@ func (ctrl *controller) Register(c *gin.Context) {
 //	if p.Type == 1 { // 注册
 //
 //		user := db.User{Phone: p.Phone, Zone: p.Zone}
-//		if !laya.DB.Where(user).Find(&user).RecordNotFound() {
+//		if !rdb.Dao.Where(user).Find(&user).RecordNotFound() {
 //			c.JSON(http.StatusOK, laya.GetMessage("PhoneExist", 40006, language, map[string]interface{}{}))
 //			return
 //		}
 //	} else if p.Type == 2 { // 忘记密码
 //		user := db.User{Phone: p.Phone, Zone: p.Zone}
-//		if laya.DB.Where(user).Find(&user).RecordNotFound() {
+//		if rdb.Dao.Where(user).Find(&user).RecordNotFound() {
 //			c.JSON(http.StatusOK, laya.GetMessage("NoUser", 40001, language, map[string]interface{}{}))
 //			return
 //		}
@@ -309,38 +308,38 @@ func (ctrl *controller) Register(c *gin.Context) {
 //	   }*/
 //
 //	// 2. 策略同个手机号60秒后才能发送
-//	num1, _ := laya.Redis.Exists("phone:time:" + p.Zone + p.Phone).Result()
+//	num1, _ := rdb.Dao.Exists("phone:time:" + p.Zone + p.Phone).Result()
 //	if num1 != 0 {
 //		c.JSON(http.StatusOK, laya.GetMessage("MsgErr", 40012, language, map[string]interface{}{}))
 //		return
 //	}
-//	if err := laya.Redis.Set("phone:time:"+p.Zone+p.Phone, "1", 60*time.Second).Err(); err != nil {
+//	if err := rdb.Dao.Set("phone:time:"+p.Zone+p.Phone, "1", 60*time.Second).Err(); err != nil {
 //		c.JSON(http.StatusOK, laya.GetMessage("Err", 0, language, map[string]interface{}{}))
 //		return
 //	}
 //
 //	// // 3. 策略一个手机号24小时只能发送5条
-//	// num2, _ := laya.Redis.Get("phone:times:" + p.Phone).Result()
+//	// num2, _ := rdb.Dao.Get("phone:times:" + p.Phone).Result()
 //	// intNum2, _ := strconv.ParseInt(num2, 10, 64)
 //	// if intNum2 >= 5 {
 //	//	c.JSON(http.StatusOK, laya.GetMessage("MsgFail",40013,language,map[string]interface{}{}))
 //	//	return
 //	// }
 //	// intNum2 += 1
-//	// if err := laya.Redis.Set("phone:times:"+p.Phone, intNum2, 24*time.Hour).Err(); err != nil {
+//	// if err := rdb.Dao.Set("phone:times:"+p.Phone, intNum2, 24*time.Hour).Err(); err != nil {
 //	//	 c.JSON(http.StatusOK, laya.GetMessage("Err",0,language,map[string]interface{}{}))
 //	//	return
 //	// }
 //	//
 //	// // 4. 策略同一个ip24小时只能发送10条
-//	// num3, _ := laya.Redis.Get("phone:ip:" + laya.RemoteIp(c.Request)).Result()
+//	// num3, _ := rdb.Dao.Get("phone:ip:" + laya.RemoteIp(c.Request)).Result()
 //	// intNum3, _ := strconv.ParseInt(num3, 10, 64)
 //	// if intNum3 >= 10 {
 //	//	c.JSON(http.StatusOK, laya.GetMessage("MsgIpFail",40014,language,map[string]interface{}{}))
 //	//	return
 //	// }
 //	// intNum3 += 1
-//	// if err := laya.Redis.Set("phone:ip:"+laya.RemoteIp(c.Request), intNum3, 24*time.Hour).Err(); err != nil {
+//	// if err := rdb.Dao.Set("phone:ip:"+laya.RemoteIp(c.Request), intNum3, 24*time.Hour).Err(); err != nil {
 //	//	 c.JSON(http.StatusOK, laya.GetMessage("Err",0,language,map[string]interface{}{}))
 //	//	return
 //	// }
@@ -348,7 +347,7 @@ func (ctrl *controller) Register(c *gin.Context) {
 //	// 6. 写入redis，300秒过期
 //	code := laya.GenValidateCode(6)
 //
-//	if err := laya.Redis.Set("phone:code:"+p.Zone+p.Phone, code, 5*time.Minute).Err(); err != nil {
+//	if err := rdb.Dao.Set("phone:code:"+p.Zone+p.Phone, code, 5*time.Minute).Err(); err != nil {
 //		c.JSON(http.StatusOK, laya.GetMessage("Err", 0, language, map[string]interface{}{}))
 //		return
 //	}
@@ -376,7 +375,7 @@ func (ctrl *controller) Register(c *gin.Context) {
 //	var ReNewPassword = c.PostForm("ReNewPassword")
 //
 //	// 5.短信验证码验证
-//	code, err := laya.Redis.Get("phone:code:" + Zone + phone).Result()
+//	code, err := rdb.Dao.Get("phone:code:" + Zone + phone).Result()
 //	if err != nil {
 //		c.JSON(http.StatusOK, laya.GetMessage("CodeErr", 40008, language, map[string]interface{}{}))
 //		return
@@ -393,7 +392,7 @@ func (ctrl *controller) Register(c *gin.Context) {
 //	}
 //
 //	// 修改密码
-//	laya.DB.Model(&db.User{}).Where("phone = ?", phone).Where("zone = ?", Zone).Update("password", NewPassword)
+//	rdb.Dao.Model(&db.User{}).Where("phone = ?", phone).Where("zone = ?", Zone).Update("password", NewPassword)
 //
 //	// 返回信息=
 //	c.JSON(http.StatusOK, laya.GetMessage("Success", 1, language, map[string]interface{}{}))
@@ -403,12 +402,14 @@ func (ctrl *controller) Register(c *gin.Context) {
 func (ctrl *controller) GetUserInfo(c *gin.Context) {
 	uid := c.GetInt64("uid")
 	user := db.User{ID: uid}
-	if laya.DB.Model(&db.User{}).Where(&user).Find(&user).RecordNotFound() {
+	if result := db.Dao.Model(&db.User{}).Where(&user).Find(&user);
+		errors.Is(result.Error, gorm.ErrRecordNotFound) {
 		c.Set("$.err", response.NotFoundUser)
 		return
 	}
 	c.Set("$.response", user)
 }
+
 //
 //// 修改用户信息
 //func (ctrl *controller) EditUser(c *gin.Context) {
@@ -426,7 +427,7 @@ func (ctrl *controller) GetUserInfo(c *gin.Context) {
 //	user := db.User{}
 //	user.ID = uid
 //
-//	if laya.DB.Where(user).Find(&user).RecordNotFound() {
+//	if rdb.Dao.Where(user).Find(&user).RecordNotFound() {
 //		c.JSON(http.StatusOK, laya.GetMessage("NoUser", 40001, language, map[string]interface{}{}))
 //		return
 //	}
@@ -467,7 +468,7 @@ func (ctrl *controller) GetUserInfo(c *gin.Context) {
 //		break
 //	}
 //
-//	if err := laya.DB.Save(&user).Error; err != nil {
+//	if err := rdb.Dao.Save(&user).Error; err != nil {
 //		c.JSON(http.StatusOK, laya.GetMessage("Err", 0, language, map[string]interface{}{}))
 //		return
 //	}
@@ -493,7 +494,7 @@ func (ctrl *controller) GetUserInfo(c *gin.Context) {
 //		return
 //	}
 //	// 5.短信验证码验证
-//	code, err := laya.Redis.Get("phone:code:" + Zone + Phone).Result()
+//	code, err := rdb.Dao.Get("phone:code:" + Zone + Phone).Result()
 //	if err != nil {
 //		c.JSON(http.StatusOK, laya.GetMessage("CodeErr", 40008, language, map[string]interface{}{}))
 //		return
@@ -516,14 +517,14 @@ func (ctrl *controller) GetUserInfo(c *gin.Context) {
 //
 //	user := db.User{ID: uid, Password: oldpassword}
 //
-//	if laya.DB.Where(user).Find(&user).RecordNotFound() {
+//	if rdb.Dao.Where(user).Find(&user).RecordNotFound() {
 //		c.JSON(http.StatusOK, laya.GetMessage("PWDErr", 40007, language, map[string]interface{}{}))
 //		return
 //	}
 //
 //	// 修改密码
 //	user.Password = newpassword
-//	if err := laya.DB.Save(&user).Error; err != nil {
+//	if err := rdb.Dao.Save(&user).Error; err != nil {
 //		c.JSON(http.StatusOK, laya.GetMessage("Err", 0, language, map[string]interface{}{}))
 //		return
 //	}
@@ -544,7 +545,7 @@ func (ctrl *controller) GetUserInfo(c *gin.Context) {
 //
 //	// 获取锁开启事务
 //	lockKey := "SignIn:lock:" + strconv.FormatInt(uid, 10)
-//	lock, err := laya.GetLock(laya.Redis, lockKey, 5*time.Second, 5*time.Second)
+//	lock, err := laya.GetLock(rdb.Dao, lockKey, 5*time.Second, 5*time.Second)
 //	if err != nil {
 //		c.JSON(http.StatusOK, laya.GetMessage("SysErr", 40024, language, map[string]interface{}{}))
 //		return
@@ -552,14 +553,14 @@ func (ctrl *controller) GetUserInfo(c *gin.Context) {
 //
 //	// 1.判断是否已经签到了
 //	usl := db.USL{Uid: uid, Ymd: ymd}
-//	if !laya.DB.Model(db.USL{}).Where(usl).Find(&usl).RecordNotFound() {
-//		laya.ReleaseLock(laya.Redis, lockKey, lock)
+//	if !rdb.Dao.Model(db.USL{}).Where(usl).Find(&usl).RecordNotFound() {
+//		laya.ReleaseLock(rdb.Dao, lockKey, lock)
 //		c.JSON(http.StatusOK, laya.GetMessage("Signed", 40059, language, map[string]interface{}{}))
 //		return
 //	}
 //	//response := laya.Response{Code: 1, Msg: map[string]interface{}{"Chinese":"成功","English":"success"}}
 //	var Data interface{}
-//	tx := laya.DB.Begin()
+//	tx := rdb.Dao.Begin()
 //	// 2. 赠送奖励
 //	config := db.Config{}
 //	tx.Model(config).Where("id = ?", 3).Find(&config)
@@ -572,13 +573,13 @@ func (ctrl *controller) GetUserInfo(c *gin.Context) {
 //		walletLog := db.WalletLog{Uid: uid, Wtype: 19, Ttype: 1, Amount: amount, CreateTime: time.Now(), BeforeAmount: userWallet.Balance}
 //		if err := tx.Create(&walletLog).Error; err != nil {
 //			tx.Rollback()
-//			laya.ReleaseLock(laya.Redis, lockKey, lock)
+//			laya.ReleaseLock(rdb.Dao, lockKey, lock)
 //			c.JSON(http.StatusOK, laya.GetMessage("Err", 0, language, err))
 //			return
 //		}
 //		if err := tx.Model(db.UW{}).Where(userWallet).UpdateColumn("balance", gorm.Expr("balance + ?", amount)).Error; err != nil {
 //			tx.Rollback()
-//			laya.ReleaseLock(laya.Redis, lockKey, lock)
+//			laya.ReleaseLock(rdb.Dao, lockKey, lock)
 //			c.JSON(http.StatusOK, laya.GetMessage("Err", 0, language, err))
 //			return
 //		}
@@ -588,7 +589,7 @@ func (ctrl *controller) GetUserInfo(c *gin.Context) {
 //		notice.Content = "SignedInSuccess|" + ac.FormatMoney(amount)
 //		if err := tx.Create(&notice).Error; err != nil {
 //			tx.Rollback()
-//			laya.ReleaseLock(laya.Redis, lockKey, lock)
+//			laya.ReleaseLock(rdb.Dao, lockKey, lock)
 //			c.JSON(http.StatusOK, laya.GetMessage("Err", 0, language, err))
 //			return
 //		}
@@ -602,13 +603,13 @@ func (ctrl *controller) GetUserInfo(c *gin.Context) {
 //	usl.CreateTime = time.Now()
 //	if err := tx.Create(&usl).Error; err != nil {
 //		tx.Rollback()
-//		laya.ReleaseLock(laya.Redis, lockKey, lock)
+//		laya.ReleaseLock(rdb.Dao, lockKey, lock)
 //		c.JSON(http.StatusOK, laya.GetMessage("Err", 0, language, err))
 //		return
 //	}
 //
 //	tx.Commit()
-//	laya.ReleaseLock(laya.Redis, lockKey, lock)
+//	laya.ReleaseLock(rdb.Dao, lockKey, lock)
 //
 //	c.JSON(http.StatusOK, laya.GetMessage("Success", 1, language, Data))
 //}

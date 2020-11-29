@@ -1,9 +1,11 @@
 package file
 
 import (
+	"context"
 	"crypto/rand"
 	"fmt"
 	"github.com/LaYa-op/laya"
+	"github.com/LaYa-op/laya-go/models/dao/rdb"
 	"github.com/LaYa-op/laya/response"
 	"github.com/gin-gonic/gin"
 	"os"
@@ -38,7 +40,7 @@ func (ctrl *controller) Upload(c *gin.Context) {
 			c.Set("$.Upload.TokenErr.code", response.TokenErr)
 			return
 		}
-		uid, _ = laya.Redis.HGet("user:uid", token).Result()
+		uid, _ = rdb.Dao.HGet(context.Background(), "user:uid", token).Result()
 		if uid == "" {
 			c.Set("$.Upload.TokenErr.code", response.TokenErr)
 			return

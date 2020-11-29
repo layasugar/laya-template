@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "github.com/LaYa-op/laya"
+	"github.com/LaYa-op/laya"
 	"github.com/LaYa-op/laya-go/middleware"
 	"github.com/LaYa-op/laya-go/routers"
 	"github.com/gin-gonic/gin"
@@ -41,7 +41,5 @@ func main() {
 }
 
 func init() {
-	// before setting
-	// laya.Before()
-	// log.Info("init the server")
+	laya.Init()
 }

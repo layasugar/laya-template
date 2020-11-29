@@ -4,11 +4,11 @@ package hall
 //func (ctrl *controller) Ping(c *gin.Context) {
 //	uid := c.GetInt64("uid")
 //	var timeUnix = float64(time.Now().Unix())
-//	score := redis.Z{
+//	score := rdb.Z{
 //		Score:  timeUnix,
 //		Member: uid,
 //	}
-//	laya.Redis.ZAdd("online_users", &score)
+//	rdb.Dao.ZAdd("online_users", &score)
 //
 //	// 查询用户信息，判断账号是否是正常状态
 //	userInfo := GetUserInfoByID(uid)
@@ -37,7 +37,7 @@ package hall
 //		if data.OnLine != 0 {
 //			strNowMax := strconv.FormatInt(now, 10)
 //			strNowMin := strconv.FormatInt(now-35, 10)
-//			ZRangeBy := redis.ZRangeBy{
+//			ZRangeBy := rdb.ZRangeBy{
 //				Min: strNowMin,
 //				Max: strNowMax,
 //			}

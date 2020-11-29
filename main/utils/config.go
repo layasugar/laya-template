@@ -21,7 +21,7 @@ type Delayer struct {
 	ErrorLog          string
 }
 
-// redis 节点数据
+// rdb 节点数据
 type Redis struct {
 	Host            string
 	Port            string
@@ -37,7 +37,7 @@ type Redis struct {
 func LoadConfig(fileName string) Config {
 	// 默认文件
 	if fileName == "" {
-		fileName = "delayer.conf"
+		fileName = "delayer.config"
 	}
 	// 读取配置文件
 	conf, err := ini.Load(fileName)
@@ -50,7 +50,7 @@ func LoadConfig(fileName string) Config {
 	timerInterval, _ := delayer.Key("timer_interval").Int64()
 	accessLog := delayer.Key("access_log").String()
 	errorLog := delayer.Key("error_log").String()
-	redis := conf.Section("redis")
+	redis := conf.Section("rdb")
 	host := redis.Key("host").String()
 	port := redis.Key("port").String()
 	database, _ := redis.Key("database").Int()

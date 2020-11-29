@@ -11,7 +11,7 @@ Retry = 2
 # 数据头协议
 Protocol = "resp" # resp / nshead
 # 数据体格式
-Converter = "redis"  # redis / mcpack1 / mapack2 / string
+Converter = "redis"  # rdb / mcpack1 / mapack2 / string
 
 # 资源使用策略
 # random: 纯随机
