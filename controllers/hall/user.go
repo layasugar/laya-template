@@ -43,7 +43,7 @@ func (ctrl *controller) Login(c *gin.Context) {
 
 	// 4.验证通过生成token,并写入redis
 	strUid := strconv.FormatInt(user.ID, 10)
-	token := utils.GetToken()
+	token := "sad"
 	oldToken, err := rdb.Dao.HGet(context.Background(), "user:token", strUid).Result()
 	if err == nil {
 		if err := rdb.Dao.HDel(context.Background(), "user:uid", oldToken).Err(); err != nil {
@@ -96,7 +96,7 @@ func (ctrl *controller) TokenLogin(c *gin.Context) {
 	}
 
 	// 2.刷新用户的token信息
-	newToken := utils.GetToken()
+	newToken := "safdas"
 	if err := rdb.Dao.HDel(context.Background(), "user:uid", token).Err(); err != nil {
 		c.Set("$.Login.Params.code", response.ParamsValidateErr)
 		return

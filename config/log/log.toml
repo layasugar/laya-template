@@ -5,3 +5,6 @@ driver = "file"
 
 ## path
 path = "./logs"
+
+## log_level
+log_level = "INFO"
