@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/LaYa-op/laya"
 	"github.com/LaYa-op/laya-go/middleware"
-	"github.com/LaYa-op/laya-go/routers"
+	"github.com/LaYa-op/laya-go/routes"
 	"github.com/gin-gonic/gin"
 	"github.com/micro/go-micro/v2/util/log"
 	"github.com/micro/go-micro/v2/web"
@@ -32,7 +32,7 @@ func main() {
 	service.Handle("/", r)
 
 	// initialise route
-	routers.Init(r)
+	routes.Init(r)
 
 	// run service
 	if err := service.Run(); err != nil {

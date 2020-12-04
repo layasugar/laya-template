@@ -1,4 +1,4 @@
-package routers
+package routes
 
 import (
 	"github.com/LaYa-op/laya-go/controllers/file"
