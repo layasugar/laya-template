@@ -1,14 +1,14 @@
 package routes
 
 import (
+	"github.com/LaYa-op/laya"
 	"github.com/LaYa-op/laya-go/controllers/file"
 	"github.com/LaYa-op/laya-go/controllers/hall"
 	"github.com/LaYa-op/laya-go/middleware"
-	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-func Init(r *gin.Engine) {
+func RoutingSetup(r *laya.WebServer) {
 	// 登录注册
 	r.POST("/hall/user/rgt", hall.Ctrl.Register)
 	//r.POST("/hall/captcha", hall.Ctrl.Captcha)
