@@ -67,7 +67,7 @@ defaultLang = "zh"
 ## log driver
 driver = "file"
 ## path
-path = "./logs"
+path = "./logs/"
 ## log_level
 log_level = "INFO"
 
