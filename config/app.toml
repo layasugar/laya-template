@@ -61,15 +61,22 @@ connMaxLifetime = 6
 [i18n]
 open = true
 defaultLang = "zh"
+path = "./config/lang/"
 
 # log
 [log]
 ## log driver
 driver = "file"
 ## path
-path = "./logs/"
+path = "./logs/log.info"
 ## log_level
 log_level = "INFO"
+## MB
+max_size = 32
+## 保留旧文件的最大天数
+max_age = 90
+## 保留旧文件的最大个数
+max_backups = 300
 
 # mq
 [rabbitmq]

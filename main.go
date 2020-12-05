@@ -10,7 +10,6 @@ func ServerSetup() *laya.App {
 	app := laya.NewApp()
 	app.WebServer().RegisterRouter(routes.RoutingSetup)
 
-
 	// 初始化内存缓存
 	//memory.Init()
 	return app

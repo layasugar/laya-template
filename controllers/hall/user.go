@@ -66,9 +66,13 @@ func (ctrl *controller) Login(c *gin.Context) {
 }
 
 func (ctrl *controller) TokenLogin(c *gin.Context) {
+	fmt.Println(response.ErrSysErr)
+
+	ctrl.Fail(c, response.ErrSysErr)
+	return
 	var tld TokenLoginData
 	if err := c.ShouldBind(&tld); err != nil {
-		c.Set("$.Login.Params.code", response.ParamsValidateErr)
+		ctrl.Fail(c, response.ErrSysErr)
 		return
 	}
 	token := tld.Token
