@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"fmt"
-	"github.com/LaYa-op/laya/logger"
+	"github.com/LaYa-op/laya/glogs"
 	"github.com/LaYa-op/laya/response"
 	"github.com/LaYa-op/laya/utils"
 	"github.com/gin-gonic/gin"
@@ -51,7 +51,7 @@ func (bc *Base) rspData(c *gin.Context, err error, data interface{}) interface{}
 	}
 
 	if v := fmt.Sprint(rsp["data"]); v == "[]" || v == "map[]" || v == "<nil>" {
-		logger.Sugar.Infof("watch_data", "%v", rsp["data"])
+		glogs.InfoF("watch_data", "%v", rsp["data"])
 		rsp["data"] = struct{}{}
 	}
 

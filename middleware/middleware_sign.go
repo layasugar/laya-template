@@ -1,17 +1,11 @@
 package middleware
 
 import (
-	"context"
-	"github.com/LaYa-op/laya/response"
-	"github.com/LaYa-op/laya/store/redis"
 	"github.com/LaYa-op/laya/utils"
 	"github.com/gin-gonic/gin"
-	"github.com/micro/go-micro/v2/util/log"
 	"net/url"
 	"sort"
-	"strconv"
 	"strings"
-	"time"
 )
 
 var Key = "f21a12a5679078397ab2b98bd4f7b284"
@@ -42,29 +36,29 @@ func GetParams(c *gin.Context) url.Values {
 }
 
 func Validate(sign string, params url.Values, c *gin.Context) {
-	t := params.Get("T")
-	intT, _ := strconv.ParseInt(t, 10, 64)
-	uuid := params.Get("U")
-
-	exist, _ := redis.Rdb.SIsMember(context.Background(), "user:uuid", uuid).Result()
-	if exist {
-		c.Set("$.RequestFrequentUuid.code", response.RequestFrequentUuid)
-		c.Abort()
-		return
-	}
-	redis.Rdb.SAdd(context.Background(), "user:uuid", uuid)
-	log.Info(time.Now().UnixNano()/1e6 - intT)
-	if time.Now().UnixNano()/1e6-intT > 3000 {
-		c.Set("$.RequestFrequentTime.code", response.RequestFrequentTime)
-		c.Abort()
-		return
-	}
-
-	if sign != params.Get("Sign") {
-		c.Set("$.RequestFrequentSign.code", response.RequestFrequentSign)
-		c.Abort()
-		return
-	}
+	//t := params.Get("T")
+	//intT, _ := strconv.ParseInt(t, 10, 64)
+	//uuid := params.Get("U")
+	//
+	//exist, _ := redis.Rdb.SIsMember(context.Background(), "user:uuid", uuid).Result()
+	//if exist {
+	//	c.Set("$.RequestFrequentUuid.code", response.RequestFrequentUuid)
+	//	c.Abort()
+	//	return
+	//}
+	//redis.Rdb.SAdd(context.Background(), "user:uuid", uuid)
+	//log.Info(time.Now().UnixNano()/1e6 - intT)
+	//if time.Now().UnixNano()/1e6-intT > 3000 {
+	//	c.Set("$.RequestFrequentTime.code", response.RequestFrequentTime)
+	//	c.Abort()
+	//	return
+	//}
+	//
+	//if sign != params.Get("Sign") {
+	//	c.Set("$.RequestFrequentSign.code", response.RequestFrequentSign)
+	//	c.Abort()
+	//	return
+	//}
 }
 
 func RunSign(s string) string {

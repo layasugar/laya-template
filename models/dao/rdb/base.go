@@ -1,7 +1,7 @@
 package rdb
 
 import (
-	"github.com/LaYa-op/laya/store/redis"
+	"github.com/LaYa-op/laya/store"
 )
 
-var Dao = redis.Rdb
+var Dao = store.Rdb
