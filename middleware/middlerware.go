@@ -1,6 +1,6 @@
 package middleware
 
-import "github.com/LaYa-op/laya/middleware"
+import "github.com/layatips/laya/middleware"
 
 var Base = &Middleware{}
 

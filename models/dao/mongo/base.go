@@ -3,7 +3,7 @@ package dbdao
 import (
 	"context"
 	"fmt"
-	"github.com/LaYa-op/laya/store"
+	"github.com/layatips/laya/store"
 	"hash/crc32"
 	"strconv"
 
@@ -13,7 +13,7 @@ import (
 
 type DBDao struct {
 	ClusterName string
-	DB          *mongodb.DB
+	DB          *store.Mdb
 }
 
 //Dao Layer GetConn

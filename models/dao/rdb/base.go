@@ -1,7 +1,7 @@
 package rdb
 
 import (
-	"github.com/LaYa-op/laya/store"
+	"github.com/layatips/laya/store"
 )
 
 var Dao = store.Rdb

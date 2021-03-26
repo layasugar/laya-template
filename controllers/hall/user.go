@@ -4,10 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/LaYa-op/laya-go/models/dao/db"
-	"github.com/LaYa-op/laya-go/models/dao/rdb"
-	"github.com/LaYa-op/laya/response"
-	"github.com/LaYa-op/laya/utils"
+	"github.com/layatips/laya-go/models/dao/db"
+	"github.com/layatips/laya-go/models/dao/rdb"
+	"github.com/layatips/laya/response"
+	"github.com/layatips/laya/utils"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"strconv"
@@ -566,12 +566,12 @@ func (ctrl *controller) GetUserInfo(c *gin.Context) {
 //	var Data interface{}
 //	tx := rdb.Dao.Begin()
 //	// 2. 赠送奖励
-//	config := db.Config{}
-//	tx.Model(config).Where("id = ?", 3).Find(&config)
-//	if config.Status == 1 {
+//	conf := db.Config{}
+//	tx.Model(conf).Where("id = ?", 3).Find(&conf)
+//	if conf.Status == 1 {
 //		userWallet := db.UW{Uid: uid}
 //		tx.Where(userWallet).Find(&userWallet)
-//		amount, _ := strconv.ParseInt(config.Val, 10, 64)
+//		amount, _ := strconv.ParseInt(conf.Val, 10, 64)
 //		//userWallet.Balance += amount
 //		usl.Amount = amount
 //		walletLog := db.WalletLog{Uid: uid, Wtype: 19, Ttype: 1, Amount: amount, CreateTime: time.Now(), BeforeAmount: userWallet.Balance}

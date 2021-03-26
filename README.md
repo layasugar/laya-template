@@ -1,12 +1,12 @@
 # laya-go
 gin+gorm+go-redis为基本骨架打造的框架，方便开发，开箱即用，micro和etcd可选用，针对中型项目微服务架构
 
-[目录结构介绍](https://github.com/LaYa-op/laya-go/wiki/%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E4%BB%8B%E7%BB%8D)
-[单个服务启动](https://github.com/LaYa-op/laya-go/wiki/%E5%8D%95%E4%B8%AA%E6%9C%8D%E5%8A%A1%E5%90%AF%E5%8A%A8)
-[微服务方式启动](https://github.com/LaYa-op/laya-go/wiki/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%96%B9%E5%BC%8F%E5%90%AF%E5%8A%A8)
+[目录结构介绍](https://github.com/layatips/laya-go/wiki/%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E4%BB%8B%E7%BB%8D)
+[单个服务启动](https://github.com/layatips/laya-go/wiki/%E5%8D%95%E4%B8%AA%E6%9C%8D%E5%8A%A1%E5%90%AF%E5%8A%A8)
+[微服务方式启动](https://github.com/layatips/laya-go/wiki/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%96%B9%E5%BC%8F%E5%90%AF%E5%8A%A8)
 
 ## i18n
-[i18n使用介绍](https://github.com/LaYa-op/laya-go/wiki/i18n)
+[i18n使用介绍](https://github.com/layatips/laya-go/wiki/i18n)
 
 - [go-i18n](https://github.com/nicksnyder/go-i18n)
 - 简单使用

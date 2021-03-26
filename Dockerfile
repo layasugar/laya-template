@@ -30,16 +30,16 @@ RUN set -ex \
     # show php version and extensions
     && php -v \
     && php -m \
-    #  ---------- some config ----------
+    #  ---------- some conf ----------
     && cd /etc/php7 \
-    # - config PHP
+    # - conf PHP
     && { \
         echo "upload_max_filesize=100M"; \
         echo "post_max_size=108M"; \
         echo "memory_limit=1024M"; \
         echo "date.timezone=${TIMEZONE}"; \
     } | tee conf.d/99-overrides.ini \
-    # - config timezone
+    # - conf timezone
     && ln -sf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
     && echo "${TIMEZONE}" > /etc/timezone \
     # ---------- clear works ----------

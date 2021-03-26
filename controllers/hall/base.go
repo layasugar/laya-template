@@ -1,11 +1,11 @@
 package hall
 
 import (
-	"github.com/LaYa-op/laya-go/controllers"
+	"github.com/layatips/laya-go/controllers"
 )
 
 var Ctrl = &controller{}
 
 type controller struct {
-	*controllers.Base
+	*controllers.BaseController
 }

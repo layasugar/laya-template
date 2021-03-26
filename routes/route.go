@@ -1,10 +1,10 @@
 package routes
 
 import (
-	"github.com/LaYa-op/laya"
-	"github.com/LaYa-op/laya-go/controllers/file"
-	"github.com/LaYa-op/laya-go/controllers/hall"
-	"github.com/LaYa-op/laya-go/middleware"
+	"github.com/layatips/laya"
+	"github.com/layatips/laya-go/controllers/file"
+	"github.com/layatips/laya-go/controllers/hall"
+	"github.com/layatips/laya-go/middleware"
 	"net/http"
 )
 

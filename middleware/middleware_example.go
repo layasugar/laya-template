@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"context"
-	"github.com/LaYa-op/laya-go/models/dao/rdb"
-	"github.com/LaYa-op/laya/response"
+	"github.com/layatips/laya-go/models/dao/rdb"
+	"github.com/layatips/laya/response"
 	"github.com/gin-gonic/gin"
 	"strconv"
 )

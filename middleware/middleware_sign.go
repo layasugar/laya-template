@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"github.com/LaYa-op/laya/utils"
+	"github.com/layatips/laya/utils"
 	"github.com/gin-gonic/gin"
 	"net/url"
 	"sort"
