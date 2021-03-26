@@ -1,9 +1,11 @@
 package middleware
 
-import "github.com/layatips/laya/middleware"
+import (
+	"github.com/layatips/laya/gmiddleware"
+)
 
 var Base = &Middleware{}
 
 type Middleware struct {
-	middleware.Middleware
+	gmiddleware.Middleware
 }

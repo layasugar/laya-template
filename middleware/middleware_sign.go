@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"github.com/layatips/laya/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/layatips/laya/gutils"
 	"net/url"
 	"sort"
 	"strings"
@@ -62,7 +62,7 @@ func Validate(sign string, params url.Values, c *gin.Context) {
 }
 
 func RunSign(s string) string {
-	return utils.MD5(s)
+	return gutils.MD5(s)
 }
 
 // Here are some methods to mask
