@@ -57,6 +57,6 @@
     "service_name": "",
     "service_endpoint": "",
     "zipkin_addr": "",
-    "mod": ""
+    "mod": 1
   }
 }

@@ -2,18 +2,18 @@ package middleware
 
 import (
 	"context"
+	"errors"
 	"github.com/gin-gonic/gin"
-	"github.com/layatips/laya-go/models/dao/rdb"
-	"github.com/layatips/laya/gresp"
+	"github.com/layatips/laya-go/models/dao"
 	"strconv"
 )
 
 // implements the controllers.HandlerWrapper
 func (*Middleware) Test(c *gin.Context) {
 	token := c.GetHeader("Token")
-	uid, err := rdb.Dao.Get(context.Background(), "user:token:"+token).Result()
+	uid, err := dao.Rdb.Get(context.Background(), "user:token:"+token).Result()
 	if err != nil {
-		c.Set("$.TokenErr.code", gresp.TokenErr)
+		c.Set("$.TokenErr.code", errors.New("asdasd"))
 		c.Abort()
 		return
 	}

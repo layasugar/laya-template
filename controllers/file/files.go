@@ -1,17 +1,12 @@
 package file
 
 import (
-	"context"
 	"crypto/rand"
 	"fmt"
-	"github.com/layatips/laya-go/models/dao/rdb"
-	"github.com/layatips/laya/response"
 	"github.com/gin-gonic/gin"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
-	"time"
 )
 
 type res struct {
@@ -21,44 +16,44 @@ type res struct {
 const uploadPath = "files"
 
 func (ctrl *controller) Upload(c *gin.Context) {
-	file, _ := c.FormFile("File")
-	if file == nil {
-		c.Set("$.Upload.NoFile.code", response.NoFile)
-		return
-	}
-	fileType := c.PostForm("FileType")
-	if fileType == "" {
-		c.Set("$.Upload.NoFileType.code", response.NoFileType)
-		return
-	}
-
-	token := c.GetHeader("Token")
-	var uid string
-
-	if token == "" {
-		c.Set("$.Upload.TokenErr.code", response.TokenErr)
-		return
-	}
-	uid, _ = rdb.Dao.HGet(context.Background(), "user:uid", token).Result()
-	if uid == "" {
-		c.Set("$.Upload.TokenErr.code", response.TokenErr)
-		return
-	}
-
-	// initialize filepath
-	newPath := ctrl.getNewPath(fileType, uid, file.Filename)
-
-	imgUrl := newPath
-	imgUrl += "?t=" + strconv.FormatInt(time.Now().Unix(), 10)
-
-	err := c.SaveUploadedFile(file, newPath)
-	if err != nil {
-		c.Set("$.Upload.SaveUploadedFail.code", response.SaveUploadedFail)
-		return
-	}
-
-	//c.Set("$.Upload.Success.response", response.Response{Code: response.Success, Data: res{ImgUrl: imgUrl}})
-	return
+	//file, _ := c.FormFile("File")
+	//if file == nil {
+	//	c.Set("$.Upload.NoFile.code", response.NoFile)
+	//	return
+	//}
+	//fileType := c.PostForm("FileType")
+	//if fileType == "" {
+	//	c.Set("$.Upload.NoFileType.code", response.NoFileType)
+	//	return
+	//}
+	//
+	//token := c.GetHeader("Token")
+	//var uid string
+	//
+	//if token == "" {
+	//	c.Set("$.Upload.TokenErr.code", response.TokenErr)
+	//	return
+	//}
+	//uid, _ = rdb.Dao.HGet(context.Background(), "user:uid", token).Result()
+	//if uid == "" {
+	//	c.Set("$.Upload.TokenErr.code", response.TokenErr)
+	//	return
+	//}
+	//
+	//// initialize filepath
+	//newPath := ctrl.getNewPath(fileType, uid, file.Filename)
+	//
+	//imgUrl := newPath
+	//imgUrl += "?t=" + strconv.FormatInt(time.Now().Unix(), 10)
+	//
+	//err := c.SaveUploadedFile(file, newPath)
+	//if err != nil {
+	//	c.Set("$.Upload.SaveUploadedFail.code", response.SaveUploadedFail)
+	//	return
+	//}
+	//
+	////c.Set("$.Upload.Success.response", response.Response{Code: response.Success, Data: res{ImgUrl: imgUrl}})
+	//return
 }
 
 func (ctrl *controller) getNewPath(fileType string, uid string, fileName string) string {

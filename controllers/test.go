@@ -87,12 +87,4 @@ func (ctrl *BaseCtrl) ReadyCheck(c *gin.Context) {
 		}
 		ctrl.Suc(c, pong, "success")
 	}
-
-	// mem检测
-	memc := gconf.GetMemConf()
-	if memc.Open {
-		dao.Mem.ItemCount()
-	}
-
-	// mongo检测
 }

@@ -7,5 +7,5 @@ import (
 var Ctrl = &controller{}
 
 type controller struct {
-	*controllers.BaseController
+	*controllers.BaseCtrl
 }

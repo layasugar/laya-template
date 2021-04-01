@@ -1,184 +1,174 @@
 package hall
 
 import (
-	"context"
-	"errors"
-	"fmt"
-	"github.com/layatips/laya-go/models/dao/db"
-	"github.com/layatips/laya-go/models/dao/rdb"
-	"github.com/layatips/laya/response"
-	"github.com/layatips/laya/utils"
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
-	"strconv"
-	"time"
 )
 
 func (ctrl *controller) Login(c *gin.Context) {
-	var LoginRequestData LoginData
-	if err := c.ShouldBind(&LoginRequestData); err != nil {
-		c.Set("$.Login.Params.code", response.ParamsValidateErr)
-		return
-	}
-	user := db.User{}
-
-	// 1.判断用户是否存在并取出用户信息
-	if result := db.Dao.Model(&user).Where("phone = ?", LoginRequestData.Name).Where("zone = ?", LoginRequestData.Zone).First(&user);
-		errors.Is(result.Error, gorm.ErrRecordNotFound) {
-		c.Set("$.Login.User.code", response.NotFoundUser)
-		return
-	}
-
-	// 2.验证用户是否被冻结
-	if user.Status == -1 {
-		c.Set("$.Login.User.Freeze.code", response.FreezeUser)
-		return
-	}
-
-	// 3.验证密码正确性
-	if LoginRequestData.Password != user.Password {
-		c.Set("$.Login.User.Password.code", response.PasswordErr)
-		return
-	}
-
-	// 4.验证通过生成token,并写入redis
-	strUid := strconv.FormatInt(user.ID, 10)
-	token := "sad"
-	oldToken, err := rdb.Dao.HGet(context.Background(), "user:token", strUid).Result()
-	if err == nil {
-		if err := rdb.Dao.HDel(context.Background(), "user:uid", oldToken).Err(); err != nil {
-			c.Set("$.Login.Response.code", response.Err)
-			return
-		}
-	}
-	if err := rdb.Dao.HSet(context.Background(), "user:token", strUid, token).Err(); err != nil {
-		c.Set("$.Login.Response.code", response.Err)
-		return
-	}
-	if err := rdb.Dao.HSet(context.Background(), "user:uid", token, strUid).Err(); err != nil {
-		c.Set("$.Login.Response.code", response.Err)
-		return
-	}
-
-	data := map[string]interface{}{"ID": user.ID, "UserName": user.UserName, "Phone": user.Phone, "Zone": user.Zone, "Token": token}
-	fmt.Println(data)
-	//c.Set("$.Login.success.response", response.Response{Code: response.Success, Data: data})
+	//var LoginRequestData LoginData
+	//if err := c.ShouldBind(&LoginRequestData); err != nil {
+	//	c.Set("$.Login.Params.code", response.ParamsValidateErr)
+	//	return
+	//}
+	//user := db.User{}
+	//
+	//// 1.判断用户是否存在并取出用户信息
+	//if result := db.Dao.Model(&user).Where("phone = ?", LoginRequestData.Name).Where("zone = ?", LoginRequestData.Zone).First(&user);
+	//	errors.Is(result.Error, gorm.ErrRecordNotFound) {
+	//	c.Set("$.Login.User.code", response.NotFoundUser)
+	//	return
+	//}
+	//
+	//// 2.验证用户是否被冻结
+	//if user.Status == -1 {
+	//	c.Set("$.Login.User.Freeze.code", response.FreezeUser)
+	//	return
+	//}
+	//
+	//// 3.验证密码正确性
+	//if LoginRequestData.Password != user.Password {
+	//	c.Set("$.Login.User.Password.code", response.PasswordErr)
+	//	return
+	//}
+	//
+	//// 4.验证通过生成token,并写入redis
+	//strUid := strconv.FormatInt(user.ID, 10)
+	//token := "sad"
+	//oldToken, err := rdb.Dao.HGet(context.Background(), "user:token", strUid).Result()
+	//if err == nil {
+	//	if err := rdb.Dao.HDel(context.Background(), "user:uid", oldToken).Err(); err != nil {
+	//		c.Set("$.Login.Response.code", response.Err)
+	//		return
+	//	}
+	//}
+	//if err := rdb.Dao.HSet(context.Background(), "user:token", strUid, token).Err(); err != nil {
+	//	c.Set("$.Login.Response.code", response.Err)
+	//	return
+	//}
+	//if err := rdb.Dao.HSet(context.Background(), "user:uid", token, strUid).Err(); err != nil {
+	//	c.Set("$.Login.Response.code", response.Err)
+	//	return
+	//}
+	//
+	//data := map[string]interface{}{"ID": user.ID, "UserName": user.UserName, "Phone": user.Phone, "Zone": user.Zone, "Token": token}
+	//fmt.Println(data)
+	////c.Set("$.Login.success.response", response.Response{Code: response.Success, Data: data})
 }
 
 func (ctrl *controller) TokenLogin(c *gin.Context) {
-	fmt.Println(response.ErrSysErr)
-
-	ctrl.Fail(c, response.ErrSysErr)
-	return
-	var tld TokenLoginData
-	if err := c.ShouldBind(&tld); err != nil {
-		ctrl.Fail(c, response.ErrSysErr)
-		return
-	}
-	token := tld.Token
-
-	uid, err := rdb.Dao.HGet(context.Background(), "user:uid", token).Result()
-	if err != nil {
-		c.Set("$.Login.Params.code", response.ParamsValidateErr)
-		return
-	}
-
-	ID, _ := strconv.ParseInt(uid, 10, 64)
-	user := db.User{ID: ID}
-
-	// 1.判断用户是否存在并取出用户信息
-	if result := db.Dao.Model(&user).Where(user).First(&user);
-		errors.Is(result.Error, gorm.ErrRecordNotFound) {
-		c.Set("$.Login.Params.code", response.ParamsValidateErr)
-		return
-	}
-
-	// 1.1 验证用户是否被冻结
-	if user.Status == 1 {
-		c.Set("$.Login.Params.code", response.ParamsValidateErr)
-		return
-	}
-
-	// 2.刷新用户的token信息
-	newToken := "safdas"
-	if err := rdb.Dao.HDel(context.Background(), "user:uid", token).Err(); err != nil {
-		c.Set("$.Login.Params.code", response.ParamsValidateErr)
-		return
-	}
-	if err := rdb.Dao.HSet(context.Background(), "user:token", strconv.FormatInt(user.ID, 10), newToken).Err(); err != nil {
-		c.Set("$.Login.Params.code", response.ParamsValidateErr)
-		return
-	}
-	if err := rdb.Dao.HSet(context.Background(), "user:uid", newToken, strconv.FormatInt(user.ID, 10)).Err(); err != nil {
-		c.Set("$.Login.Params.code", response.ParamsValidateErr)
-		return
-	}
-
-	// 3. 更新登录时间以及ip
-	ip := utils.RemoteIp(c.Request)
-	db.Dao.Model(&user).Where("id = ?", user.ID).Updates(db.User{LastLoginIp: ip, LastLoginTime: time.Now()})
-
-	data := map[string]interface{}{"ID": user.ID, "UserName": user.UserName, "Zone": user.Zone, "Phone": user.Phone, "InviteCode": user.InviteCode, "Token": newToken}
-
-	c.Set("$.TokenLogin.response", data)
+	//fmt.Println(response.ErrSysErr)
+	//
+	//ctrl.Fail(c, response.ErrSysErr)
+	//return
+	//var tld TokenLoginData
+	//if err := c.ShouldBind(&tld); err != nil {
+	//	ctrl.Fail(c, response.ErrSysErr)
+	//	return
+	//}
+	//token := tld.Token
+	//
+	//uid, err := rdb.Dao.HGet(context.Background(), "user:uid", token).Result()
+	//if err != nil {
+	//	c.Set("$.Login.Params.code", response.ParamsValidateErr)
+	//	return
+	//}
+	//
+	//ID, _ := strconv.ParseInt(uid, 10, 64)
+	//user := db.User{ID: ID}
+	//
+	//// 1.判断用户是否存在并取出用户信息
+	//if result := db.Dao.Model(&user).Where(user).First(&user);
+	//	errors.Is(result.Error, gorm.ErrRecordNotFound) {
+	//	c.Set("$.Login.Params.code", response.ParamsValidateErr)
+	//	return
+	//}
+	//
+	//// 1.1 验证用户是否被冻结
+	//if user.Status == 1 {
+	//	c.Set("$.Login.Params.code", response.ParamsValidateErr)
+	//	return
+	//}
+	//
+	//// 2.刷新用户的token信息
+	//newToken := "safdas"
+	//if err := rdb.Dao.HDel(context.Background(), "user:uid", token).Err(); err != nil {
+	//	c.Set("$.Login.Params.code", response.ParamsValidateErr)
+	//	return
+	//}
+	//if err := rdb.Dao.HSet(context.Background(), "user:token", strconv.FormatInt(user.ID, 10), newToken).Err(); err != nil {
+	//	c.Set("$.Login.Params.code", response.ParamsValidateErr)
+	//	return
+	//}
+	//if err := rdb.Dao.HSet(context.Background(), "user:uid", newToken, strconv.FormatInt(user.ID, 10)).Err(); err != nil {
+	//	c.Set("$.Login.Params.code", response.ParamsValidateErr)
+	//	return
+	//}
+	//
+	//// 3. 更新登录时间以及ip
+	//ip := utils.RemoteIp(c.Request)
+	//db.Dao.Model(&user).Where("id = ?", user.ID).Updates(db.User{LastLoginIp: ip, LastLoginTime: time.Now()})
+	//
+	//data := map[string]interface{}{"ID": user.ID, "UserName": user.UserName, "Zone": user.Zone, "Phone": user.Phone, "InviteCode": user.InviteCode, "Token": newToken}
+	//
+	//c.Set("$.TokenLogin.response", data)
 }
 
 func (ctrl *controller) Register(c *gin.Context) {
-	var rd RegisterData
-	if err := c.ShouldBind(&rd); err != nil {
-		c.Set("$.Login.TokenErr.code", response.ParamsValidateErr)
-		return
-	}
-
-	// 2.手机号重复判断
-	user := db.User{Phone: rd.Phone, Zone: rd.Zone}
-	if result := db.Dao.Where(user).Find(&user);
-		!errors.Is(result.Error, gorm.ErrRecordNotFound) {
-		c.Set("$.Login.Params.code", response.ParamsValidateErr)
-		return
-	}
-
-	// 3.密码与重复密码校验
-	if rd.Password != rd.RPassword {
-		c.Set("$.Login.Params.code", response.ParamsValidateErr)
-		return
-	}
-
-	// 5.短信验证码验证
-	//code, err := rdb.Dao.Get("phone:code:" + rd.Zone + rd.Phone).Result()
+	//var rd RegisterData
+	//if err := c.ShouldBind(&rd); err != nil {
+	//	c.Set("$.Login.TokenErr.code", response.ParamsValidateErr)
+	//	return
+	//}
 	//
-	//if err != nil {
-	//	c.JSON(http.StatusOK, laya.GetMessage("CodeErr", 40008, language, map[string]interface{}{}))
+	//// 2.手机号重复判断
+	//user := db.User{Phone: rd.Phone, Zone: rd.Zone}
+	//if result := db.Dao.Where(user).Find(&user);
+	//	!errors.Is(result.Error, gorm.ErrRecordNotFound) {
+	//	c.Set("$.Login.Params.code", response.ParamsValidateErr)
 	//	return
 	//}
-	//if code != rd.PhoneCode {
-	//	c.JSON(http.StatusOK, laya.GetMessage("PhoneCodeErr", 40009, language, map[string]interface{}{}))
+	//
+	//// 3.密码与重复密码校验
+	//if rd.Password != rd.RPassword {
+	//	c.Set("$.Login.Params.code", response.ParamsValidateErr)
 	//	return
 	//}
-
-	// 6.写入数据库并初始化钱包等级和余额宝
-	tx := db.Dao.Begin()
-	nickname := rd.Phone
-
-	var insertID []int64
-	db.Dao.Raw("select max(id) as id from tb_user").Pluck("id", &insertID)
-	var ID int64
-	ID = insertID[0] + 137
-	user = db.User{ID: ID, UserName: nickname, Password: rd.Password, Phone: rd.Phone, CreatedAt: time.Now(), LastLoginTime: time.Now(), Status: 2, LastLoginIp: utils.RemoteIp(c.Request), Zone: rd.Zone}
-
-	if err := tx.Create(&user).Error; err != nil {
-		tx.Rollback()
-		c.Set("$.Login.Params.code", response.ParamsValidateErr)
-		return
-	}
-
-	// 6.1 邀请码生成
-	inviteCode := utils.GetRandomString6(uint64(user.ID))
-	if err := tx.Model(&user).Update("invite_code", inviteCode).Error; err != nil {
-		tx.Rollback()
-		c.Set("$.Login.Params.code", response.ParamsValidateErr)
-		return
-	}
+	//
+	//// 5.短信验证码验证
+	////code, err := rdb.Dao.Get("phone:code:" + rd.Zone + rd.Phone).Result()
+	////
+	////if err != nil {
+	////	c.JSON(http.StatusOK, laya.GetMessage("CodeErr", 40008, language, map[string]interface{}{}))
+	////	return
+	////}
+	////if code != rd.PhoneCode {
+	////	c.JSON(http.StatusOK, laya.GetMessage("PhoneCodeErr", 40009, language, map[string]interface{}{}))
+	////	return
+	////}
+	//
+	//// 6.写入数据库并初始化钱包等级和余额宝
+	//tx := db.Dao.Begin()
+	//nickname := rd.Phone
+	//
+	//var insertID []int64
+	//db.Dao.Raw("select max(id) as id from tb_user").Pluck("id", &insertID)
+	//var ID int64
+	//ID = insertID[0] + 137
+	//user = db.User{ID: ID, UserName: nickname, Password: rd.Password, Phone: rd.Phone, CreatedAt: time.Now(), LastLoginTime: time.Now(), Status: 2, LastLoginIp: utils.RemoteIp(c.Request), Zone: rd.Zone}
+	//
+	//if err := tx.Create(&user).Error; err != nil {
+	//	tx.Rollback()
+	//	c.Set("$.Login.Params.code", response.ParamsValidateErr)
+	//	return
+	//}
+	//
+	//// 6.1 邀请码生成
+	//inviteCode := utils.GetRandomString6(uint64(user.ID))
+	//if err := tx.Model(&user).Update("invite_code", inviteCode).Error; err != nil {
+	//	tx.Rollback()
+	//	c.Set("$.Login.Params.code", response.ParamsValidateErr)
+	//	return
+	//}
 
 	//// 6.3 用户会员等级初始化
 	//userLevel := db.UL{Uid: user.ID, Level: 0}
@@ -232,9 +222,9 @@ func (ctrl *controller) Register(c *gin.Context) {
 	//	}
 	//}
 
-	tx.Commit()
-	// 7.返回数据
-	c.Set("$.Register.response", nil)
+	//tx.Commit()
+	//// 7.返回数据
+	//c.Set("$.Register.response", nil)
 }
 
 //
@@ -404,14 +394,14 @@ func (ctrl *controller) Register(c *gin.Context) {
 //
 // 获取用户信息
 func (ctrl *controller) GetUserInfo(c *gin.Context) {
-	uid := c.GetInt64("uid")
-	user := db.User{ID: uid}
-	if result := db.Dao.Model(&db.User{}).Where(&user).Find(&user);
-		errors.Is(result.Error, gorm.ErrRecordNotFound) {
-		c.Set("$.err", response.NotFoundUser)
-		return
-	}
-	c.Set("$.response", user)
+	//uid := c.GetInt64("uid")
+	//user := db.User{ID: uid}
+	//if result := db.Dao.Model(&db.User{}).Where(&user).Find(&user);
+	//	errors.Is(result.Error, gorm.ErrRecordNotFound) {
+	//	c.Set("$.err", response.NotFoundUser)
+	//	return
+	//}
+	//c.Set("$.response", user)
 }
 
 //
