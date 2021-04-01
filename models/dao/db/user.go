@@ -4,23 +4,20 @@ import "time"
 
 // 声明模型User
 type User struct {
-	ID            int64
-	UserName      string
-	Zone          string // 手机区号
-	Phone         string
-	Email         string
-	Password      string `json:"-"`
-	InviteCode    string
-	Status        int64 // 用户状态，-1冻结,1正常
-	CreatedAt     time.Time
-	LastLoginIp   string
-	LastLoginTime time.Time
+	ID            int64     `json:"id"`
+	Status        int64     `json:"status"` // 用户状态，2冻结,1正常
+	UserName      string    `json:"user_name"`
+	Zone          string    `json:"zone"` // 手机区号
+	Phone         string    `json:"phone"`
+	Email         string    `json:"email"`
+	Password      string    `json:"-"`
+	InviteCode    string    `json:"invite_code"`
+	CreatedAt     time.Time `json:"created_at"`
+	LastLoginIp   string    `json:"last_login_ip"`
+	LastLoginTime time.Time `json:"last_login_time"`
 }
 
 // 将 User 的表名设置为 `user`
 func (User) TableName() string {
 	return "laya_user"
 }
-
-// get user model
-//var UserModel = Dao.Model(&User{})
