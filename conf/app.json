@@ -5,20 +5,13 @@
   "app_url": "https://github.com/layatips/laya-go",
   "gin_log": "/home/logs/app/laya-go/gin_http.log",
   "params_log": true,
-  "log": {
-    "open": true,
-    "path": "/home/logs/app/laya-go/app.log",
-    "max_size": 32,
-    "max_age": 90,
-    "max_backups": 300
-  },
   "mem": {
     "open": true,
     "default_exp": 300,
     "cleanup": 600
   },
   "mysql": {
-    "open": false,
+    "open": true,
     "driver": "mysql",
     "dsn": "root:123456@tcp(mysql:3306)/test?charset=utf8&parseTime=True&loc=Local",
     "maxIdleConn": 10,
