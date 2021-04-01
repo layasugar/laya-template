@@ -1,4 +1,4 @@
-package worker
+package admin
 
 import (
 	"github.com/layatips/laya-go/controllers"

@@ -2,28 +2,20 @@ package routes
 
 import (
 	"github.com/layatips/laya"
+	"github.com/layatips/laya-go/controllers/admin"
+	"github.com/layatips/laya-go/controllers/app"
 	"github.com/layatips/laya-go/controllers/file"
-	"github.com/layatips/laya-go/controllers/hall"
-	"github.com/layatips/laya-go/middleware"
 	"net/http"
 )
 
-func RoutingSetup(r *laya.WebServer) {
-	// 登录注册
-	r.POST("/hall/user/rgt", hall.Ctrl.Register)
-	//r.POST("/hall/captcha", hall.Ctrl.Captcha)
-	r.POST("/hall/user/login", hall.Ctrl.Login)
-	r.POST("/hall/user/tLogin", hall.Ctrl.TokenLogin)
-	//r.POST("/hall/send/phone", hall.Ctrl.Phone)
-	//r.POST("/hall/user/pwd", hall.Ctrl.EditUserPwd)
+func RegisterRoute(r *laya.WebServer) {
+	// 获取用户信息
+	r.POST("/app/user/info", app.Ctrl.GetUserInfo)
+
+	// 获取用户列表
+	r.POST("/admin/user/list", admin.Ctrl.GetUserList)
 
 	// 文件服务器
-	r.POST("/hall/files/upload", file.Ctrl.Upload)
-	r.StaticFS("/hall/files", http.Dir("files"))
-
-	authorized := r.Group("/")
-	authorized.Use(middleware.Base.Test)
-	{
-		authorized.POST("/hall/user/getUserInfo", hall.Ctrl.GetUserInfo)
-	}
+	r.POST("/app/files/upload", file.Ctrl.Upload)
+	r.StaticFS("/app/files", http.Dir("files"))
 }

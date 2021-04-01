@@ -88,3 +88,7 @@ func (ctrl *BaseCtrl) ReadyCheck(c *gin.Context) {
 		ctrl.Suc(c, pong, "success")
 	}
 }
+
+func (ctrl *BaseCtrl) Reload(c *gin.Context) {
+
+}
