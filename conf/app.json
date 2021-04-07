@@ -7,8 +7,13 @@
     "gin_log": "/home/logs/app/laya-go/gin_http.log",
     "params_log": true
   },
+  "log": {
+    "path": "/home/logs/app/payment/app.log",
+    "max_size": 32,
+    "max_age": 90,
+    "max_backups": 300
+  },
   "mem": {
-    "open": true,
     "default_exp": 300,
     "cleanup": 600
   },
@@ -19,7 +24,6 @@
     "connMaxLifetime": 6
   },
   "redis": {
-    "open": false,
     "db": 0,
     "addr": "redis:6379",
     "pwd": "",
@@ -28,13 +32,11 @@
     "idleTimeout": 1000
   },
   "mongo": {
-    "open": false,
     "dsn": "mongodb://root:123456@127.0.0.1:27017,127.0.0.1:27017/?authSource=admin",
     "minPoolSize": 10,
     "maxPoolSize": 100
   },
   "kafka": {
-    "open": false,
     "brokers": [
       "192.168.3.40:9092",
       "192.168.3.41:9092",
@@ -46,7 +48,6 @@
     "verify_ssl": false
   },
   "zipkin": {
-    "open": false,
     "service_name": "",
     "service_endpoint": "",
     "zipkin_addr": "",
