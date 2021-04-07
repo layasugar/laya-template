@@ -9,7 +9,7 @@ import (
 type getUserInfoParam = app.UserParam
 
 // 获取用户信息
-func (ctrl *controller) GetUserInfo(c *gin.Context) {
+func (ctrl *BaseAppCtrl) GetUserInfo(c *gin.Context) {
 	var param getUserInfoParam
 	err := c.ShouldBind(&param)
 	if err != nil {

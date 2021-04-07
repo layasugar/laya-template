@@ -4,15 +4,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/layatips/laya-go/models/dao"
 	"github.com/layatips/laya-go/models/dao/db"
-	"github.com/layatips/laya/gstore"
 )
 
 type User = db.User
 
 func GetUserById(c *gin.Context, userId uint64) (*User, error) {
 	var u User
-	tx := gstore.DB
-	err := tx.Model(&User{}).Where("id = ?", userId).First(&u).Error
+	err := dao.DB.Model(&User{}).Where("id = ?", userId).First(&u).Error
 	return &u, err
 }
 

@@ -4,8 +4,8 @@ import (
 	"github.com/layatips/laya-go/controllers"
 )
 
-var Ctrl = &controller{}
+var Ctrl = &BaseAppCtrl{}
 
-type controller struct {
-	*controllers.BaseCtrl
+type BaseAppCtrl struct {
+	controllers.BaseCtrl
 }

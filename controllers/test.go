@@ -3,10 +3,10 @@ package controllers
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/go-redis/redis/v8"
 	"github.com/layatips/laya-go/models/dao"
 	"github.com/layatips/laya/gconf"
 	"github.com/layatips/laya/glogs"
+	"github.com/layatips/laya/gstore"
 	"net/http"
 )
 
@@ -59,34 +59,30 @@ func (ctrl *BaseCtrl) HealthCheck(c *gin.Context) {
 
 func (ctrl *BaseCtrl) ReadyCheck(c *gin.Context) {
 	// mysql检测
-	mc := gconf.GetDBConf()
-	if mc.Open {
-		sqlDB, err := dao.DB.DB()
-		if err != nil {
-			glogs.ErrorF("探针存活检测失败,mysql凉凉")
-			c.AbortWithStatus(http.StatusInternalServerError)
-			return
-		}
-
-		err = sqlDB.Ping()
-		if err != nil {
-			glogs.ErrorF("探针存活检测失败,mysql凉凉")
-			c.AbortWithStatus(http.StatusInternalServerError)
-			return
-		}
+	err := gstore.DBSurvive(dao.DB)
+	if err != nil {
+		glogs.ErrorF("探针存活检测失败,mysql凉凉,err=%s", err.Error())
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
 
 	// redis检测
-	rc := gconf.GetRdbConf()
-	if rc.Open {
-		pong, err := dao.Rdb.Ping(c).Result()
-		if err != nil && err != redis.Nil {
-			glogs.ErrorF("探针存活检测失败,redis凉凉")
-			c.AbortWithStatus(http.StatusInternalServerError)
-			return
-		}
-		ctrl.Suc(c, pong, "success")
+	err = gstore.RdbSurvive(dao.Rdb)
+	if err != nil {
+		glogs.ErrorF("探针存活检测失败,redis凉凉,err=%s", err.Error())
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
+
+	// mongo检测
+	err = gstore.MdbSurvive(dao.Mdb)
+	if err != nil {
+		glogs.ErrorF("探针存活检测失败,redis凉凉,err=%s", err.Error())
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	ctrl.Suc(c, "pong", "success")
 }
 
 func (ctrl *BaseCtrl) Reload(c *gin.Context) {

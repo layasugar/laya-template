@@ -19,5 +19,5 @@ type User struct {
 
 // 将 User 的表名设置为 `user`
 func (User) TableName() string {
-	return "laya_user"
+	return "user"
 }
