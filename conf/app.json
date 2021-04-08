@@ -5,7 +5,7 @@
     "run_mode": "debug",
     "app_url": "https://github.com/layatips/laya-go",
     "gin_log": "/home/logs/app/laya-go/gin_http.log",
-    "params_log": true
+    "param_log": true
   },
   "log": {
     "path": "/home/logs/app/payment/app.log",

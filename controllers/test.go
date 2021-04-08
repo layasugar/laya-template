@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/layatips/laya-go/models/dao"
-	"github.com/layatips/laya/gconf"
+	"github.com/layatips/laya/genv"
 	"github.com/layatips/laya/glogs"
 	"github.com/layatips/laya/gstore"
 	"net/http"
@@ -47,8 +47,7 @@ func (ctrl *BaseCtrl) MemoryStatus(c *gin.Context) {
 
 // version
 func (ctrl *BaseCtrl) Version(c *gin.Context) {
-	bca := gconf.GetBaseConf()
-	res := bca.AppName + " api version: 1.0.0\r\n" + "app_url: " + bca.AppUrl
+	res := genv.AppName() + " api version: 1.0.0\r\n" + "app_url: " + genv.AppUrl()
 	_, _ = c.Writer.Write([]byte(res))
 	return
 }

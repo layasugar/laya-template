@@ -9,8 +9,8 @@ import (
 // ServerSetup 初始化服务设置
 func ServerSetup() *laya.App {
 	app := laya.NewApp()
-	app.RegisterRouter(routes.Routes)
-	app.Use(dao.InitDao)
+	app.Use(dao.Init)
+	app.RegisterRouter(routes.Register)
 	return app
 }
 

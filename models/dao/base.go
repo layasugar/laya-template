@@ -26,7 +26,7 @@ var mdbKey = "mongo"
 // Mem
 var Mem *gcache.Cache
 
-func InitDao() {
+func Init() {
 	//mysql
 	dbConfig, err := gconf.GetDBConf(dbKey)
 	if err != nil {

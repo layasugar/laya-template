@@ -5,7 +5,7 @@ import (
 	"github.com/layatips/laya-go/controllers"
 )
 
-func Routes(r *gin.Engine) {
+func Register(r *gin.Engine) {
 	r.GET("/", controllers.Ctrl.Version)                    //version
 	r.POST("/test", controllers.Ctrl.Test)                  //测试接口
 	r.POST("/memory-status", controllers.Ctrl.MemoryStatus) //测试接口
