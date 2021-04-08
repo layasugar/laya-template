@@ -5,16 +5,6 @@ gin+gorm+go-redis为基本骨架打造的框架，方便开发，开箱即用，
 [单个服务启动](https://github.com/layatips/laya-go/wiki/%E5%8D%95%E4%B8%AA%E6%9C%8D%E5%8A%A1%E5%90%AF%E5%8A%A8)
 [微服务方式启动](https://github.com/layatips/laya-go/wiki/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%96%B9%E5%BC%8F%E5%90%AF%E5%8A%A8)
 
-## i18n
-[i18n使用介绍](https://github.com/layatips/laya-go/wiki/i18n)
-
-- [go-i18n](https://github.com/nicksnyder/go-i18n)
-- 简单使用
-```
-c.Set("$.TokenErr.code", r.TokenErr)
-会用"."隔开，取出倒数第二段字符TokenErr作为ID翻译
-```
-
 ## 配置文件的使用
 - 运行服务时，请添加启动参数--env=dev,表示使用dev配置，具体配置请参照config.yaml
 

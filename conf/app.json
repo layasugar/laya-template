@@ -4,11 +4,10 @@
     "http_listen": "0.0.0.0:10080",
     "run_mode": "debug",
     "app_url": "https://github.com/layatips/laya-go",
-    "gin_log": "/home/logs/app/laya-go/gin_http.log",
     "param_log": true
   },
   "log": {
-    "path": "/home/logs/app/payment/app.log",
+    "path": "/home/logs/app/",
     "max_size": 32,
     "max_age": 90,
     "max_backups": 300
@@ -32,7 +31,7 @@
     "idleTimeout": 1000
   },
   "mongo": {
-    "dsn": "mongodb://root:123456@127.0.0.1:27017,127.0.0.1:27017/?authSource=admin",
+    "dsn": "mongodb://admin:123456@127.0.0.1:27017/?authSource=admin",
     "minPoolSize": 10,
     "maxPoolSize": 100
   },

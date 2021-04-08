@@ -10,6 +10,8 @@ import (
 func ServerSetup() *laya.App {
 	app := laya.NewApp()
 	app.Use(dao.Init)
+	// register middleware
+	//app.WebServer.Use(middleware.LogInParams)
 	app.RegisterRouter(routes.Register)
 	return app
 }

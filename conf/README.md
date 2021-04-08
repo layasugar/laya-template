@@ -150,5 +150,5 @@
 ## service_name：服务名称
 ## service_endpoint = "0.0.0.0:10080"
 ## zipkin_addr = "http://zipkin.xxx.cn/api/v2/spans"
-## mod = 1 //1==全量。值越大，采样率月底，对性能影响越小
+## mod = 1 //1==全量 值越大，采样率月底，对性能影响越小
 ```
