@@ -9,10 +9,19 @@ import (
 // ServerSetup 初始化服务设置
 func ServerSetup() *laya.App {
 	app := laya.NewApp()
+
+	// open file watcher
+	//app.RegisterFileWatcher(genv.ConfigPath, global.ConfChangeHandler)
+
+	// open db connection
 	app.Use(dao.Init)
+
 	// register middleware
-	//app.WebServer.Use(middleware.LogInParams)
+	//app.WebServer.Use(handleFunc)
+
+	// register routes
 	app.RegisterRouter(routes.Register)
+
 	return app
 }
 

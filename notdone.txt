@@ -5,6 +5,7 @@
 5. zipkin调试链路追踪
 6. kafka调试
 7. rpc示例
-8. 配置热重载
+8. 配置热重载文件监听(搞定)
 9. 中国时间处理
 10. http_client处理
+11. gin屏蔽掉不想打印得requestUri
