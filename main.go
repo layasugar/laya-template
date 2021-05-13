@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/layatips/laya"
-	"github.com/layatips/laya-go/models/dao"
+	"github.com/layatips/laya-go/middleware"
 	"github.com/layatips/laya-go/routes"
 )
 
@@ -13,11 +13,11 @@ func ServerSetup() *laya.App {
 	// open file watcher
 	//app.RegisterFileWatcher(genv.ConfigPath, global.ConfChangeHandler)
 
-	// open db connection
-	app.Use(dao.Init)
+	// open db connection and global do before something
+	//app.Use(dao.Init, global.Init)
 
 	// register middleware
-	//app.WebServer.Use(handleFunc)
+	app.WebServer.Use(middleware.SetHeader, middleware.LogInParams, middleware.SetTrace)
 
 	// register routes
 	app.RegisterRouter(routes.Register)

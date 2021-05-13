@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/layatips/laya-go/models/page/app"
 	"github.com/layatips/laya/glogs"
@@ -19,7 +20,7 @@ func (ctrl *BaseAppCtrl) GetUserInfo(c *gin.Context) {
 
 	resp, err := app.GetUserInfo(c, &param)
 	if err != nil {
-		glogs.ErrorFR(c, "title=获取用户信息,err=%s", err.Error())
+		glogs.ErrorF(c, "获取用户信息", fmt.Sprintf("title=获取用户信息,err=%s", err.Error()))
 		ctrl.Fail(c, err)
 		return
 	}

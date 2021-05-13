@@ -1,11 +1,12 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/layatips/laya-go/global/errno"
 	"github.com/layatips/laya-go/models/dao"
 	"github.com/layatips/laya/genv"
 	"github.com/layatips/laya/glogs"
-	"github.com/layatips/laya/gresp"
 	"github.com/layatips/laya/gstore"
 	"net/http"
 )
@@ -14,7 +15,7 @@ import (
 var Ctrl = &BaseCtrl{}
 
 type BaseCtrl struct {
-	gresp.Resp
+	errno.Resp
 }
 
 type Memories struct {
@@ -61,7 +62,7 @@ func (ctrl *BaseCtrl) ReadyCheck(c *gin.Context) {
 	// mysql检测
 	err := gstore.DBSurvive(dao.DB)
 	if err != nil {
-		glogs.ErrorF("探针存活检测失败,mysql凉凉,err=%s", err.Error())
+		glogs.ErrorF(c, "探针存活检测失败", fmt.Sprintf("mysql凉凉,err=%s", err.Error()))
 		c.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
@@ -69,7 +70,7 @@ func (ctrl *BaseCtrl) ReadyCheck(c *gin.Context) {
 	// redis检测
 	err = gstore.RdbSurvive(dao.Rdb)
 	if err != nil {
-		glogs.ErrorF("探针存活检测失败,redis凉凉,err=%s", err.Error())
+		glogs.ErrorF(c, "探针存活检测失败", fmt.Sprintf("redis凉凉,err=%s", err.Error()))
 		c.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
@@ -77,7 +78,7 @@ func (ctrl *BaseCtrl) ReadyCheck(c *gin.Context) {
 	// mongo检测
 	err = gstore.MdbSurvive(dao.Mdb)
 	if err != nil {
-		glogs.ErrorF("探针存活检测失败,mongodb凉凉,err=%s", err.Error())
+		glogs.ErrorF(c, "探针存活检测失败", fmt.Sprintf("探针存活检测失败,mongodb凉凉,err=%s", err.Error()))
 		c.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}

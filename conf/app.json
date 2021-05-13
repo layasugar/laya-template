@@ -2,19 +2,10 @@
   "app": {
     "app_name": "laya-go",
     "http_listen": "0.0.0.0:10080",
-    "run_mode": "debug",
+    "run_mode": "release",
     "app_url": "https://github.com/layatips/laya-go",
-    "param_log": true
-  },
-  "log": {
-    "path": "/home/logs/app/",
-    "max_size": 32,
-    "max_age": 90,
-    "max_backups": 300
-  },
-  "mem": {
-    "default_exp": 300,
-    "cleanup": 600
+    "param_log": true,
+    "log_path": "/home/logs/app"
   },
   "mysql": {
     "dsn": "root:123456@tcp(mysql:3306)/test?charset=utf8&parseTime=True&loc=Local",
@@ -41,15 +32,19 @@
       "192.168.3.41:9092",
       "192.168.3.42:9092"
     ],
+    "topic": "layatest",
+    "group": "layatesta",
     "cert_file": "",
     "key_file": "",
     "ca_file": "",
     "verify_ssl": false
   },
   "zipkin": {
-    "service_name": "",
-    "service_endpoint": "",
     "zipkin_addr": "",
     "mod": 1
+  },
+  "ding": {
+    "robot_key": "",
+    "robot_host": ""
   }
 }

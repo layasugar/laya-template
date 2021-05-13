@@ -19,7 +19,7 @@ func GetUserInfo(c *gin.Context, param *UserParam) (interface{}, error) {
 		return nil, err
 	}
 	if errors.Is(err, gorm.ErrRecordNotFound) {
-		glogs.WarnFR(c, "%s", "用户不存在")
+		glogs.WarnF(c, "用户中心", "用户不存在")
 		return nil, errno.UserNotFound
 	}
 	return user, nil

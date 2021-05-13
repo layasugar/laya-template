@@ -14,8 +14,8 @@ func GetUserById(c *gin.Context, userId uint64) (*User, error) {
 	return &u, err
 }
 
-func GetUserListByZone(c *gin.Context, Zone string) ([]*User, error) {
+func GetUserListByZone(c *gin.Context, Id int64) ([]*User, error) {
 	var users []*User
-	err := dao.DB.Model(&User{}).Where("id = ?", Zone).Find(&users).Error
+	err := dao.DB.Model(&User{}).Where("id = ?", Id).Find(&users).Error
 	return users, err
 }
