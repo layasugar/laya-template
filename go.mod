@@ -10,5 +10,3 @@ require (
 	go.mongodb.org/mongo-driver v1.5.1
 	gorm.io/gorm v1.21.7
 )
-
-replace github.com/layatips/laya => ./../laya
