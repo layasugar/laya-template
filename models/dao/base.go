@@ -9,6 +9,7 @@ import (
 	"github.com/layatips/laya/gkafka"
 	"github.com/layatips/laya/glogs"
 	"github.com/layatips/laya/gstore"
+	"github.com/olivere/elastic/v6"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -19,6 +20,7 @@ const (
 	rdbKey   = "redis"
 	mdbKey   = "mongo"
 	kafkaKey = "kafka"
+	esKey    = "es"
 )
 
 // DB is sql *db
@@ -35,6 +37,9 @@ var Mem *gcache.Cache
 
 // kafka
 var Kafka *gkafka.Engine
+
+// es
+var Es *elastic.Client
 
 func Init() {
 	//mysql
@@ -76,4 +81,17 @@ func Init() {
 		VerifySsl:    gkc.VerifySsl,
 	}
 	Kafka = gkafka.InitKafka(kc)
+
+	// es客户端
+	esc, err := gconf.GetEsConf(esKey)
+	if err != nil {
+		panic(err.Error())
+	}
+	Es, err = elastic.NewClient(
+		elastic.SetURL(esc.Addr...),
+		elastic.SetBasicAuth(esc.User, esc.Pwd),
+	)
+	if err != nil {
+		panic(err.Error())
+	}
 }

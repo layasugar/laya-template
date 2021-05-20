@@ -3,6 +3,7 @@
     "app_name": "laya-go",
     "http_listen": "0.0.0.0:10080",
     "run_mode": "release",
+    "app_mode": "dev",
     "app_url": "https://github.com/layatips/laya-go",
     "param_log": true,
     "log_path": "/home/logs/app"
@@ -25,6 +26,13 @@
     "dsn": "mongodb://admin:123456@127.0.0.1:27017/?authSource=admin",
     "minPoolSize": 10,
     "maxPoolSize": 100
+  },
+  "es": {
+    "addr": [
+      "http://elasticsearch:9200"
+    ],
+    "user": "",
+    "pwd": ""
   },
   "kafka": {
     "brokers": [

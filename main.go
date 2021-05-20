@@ -8,7 +8,7 @@ import (
 
 // ServerSetup 初始化服务设置
 func ServerSetup() *laya.App {
-	app := laya.NewApp()
+	app := laya.DefaultApp()
 
 	// open file watcher
 	//app.RegisterFileWatcher(genv.ConfigPath, global.ConfChangeHandler)

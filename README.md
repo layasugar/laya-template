@@ -1,6 +1,43 @@
 ### laya-go
 gin+gorm+go-redis为基本骨架打造的目录结构，方便开发，开箱即用
 
+#### web应用
+
+- 参考mian.go
+
+#### 服务应用
+
+```
+// ServerSetup 初始化服务设置
+func ServerSetup() *xgs.App {
+	app := xgs.NewApp(xgs.SetLogger)
+	//app.Use(conf.Load)
+	return app
+}
+
+func main() {
+	app := ServerSetup()
+	
+    // your code
+
+	app.Use(listenHttp)
+}
+
+func listenHttp() {
+	http.HandleFunc("/reload", func(w http.ResponseWriter, r *http.Request) {
+		_, _ = w.Write([]byte(utils.RespSuc))
+	})
+	http.HandleFunc("/ready", func(w http.ResponseWriter, r *http.Request) {
+		_, _ = w.Write([]byte(utils.RespSuc))
+	})
+	http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		_, _ = w.Write([]byte(utils.RespSuc))
+	})
+	log.Printf("http_listen: %s", genv.HttpListen())
+	_ = http.ListenAndServe(genv.HttpListen(), nil)
+}
+```
+
 #### 配置文件的使用
 - 运行服务时配置，具体配置请参照conf/app.json，按照结构配置，base和log和mem提供默认配置可以不配
 - 别问为什么用json，问就是不知道
@@ -122,14 +159,59 @@ glogs.SendAlarm(d)
 
 - time.go是基于sql.nulltime自己实现的
 - helps是辅助工具类
-- redis_lock是实现的redis锁
+- redis_lock是实现分布式的redis锁
 
 ##
 
-#### 未来版本规划
+#### 协程池可参考
 
-- 实现一个协程池，并可选开启和关闭，让异步任务简单化
-- 配置热重载
+- ants.pool
+
+```
+p, _ := ants.NewPoolWithFunc(runtime.NumCPU()*2, func(data interface{}) {
+   if pData, ok := data.([]OtsOrder); ok {
+       err := batchWriteOtsOrder(pData)
+       if err != nil {
+           glogs.Error("WorkerRunOnlineCourse err:%v", err.Error())
+       }
+   }
+})
+defer p.Release()
+// Submit tasks one by one.
+for data := range BatchOtsOrderChan {
+   _ = p.Invoke(data)
+}
+```
+
+#### 流批处理可参考
+```
+func WorkerReadyClass(inChan <-chan PutData, batchSize int, duration time.Duration) {
+	batchData := make([]PutData, 0, batchSize)
+	i := 0
+	for {
+		ctx, _ := context.WithTimeout(context.Background(), duration)
+		select {
+		case data, ok := <-inChan:
+			if !ok {
+				return
+			}
+			batchData = append(batchData, data)
+			i++
+			if i >= batchSize {
+				WorkChanClass <- batchData
+				batchData = make([]PutData, 0, batchSize)
+				i = 0
+			}
+		case <-ctx.Done():
+			if len(batchData) > 0 {
+				WorkChanClass <- batchData
+				batchData = make([]PutData, 0, batchSize)
+				i = 0
+			}
+		}
+	}
+}
+```
 
 #### 推荐工具
 

@@ -19,6 +19,7 @@ func Init() {
 	} else {
 		log.Printf("Message partion: %d, Message offset: %d.", partition, offset)
 	}
+	return
 }
 
 // 消费kafka
