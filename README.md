@@ -184,34 +184,8 @@ for data := range BatchOtsOrderChan {
 ```
 
 #### 流批处理可参考
-```
-func WorkerReadyClass(inChan <-chan PutData, batchSize int, duration time.Duration) {
-	batchData := make([]PutData, 0, batchSize)
-	i := 0
-	for {
-		ctx, _ := context.WithTimeout(context.Background(), duration)
-		select {
-		case data, ok := <-inChan:
-			if !ok {
-				return
-			}
-			batchData = append(batchData, data)
-			i++
-			if i >= batchSize {
-				WorkChanClass <- batchData
-				batchData = make([]PutData, 0, batchSize)
-				i = 0
-			}
-		case <-ctx.Done():
-			if len(batchData) > 0 {
-				WorkChanClass <- batchData
-				batchData = make([]PutData, 0, batchSize)
-				i = 0
-			}
-		}
-	}
-}
-```
+[参考地址](https://github.com/layatips/demo-go/blob/master/main_batch_stream.go)
+
 
 #### 推荐工具
 
