@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/layatips/laya"
-	"github.com/layatips/laya-go/middleware"
-	"github.com/layatips/laya-go/routes"
+	"github.com/layasugar/laya"
+	"github.com/layasugar/laya-go/middleware"
+	"github.com/layasugar/laya-go/routes"
 )
 
 // ServerSetup 初始化服务设置

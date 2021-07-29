@@ -3,9 +3,9 @@ package app
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
-	"github.com/layatips/laya-go/global/errno"
-	"github.com/layatips/laya-go/models/data"
-	"github.com/layatips/laya/glogs"
+	"github.com/layasugar/laya-go/global/errno"
+	"github.com/layasugar/laya-go/models/data"
+	"github.com/layasugar/laya/glogs"
 	"gorm.io/gorm"
 )
 

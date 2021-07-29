@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/layatips/laya-go/controllers"
+	"github.com/layasugar/laya-go/controllers"
 )
 
 var Ctrl = &BaseAppCtrl{}

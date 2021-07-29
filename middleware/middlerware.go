@@ -6,9 +6,9 @@ import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
-	"github.com/layatips/laya/genv"
-	"github.com/layatips/laya/glogs"
-	"github.com/layatips/laya/gutils"
+	"github.com/layasugar/laya/genv"
+	"github.com/layasugar/laya/glogs"
+	"github.com/layasugar/laya/gutils"
 	"io/ioutil"
 	"strings"
 )

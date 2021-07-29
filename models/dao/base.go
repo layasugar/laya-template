@@ -4,11 +4,11 @@ package dao
 
 import (
 	"github.com/go-redis/redis/v8"
-	"github.com/layatips/laya/gcache"
-	"github.com/layatips/laya/gconf"
-	"github.com/layatips/laya/gkafka"
-	"github.com/layatips/laya/glogs"
-	"github.com/layatips/laya/gstore"
+	"github.com/layasugar/laya/gcache"
+	"github.com/layasugar/laya/gconf"
+	"github.com/layasugar/laya/gkafka"
+	"github.com/layasugar/laya/glogs"
+	"github.com/layasugar/laya/gstore"
 	"github.com/olivere/elastic/v6"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gorm.io/gorm"

@@ -1,7 +1,7 @@
 package global
 
 import (
-	"github.com/layatips/laya-go/models/dao"
+	"github.com/layasugar/laya-go/models/dao"
 	"log"
 )
 

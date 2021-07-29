@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/layatips/laya-go/controllers"
+	"github.com/layasugar/laya-go/controllers"
 )
 
 func Register(r *gin.Engine) {

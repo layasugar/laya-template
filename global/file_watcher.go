@@ -1,9 +1,9 @@
 package global
 
 import (
-	"github.com/layatips/laya-go/models/dao"
-	"github.com/layatips/laya/gconf"
-	"github.com/layatips/laya/genv"
+	"github.com/layasugar/laya-go/models/dao"
+	"github.com/layasugar/laya/gconf"
+	"github.com/layasugar/laya/genv"
 	"log"
 	"sync"
 	"time"

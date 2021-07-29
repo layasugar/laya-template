@@ -3,8 +3,8 @@ package app
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/layatips/laya-go/models/page/app"
-	"github.com/layatips/laya/glogs"
+	"github.com/layasugar/laya-go/models/page/app"
+	"github.com/layasugar/laya/glogs"
 )
 
 type getUserInfoParam = app.UserParam

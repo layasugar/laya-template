@@ -2,9 +2,9 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/layatips/laya-go/controllers/admin"
-	"github.com/layatips/laya-go/controllers/app"
-	"github.com/layatips/laya-go/controllers/file"
+	"github.com/layasugar/laya-go/controllers/admin"
+	"github.com/layasugar/laya-go/controllers/app"
+	"github.com/layasugar/laya-go/controllers/file"
 	"net/http"
 )
 

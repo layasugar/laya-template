@@ -3,8 +3,8 @@ package admin
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/layatips/laya-go/models/page/admin"
-	"github.com/layatips/laya/glogs"
+	"github.com/layasugar/laya-go/models/page/admin"
+	"github.com/layasugar/laya/glogs"
 )
 
 type getUserListParam = admin.UserParam

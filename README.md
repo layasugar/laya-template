@@ -41,20 +41,20 @@ func listenHttp() {
 #### 配置文件的使用
 - 运行服务时配置，具体配置请参照conf/app.json，按照结构配置，base和log和mem提供默认配置可以不配
 - 别问为什么用json，问就是不知道
-- 参考[配置说明](https://github.com/layatips/laya-go/tree/master/conf)
+- 参考[配置说明](https://github.com/layasugar/laya-go/tree/master/conf)
 
 #### api模板
 
-- [github链接](https://github.com/layatips/laya-go)
+- [github链接](https://github.com/layasugar/laya-go)
 - 总的来说就是自己的日常开发形成的一套习惯，代码拉下来就可以运行，方便新api或者web项目的快速搭建 组件都是目前golang比较火的组件
 
 #### 启动运行
 
 1. clone代码
-    - ```git clone https://github.com/layatips/laya-go.git```
+    - ```git clone https://github.com/layasugar/laya-go.git```
 2. 修改配置conf/app.json
 3. 启动
-    - ```go run github.com/layatips/laya-go```
+    - ```go run github.com/layasugar/laya-go```
 4. docker方式启动
     - ```docker build -t laya-go:1.0 . && docker run --name laya-go -p 10080:10080 --network devops --network-alias laya-go laya-go:1.0 ```
 
@@ -184,7 +184,7 @@ for data := range BatchOtsOrderChan {
 ```
 
 #### 流批处理可参考
-[参考地址](https://github.com/layatips/demo-go/blob/master/main_batch_stream.go)
+[参考地址](https://github.com/layasugar/demo-go/blob/master/main_batch_stream.go)
 
 
 #### 推荐工具

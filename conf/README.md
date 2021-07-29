@@ -7,7 +7,7 @@
     "app_name": "laya-go",
     "http_listen": "0.0.0.0:10080",
     "run_mode": "debug",
-    "app_url": "https://github.com/layatips/laya-go",
+    "app_url": "https://github.com/layasugar/laya-go",
     "gin_log": "/home/logs/app/laya-go/gin_http.log",
     "params_log": true
   }
