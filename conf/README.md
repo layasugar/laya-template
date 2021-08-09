@@ -5,18 +5,24 @@
 ```
   "app": {
     "app_name": "laya-go",
+    "app_mode": "dev",
     "http_listen": "0.0.0.0:10080",
     "run_mode": "debug",
+    "version": "1.0.0",
     "app_url": "https://github.com/layasugar/laya-go",
-    "gin_log": "/home/logs/app/laya-go/gin_http.log",
-    "params_log": true
+    "param_log": true,
+    "log_path": "/home/logs/app/laya-go/gin_http.log",
+    "pprof": true
   }
-## app_name：项目名称
+## app_name：app名称
+## app_mode：app运行环境 dev or test or pre or prod
 ## http_listen：监听端口
-## run_mode: debug or release
+## run_mode: gin运行模式debug or release
+## version: app版本号
 ## app_url: 当前项目请求url
-## gin_log: gin的http请求日志输出到文件
-## params_log: 是否打印入参和出参
+## param_log: 是否开启请求参数和返回参数打印
+## log_path: 日志路径"/home/log/app/$(app_name)"
+## pprof: 是否开启pprof
 ```
 
 ##
@@ -95,7 +101,7 @@
 ## idleTimeout：空闲链接超时时间(单位：time.Second秒)
 ```
 
-##       
+##          
 
 ### mongo
 
