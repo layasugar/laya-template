@@ -60,7 +60,7 @@ func (ctrl *BaseCtrl) HealthCheck(c *gin.Context) {
 // 健康检查
 func (ctrl *BaseCtrl) ReadyCheck(c *gin.Context) {
 	// mysql检测
-	err := gstore.DBSurvive(dao.DB)
+	err := gstore.DbSurvive(dao.DB)
 	if err != nil {
 		glogs.ErrorF(c, "探针存活检测失败", fmt.Sprintf("mysql凉凉,err=%s", err.Error()))
 		c.AbortWithStatus(http.StatusInternalServerError)

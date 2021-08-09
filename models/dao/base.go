@@ -9,7 +9,7 @@ import (
 	"github.com/layasugar/laya/gkafka"
 	"github.com/layasugar/laya/glogs"
 	"github.com/layasugar/laya/gstore"
-	"github.com/olivere/elastic/v6"
+	"github.com/olivere/elastic/v7"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -42,12 +42,17 @@ var Kafka *gkafka.Engine
 var Es *elastic.Client
 
 func Init() {
-	//mysql
+	// mysql init client
+	// dsn 是必须配置的，其他都是非必须的
+	// gstore.SetPoolConfig(dc.DbPoolCfg), gstore.SetGormConfig(dbCfg) 都是非必须的
 	dc, err := gconf.GetDBConf(dbKey)
 	if err != nil {
 		panic(err.Error())
 	}
-	DB = gstore.InitDB(dc.MaxIdleConn, dc.MaxOpenConn, dc.ConnMaxLifetime, dc.Dsn, glogs.Default(glogs.Sugar, logger.Info))
+	dbCfg := &gorm.Config{
+		Logger: glogs.Default(glogs.Sugar, logger.Info),
+	}
+	DB = gstore.InitDB(dc.Dsn, gstore.SetPoolConfig(dc.DbPoolCfg), gstore.SetGormConfig(dbCfg))
 
 	//redis
 	rc, err := gconf.GetRdbConf(rdbKey)
