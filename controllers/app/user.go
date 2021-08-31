@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/layasugar/laya-go/models/page/app"
-	"github.com/layasugar/laya/glogs"
+	"github.com/layasugar/glogs"
 )
 
 type getUserInfoParam = app.UserParam

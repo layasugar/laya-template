@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/layasugar/laya-go/models/page/admin"
-	"github.com/layasugar/laya/glogs"
+	"github.com/layasugar/glogs"
 )
 
 type getUserListParam = admin.UserParam

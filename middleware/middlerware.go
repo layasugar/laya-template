@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
 	"github.com/layasugar/laya/genv"
-	"github.com/layasugar/laya/glogs"
+	"github.com/layasugar/glogs"
 	"github.com/layasugar/laya/gutils"
 	"io/ioutil"
 	"strings"

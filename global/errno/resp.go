@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/layasugar/laya/genv"
-	"github.com/layasugar/laya/glogs"
+	"github.com/layasugar/glogs"
 	"github.com/layasugar/laya/gutils"
 	"net/http"
 )

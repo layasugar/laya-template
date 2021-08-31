@@ -6,7 +6,7 @@ import (
 	"github.com/layasugar/laya-go/global/errno"
 	"github.com/layasugar/laya-go/models/dao"
 	"github.com/layasugar/laya/genv"
-	"github.com/layasugar/laya/glogs"
+	"github.com/layasugar/glogs"
 	"github.com/layasugar/laya/gstore"
 	"net/http"
 )

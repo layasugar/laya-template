@@ -3,7 +3,7 @@ package admin
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/layasugar/laya-go/models/data"
-	"github.com/layasugar/laya/glogs"
+	"github.com/layasugar/glogs"
 	"time"
 )
 
