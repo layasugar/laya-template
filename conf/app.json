@@ -17,10 +17,10 @@
   },
   "redis": {
     "db": 0,
-    "addr": "redis:6379",
     "pwd": "",
-    "poolSize": 5,
-    "maxRetries": 3,
-    "idleTimeout": 1000
+    "addr": "redis:6379",
+    "pool_size": 5,
+    "max_retries": 3,
+    "idle_timeout": 1000
   }
 }
