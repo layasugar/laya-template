@@ -28,5 +28,5 @@ func ServerSetup() *laya.App {
 
 func main() {
 	app := ServerSetup()
-	app.RunWebServer()
+	app.RunServer()
 }

@@ -4,7 +4,7 @@ COPY . /app
 RUN go env -w GOPROXY=https://goproxy.cn,direct \
    && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on \
    && cd /app \
-   && go build  -o ./laya-go github.com/layasugar/laya-go
+   && go build  -o ./laya-go .
 
 FROM debian:stretch-slim
 COPY --from=0 /app/laya-go /var/www/code/app/laya-go
