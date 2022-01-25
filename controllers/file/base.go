@@ -1,7 +1,7 @@
 package file
 
 import (
-	"github.com/layasugar/laya-go/controllers"
+	"github.com/layasugar/laya-template/controllers"
 )
 
 var Ctrl = &controller{}

@@ -4,17 +4,18 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"github.com/gin-gonic/gin"
-	uuid "github.com/satori/go.uuid"
-	"github.com/layasugar/laya/genv"
 	"github.com/layasugar/glogs"
+	"github.com/layasugar/laya"
+	"github.com/layasugar/laya-template/global"
+	"github.com/layasugar/laya/genv"
 	"github.com/layasugar/laya/gutils"
+	uuid "github.com/satori/go.uuid"
 	"io/ioutil"
 	"strings"
 )
 
-// implements the gin.handlerFunc
-func SetHeader(c *gin.Context) {
+// SetHeader implements the gin.handlerFunc
+func SetHeader(c *laya.WebContext) {
 	c.Header("Content-Type", "application/json; charset=utf-8")
 	requestID := c.GetHeader(glogs.RequestIDName)
 	if requestID == "" {
@@ -23,7 +24,7 @@ func SetHeader(c *gin.Context) {
 	c.Next()
 }
 
-func SetTrace(c *gin.Context) {
+func SetTrace(c *laya.WebContext) {
 	if !gutils.InSliceString(c.Request.RequestURI, gutils.IgnoreRoutes) {
 		span := glogs.StartSpanR(c.Request, c.Request.RequestURI)
 		if span != nil {
@@ -35,9 +36,10 @@ func SetTrace(c *gin.Context) {
 	}
 }
 
-func LogInParams(c *gin.Context) {
-	if !gutils.InSliceString(c.Request.RequestURI, gutils.IgnoreRoutes) {
-		if genv.ParamLog() {
+// LogInParams 记录框架出入参
+func LogInParams(c *laya.WebContext) {
+	if genv.ParamLog() {
+		if !global.CheckNoLogParams(c.Request.RequestURI) {
 			requestData, _ := c.GetRawData()
 			c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(requestData))
 			ct := c.GetHeader("Content-Type")
@@ -47,13 +49,14 @@ func LogInParams(c *gin.Context) {
 				var in map[string]interface{}
 				_ = json.NewDecoder(bytes.NewBuffer(requestData)).Decode(&in)
 				inJson, _ := json.Marshal(&in)
-				glogs.InfoF(c, "入参打印", "path=%s,content=%s", c.Request.RequestURI, inJson)
+				glogs.InfoF(c.Request, "入参", string(inJson), glogs.String("header", c.Request.Header))
 			case "application/x-www-form-urlencoded", "multipart/form-data":
-				glogs.InfoF(c, "入参打印", "title=入参打印,path=%s,content=%s", c.Request.RequestURI, string(requestData))
+				glogs.InfoF(c.Request, "入参", string(requestData), glogs.String("header", c.Request.Header))
 			default:
-				glogs.InfoF(c, "入参打印", "title=入参打印,path=%s,content=%s", c.Request.RequestURI, string(requestData))
+				glogs.InfoF(c.Request, "入参", string(requestData), glogs.String("header", c.Request.Header))
 			}
 		}
 	}
+
 	c.Next()
 }

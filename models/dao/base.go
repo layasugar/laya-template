@@ -4,19 +4,9 @@ package dao
 
 import (
 	"github.com/go-redis/redis/v8"
-	"github.com/layasugar/glogs"
 	"github.com/layasugar/laya/gconf"
 	"github.com/layasugar/laya/gstore"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
-)
-
-const (
-	dbKey    = "mysql"
-	rdbKey   = "redis"
-	mdbKey   = "mongo"
-	kafkaKey = "kafka"
-	esKey    = "es"
 )
 
 // DB is sql *db
@@ -26,8 +16,8 @@ var DB *gorm.DB
 var Rdb *redis.Client
 
 func Init() {
-	//mysql
-	dbCfg := &gorm.Config{Logger: glogs.Default(glogs.Sugar, logger.Info)}
-	dbPoolCfg := gstore.DbPoolCfg{}
-	DB = gstore.InitDB(gconf.C.GetString("mysql.dsn"), gstore.SetPoolConfig(dbPoolCfg), gstore.SetGormConfig(dbCfg))
+	// mysql
+	DB = gstore.InitDB(gconf.V.GetString("mysql.dsn"), gstore.LevelInfo)
+
+	// redis
 }

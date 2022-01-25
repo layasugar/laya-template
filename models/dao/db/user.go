@@ -1,8 +1,10 @@
 package db
 
-import "time"
+import (
+	"time"
+)
 
-// 声明模型User
+// User 声明模型
 type User struct {
 	ID            int64     `json:"id"`
 	Status        int64     `json:"status"` // 用户状态，2冻结,1正常
@@ -17,7 +19,7 @@ type User struct {
 	LastLoginTime time.Time `json:"last_login_time"`
 }
 
-// 将 User 的表名设置为 `user`
+// TableName 将 User 的表名设置为 `user`
 func (User) TableName() string {
 	return "user"
 }

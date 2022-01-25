@@ -1,17 +1,40 @@
+## 应用名称, 运行模式, http端口, pbrpc端口, 应用外网地址, 是否开启入参出参打印, 应用版本号
 [app]
-name = "laya-go"
-mode = "dev1"
-run_mode = "debug"
-http_listen = "0.0.0.0:80"
 url = "http://127.0.0.1:80"
-pprof = true
+name = "laya-template"
+run_mode = "release"
+http_listen = "0.0.0.0:80"
+pbrpc_liten = "0.0.0.0:10082"
 params = true
-logger = "/home/logs/app"
 version = "1.0.0"
 
+## 应用日志的配置(路径和保留天数和打印在控制台还是文件中)(默认开启7天, 最大日志保留30个, 单个日志大小是128M, 7天内日志最大到3.75G)
+[app.logger]
+type = "console"
+path = "/home/logs/app"
+max_age = 7
+max_count = 30
+
+## 应用链路追踪上报(支持zipkin和jaeger), 采样率是0-100
+[app.trace]
+type = "jaeger"
+addr = "127.0.0.1:14250"
+mod = 1
+
+## mysql配置, 自行合理配置, models/dao/base.go, 初始化配置
 [mysql]
 dsn = "root:123456@tcp(127.0.0.1:3306)/test?charset=utf8&parseTime=True&loc=Local"
 
+## redis配置
+[[redis]]
+
+## mongo配置
+[[mongo]]
+
+## extra其他配置
+[extra]
+
+## 错误码配置
 [err_code]
-"4001" = "hello world"
-"4002" = "surprice"
+"400" = "system error"
+"4002" = "surprise"

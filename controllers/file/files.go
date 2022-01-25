@@ -3,7 +3,7 @@ package file
 import (
 	"crypto/rand"
 	"fmt"
-	"github.com/gin-gonic/gin"
+	"github.com/layasugar/laya"
 	"os"
 	"path/filepath"
 	"strings"
@@ -15,7 +15,7 @@ type res struct {
 
 const uploadPath = "files"
 
-func (ctrl *controller) Upload(c *gin.Context) {
+func (ctrl *controller) Upload(c *laya.WebContext) {
 	//file, _ := c.FormFile("File")
 	//if file == nil {
 	//	c.Set("$.Upload.NoFile.code", response.NoFile)

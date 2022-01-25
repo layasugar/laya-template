@@ -1,9 +1,9 @@
 package admin
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/layasugar/laya-go/models/data"
 	"github.com/layasugar/glogs"
+	"github.com/layasugar/laya"
+	"github.com/layasugar/laya-template/models/data"
 	"time"
 )
 
@@ -11,7 +11,7 @@ type UserParam struct {
 	Id int64 `json:"id" binding:"required"`
 }
 
-func GetUserList(c *gin.Context, param *UserParam) (interface{}, error) {
+func GetUserList(c *laya.WebContext, param *UserParam) (interface{}, error) {
 	span1 := glogs.StartSpan("GetUserList")
 	time.Sleep(time.Second)
 	glogs.StopSpan(span1)

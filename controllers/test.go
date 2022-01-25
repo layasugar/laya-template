@@ -1,11 +1,11 @@
 package controllers
 
 import (
-	"github.com/gin-gonic/gin"
+	"github.com/layasugar/laya"
 )
 
 // test
-func (ctrl *BaseCtrl) Test(c *gin.Context) {
+func (ctrl *BaseCtrl) Test(c *laya.WebContext) {
 	var body map[string]interface{}
 	_ = c.ShouldBindJSON(&body)
 

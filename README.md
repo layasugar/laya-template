@@ -1,7 +1,12 @@
-### laya-go
-gin+gorm+go-redis为基本骨架打造的目录结构，方便开发，开箱即用
+# laya-template
 
-#### web应用
+后端服务模板 使用 [laya](https://github.com/layasugar/laya) 搭建 旨在快速搭建中小型应用服务, restfulApi, rpc服务 ==
+
+> Please note that this repository is out-of-the-box template
+
+## 快速使用
+
+### web应用
 
 - 参考mian.go
 
@@ -38,27 +43,34 @@ func listenHttp() {
 }
 ```
 
+### 日志
+
+### 告警
+
+### 链路追踪
+
 #### 配置文件的使用
-- 运行服务时配置，具体配置请参照conf/app.json，按照结构配置，base和log和mem提供默认配置可以不配
+
+- 运行服务时配置，具体配置请参照conf/app.toml，按照结构配置，base和log和mem提供默认配置可以不配
 - 别问为什么用json，问就是不知道
-- 参考[配置说明](https://github.com/layasugar/laya-go/tree/master/conf)
+- 参考[配置说明](https://github.com/layasugar/laya-template/tree/master/conf)
 
 #### api模板
 
-- [github链接](https://github.com/layasugar/laya-go)
+- [github链接](https://github.com/layasugar/laya-template)
 - 总的来说就是自己的日常开发形成的一套习惯，代码拉下来就可以运行，方便新api或者web项目的快速搭建 组件都是目前golang比较火的组件
 
 #### 启动运行
 
 1. clone代码
-    - ```git clone https://github.com/layasugar/laya-go.git```
+    - ```git clone https://github.com/layasugar/laya-template.git```
 2. 修改配置conf/app.json
 3. 启动
-    - ```go run github.com/layasugar/laya-go```
+    - ```go run github.com/layasugar/laya-template```
 4. docker方式启动
     - ```docker build -t laya-go:1.0 . && docker run --name laya-go -p 10080:10080 --network devops --network-alias laya-go laya-go:1.0 ```
 
-##   
+##    
 
 #### route
 
@@ -184,8 +196,8 @@ for data := range BatchOtsOrderChan {
 ```
 
 #### 流批处理可参考
-[参考地址](https://github.com/layasugar/demo-go/blob/master/main_batch_stream.go)
 
+[参考地址](https://github.com/layasugar/demo-go/blob/master/main_batch_stream.go)
 
 #### 推荐工具
 
@@ -198,3 +210,10 @@ for data := range BatchOtsOrderChan {
 
 - [github链接](https://github.com/rakyll/hey)
 - ```hey -n 100 -c 1000```
+
+
+#### gorm外封装一层, 处理日志, 自动将gorm日志定向到logger
+
+//replace github.com/layasugar/laya => ./../laya
+//
+//replace github.com/layasugar/glogs => ./../glogs

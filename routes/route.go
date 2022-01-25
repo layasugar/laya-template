@@ -1,14 +1,14 @@
 package routes
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/layasugar/laya-go/controllers/admin"
-	"github.com/layasugar/laya-go/controllers/app"
-	"github.com/layasugar/laya-go/controllers/file"
+	"github.com/layasugar/laya"
+	"github.com/layasugar/laya-template/controllers/admin"
+	"github.com/layasugar/laya-template/controllers/app"
+	"github.com/layasugar/laya-template/controllers/file"
 	"net/http"
 )
 
-func RegisterApp(r *gin.Engine) {
+func RegisterApp(r *laya.WebServer) {
 	// 获取用户信息
 	r.POST("/app/user/info", app.Ctrl.GetUserInfo)
 
