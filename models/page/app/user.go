@@ -2,7 +2,6 @@ package app
 
 import (
 	"errors"
-	"github.com/layasugar/glogs"
 	"github.com/layasugar/laya"
 	"github.com/layasugar/laya-template/global"
 	"github.com/layasugar/laya-template/models/data"
@@ -13,13 +12,13 @@ type UserParam struct {
 	Id uint64 `json:"id" binding:"required"`
 }
 
-func GetUserInfo(c *laya.WebContext, param *UserParam) (interface{}, error) {
-	user, err := data.GetUserById(c, param.Id)
+func GetUserInfo(ctx *laya.WebContext, param *UserParam) (interface{}, error) {
+	user, err := data.GetUserById(ctx, param.Id)
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil, err
 	}
 	if errors.Is(err, gorm.ErrRecordNotFound) {
-		glogs.WarnF(c.Request, "用户中心", "用户不存在")
+		ctx.Info("用户中心", "用户不存在")
 		return nil, global.UserNotFound
 	}
 	return user, nil

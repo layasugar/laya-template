@@ -8,13 +8,13 @@ import (
 
 type User = db.User
 
-func GetUserById(c *laya.WebContext, userId uint64) (*User, error) {
+func GetUserById(ctx *laya.WebContext, userId uint64) (*User, error) {
 	var u User
 	err := dao.DB.Model(&User{}).Where("id = ?", userId).First(&u).Error
 	return &u, err
 }
 
-func GetUserListByZone(c *laya.WebContext, Id int64) ([]*User, error) {
+func GetUserListByZone(ctx *laya.WebContext, Id int64) ([]*User, error) {
 	var users []*User
 	err := dao.DB.Model(&User{}).Where("id = ?", Id).Find(&users).Error
 	return users, err

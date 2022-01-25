@@ -5,9 +5,9 @@ import (
 )
 
 // test
-func (ctrl *BaseCtrl) Test(c *laya.WebContext) {
+func (ctrl *BaseCtrl) Test(ctx *laya.WebContext) {
 	var body map[string]interface{}
-	_ = c.ShouldBindJSON(&body)
+	_ = ctx.ShouldBindJSON(&body)
 
 	//// 生产数据
 	//partition, offset, err := dao.Kafka.SendMsg("layatest", "1111111111111")
@@ -27,5 +27,5 @@ func (ctrl *BaseCtrl) Test(c *laya.WebContext) {
 	//}
 	//glogs.SendDing(alarmData)
 	//fmt.Println(body)
-	ctrl.Suc(c, body, "success")
+	ctrl.Suc(ctx, body, "success")
 }

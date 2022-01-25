@@ -216,4 +216,4 @@ for data := range BatchOtsOrderChan {
 
 //replace github.com/layasugar/laya => ./../laya
 //
-//replace github.com/layasugar/glogs => ./../glogs
+//replace github.com/layasugar/laya/glogs => ./../glogs

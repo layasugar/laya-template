@@ -15,7 +15,7 @@ type res struct {
 
 const uploadPath = "files"
 
-func (ctrl *controller) Upload(c *laya.WebContext) {
+func (ctrl *controller) Upload(ctx *laya.WebContext) {
 	//file, _ := c.FormFile("File")
 	//if file == nil {
 	//	c.Set("$.Upload.NoFile.code", response.NoFile)

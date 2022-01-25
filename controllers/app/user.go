@@ -2,7 +2,6 @@ package app
 
 import (
 	"fmt"
-	"github.com/layasugar/glogs"
 	"github.com/layasugar/laya"
 	"github.com/layasugar/laya-template/models/page/app"
 )
@@ -10,19 +9,19 @@ import (
 type getUserInfoParam = app.UserParam
 
 // GetUserInfo 获取用户信息
-func (ctrl *BaseAppCtrl) GetUserInfo(c *laya.WebContext) {
+func (ctrl *BaseAppCtrl) GetUserInfo(ctx *laya.WebContext) {
 	var param getUserInfoParam
-	err := c.ShouldBind(&param)
+	err := ctx.ShouldBind(&param)
 	if err != nil {
-		ctrl.Fail(c, err)
+		ctrl.Fail(ctx, err)
 		return
 	}
 
-	resp, err := app.GetUserInfo(c, &param)
+	resp, err := app.GetUserInfo(ctx, &param)
 	if err != nil {
-		glogs.ErrorF(c.Request, "获取用户信息", fmt.Sprintf("title=获取用户信息,err=%s", err.Error()))
-		ctrl.Fail(c, err)
+		ctx.Info("获取用户信息", fmt.Sprintf("title=获取用户信息,err=%s", err.Error()))
+		ctrl.Fail(ctx, err)
 		return
 	}
-	ctrl.Suc(c, resp)
+	ctrl.Suc(ctx, resp)
 }

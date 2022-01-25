@@ -21,6 +21,9 @@ func ServerSetup() *laya.App {
 	// register routes
 	app.WebServer().RegisterRouter(routes.Register)
 
+	// rpc 路由
+	//app.PbRPCServer().AddHandler(rpc.AddUser)
+
 	// 屏蔽不需要打印出入参路由分组
 	global.SetNoLogParamsPrefix("/admin")
 
@@ -31,4 +34,5 @@ func main() {
 	app := ServerSetup()
 
 	app.RunWebServer()
+	//app.RunPbRPCServer()
 }

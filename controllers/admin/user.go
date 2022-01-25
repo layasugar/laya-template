@@ -2,26 +2,25 @@ package admin
 
 import (
 	"fmt"
-	"github.com/layasugar/glogs"
 	"github.com/layasugar/laya"
 	"github.com/layasugar/laya-template/models/page/admin"
 )
 
 type getUserListParam = admin.UserParam
 
-func (ctrl *controller) GetUserList(c *laya.WebContext) {
+func (ctrl *controller) GetUserList(ctx *laya.WebContext) {
 	var param getUserListParam
-	err := c.ShouldBindJSON(&param)
+	err := ctx.ShouldBindJSON(&param)
 	if err != nil {
-		ctrl.Fail(c, err)
+		ctrl.Fail(ctx, err)
 		return
 	}
 
-	resp, err := admin.GetUserList(c, &param)
+	resp, err := admin.GetUserList(ctx, &param)
 	if err != nil {
-		glogs.ErrorF(c.Request, "获取用户列表", fmt.Sprintf("title=获取用户列表,err=%s", err.Error()))
-		ctrl.Fail(c, err)
+		ctx.Info("获取用户列表", fmt.Sprintf("title=获取用户列表,err=%s", err.Error()))
+		ctrl.Fail(ctx, err)
 		return
 	}
-	ctrl.Suc(c, resp)
+	ctrl.Suc(ctx, resp)
 }
