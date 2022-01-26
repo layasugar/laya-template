@@ -4,6 +4,10 @@
 
 > Please note that this repository is out-of-the-box template
 
+## 约定
+- func返回单独结构体时, 返回该数据得指针
+- laya.WebContext与laya.PbRpcContext需要全局传递
+
 ## 快速使用
 
 ### web应用

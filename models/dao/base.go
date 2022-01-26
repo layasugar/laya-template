@@ -20,4 +20,11 @@ func Init() {
 	DB = gstore.InitDB(gconf.V.GetString("mysql.dsn"), gstore.LevelInfo)
 
 	// redis
+	// redis
+	rdbCfg := redis.Options{
+		Addr:     gconf.V.GetString("redis.addr"),
+		DB:       gconf.V.GetInt("redis.db"),
+		Password: gconf.V.GetString("redis.pwd"),
+	}
+	Rdb = gstore.InitRdb(rdbCfg)
 }

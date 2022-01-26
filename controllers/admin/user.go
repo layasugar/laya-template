@@ -1,24 +1,29 @@
 package admin
 
 import (
-	"fmt"
 	"github.com/layasugar/laya"
+	"github.com/layasugar/laya-template/global/page"
 	"github.com/layasugar/laya-template/models/page/admin"
 )
 
-type getUserListParam = admin.UserParam
-
 func (ctrl *controller) GetUserList(ctx *laya.WebContext) {
-	var param getUserListParam
+	var param admin.GetUserListReq
 	err := ctx.ShouldBindJSON(&param)
 	if err != nil {
 		ctrl.Fail(ctx, err)
 		return
 	}
 
+	if param.Page == 0 {
+		param.Page = page.DefaultPage
+	}
+	if param.PageSize == 0 {
+		param.PageSize = page.DefaultPageSize
+	}
+
 	resp, err := admin.GetUserList(ctx, &param)
 	if err != nil {
-		ctx.Info("获取用户列表", fmt.Sprintf("title=获取用户列表,err=%s", err.Error()))
+		ctx.Infof("获取用户列表, err: %s", err.Error())
 		ctrl.Fail(ctx, err)
 		return
 	}

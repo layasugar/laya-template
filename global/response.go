@@ -72,7 +72,7 @@ func (res *Resp) Suc(ctx *laya.WebContext, data interface{}, msg ...string) {
 	if genv.ParamLog() {
 		if !CheckNoLogParams(ctx.Request.RequestURI) {
 			log, _ := json.Marshal(&rr)
-			ctx.Info("出参", string(log))
+			ctx.Infof("出参", string(log))
 		}
 	}
 
@@ -92,7 +92,7 @@ func (res *Resp) Fail(ctx *laya.WebContext, err error) {
 	if genv.ParamLog() {
 		if !CheckNoLogParams(ctx.Request.RequestURI) {
 			log, _ := json.Marshal(&rr)
-			ctx.Info("出参", string(log))
+			ctx.Infof("出参", string(log))
 		}
 	}
 
@@ -103,7 +103,7 @@ func (res *Resp) Fail(ctx *laya.WebContext, err error) {
 func (res *Resp) RawJSONString(ctx *laya.WebContext, data string) {
 	if genv.ParamLog() {
 		if !CheckNoLogParams(ctx.Request.RequestURI) {
-			ctx.Info("出参", data)
+			ctx.Infof("出参", data)
 		}
 	}
 
@@ -117,7 +117,7 @@ func (res *Resp) RawJSONString(ctx *laya.WebContext, data string) {
 func (res *Resp) RawString(ctx *laya.WebContext, data string) {
 	if genv.ParamLog() {
 		if !CheckNoLogParams(ctx.Request.RequestURI) {
-			ctx.Info("出参", data)
+			ctx.Infof("出参", data)
 		}
 	}
 

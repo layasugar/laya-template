@@ -35,8 +35,11 @@ addr = "pbrpc://127.0.0.1:30082"
 
 ## mysql配置, redis配置, mongo配置 自行合理配置, models/dao/base.go, 初始化配置
 [mysql]
-dsn = "root:123456@tcp(127.0.0.1:3306)/test?charset=utf8&parseTime=True&loc=Local"
+dsn = "root:123456@tcp(127.0.0.1:3306)/laya_template?charset=utf8&parseTime=True&loc=Local"
 [redis]
+addr = "127.0.0.1:6379"
+db = 0
+pwd = "123456"
 [mongo]
 
 ## extra其他配置

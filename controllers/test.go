@@ -4,28 +4,9 @@ import (
 	"github.com/layasugar/laya"
 )
 
-// test
+// Test test接口
 func (ctrl *BaseCtrl) Test(ctx *laya.WebContext) {
 	var body map[string]interface{}
 	_ = ctx.ShouldBindJSON(&body)
-
-	//// 生产数据
-	//partition, offset, err := dao.Kafka.SendMsg("layatest", "1111111111111")
-	//if err != nil {
-	//	log.Print(err.Error())
-	//} else {
-	//	log.Printf("Message partion: %d, Message offset: %d.", partition, offset)
-	//}
-	////钉钉推送
-	//var alarmData = &glogs.AlarmData{
-	//	Title:       "我是一个快乐的机器人",
-	//	Description: "快乐的机器人",
-	//	Content: map[string]interface{}{
-	//		"time": time.Now(),
-	//		"haha": "流弊机器人",
-	//	},
-	//}
-	//glogs.SendDing(alarmData)
-	//fmt.Println(body)
-	ctrl.Suc(ctx, body, "success")
+	ctrl.Suc(ctx, body, "this is test restfulApi")
 }

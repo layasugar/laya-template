@@ -1,4 +1,4 @@
-package middleware
+package middlewares
 
 import (
 	"bytes"
@@ -49,11 +49,11 @@ func LogInParams(ctx *laya.WebContext) {
 				var in map[string]interface{}
 				_ = json.NewDecoder(bytes.NewBuffer(requestData)).Decode(&in)
 				inJson, _ := json.Marshal(&in)
-				ctx.Info("入参", string(inJson), glogs.String("header", ctx.Request.Header))
+				ctx.Infof("入参", string(inJson), glogs.String("header", ctx.Request.Header))
 			case "application/x-www-form-urlencoded", "multipart/form-data":
-				ctx.Info("入参", string(requestData), glogs.String("header", ctx.Request.Header))
+				ctx.Infof("入参", string(requestData), glogs.String("header", ctx.Request.Header))
 			default:
-				ctx.Info("入参", string(requestData), glogs.String("header", ctx.Request.Header))
+				ctx.Infof("入参", string(requestData), glogs.String("header", ctx.Request.Header))
 			}
 		}
 	}

@@ -4,8 +4,8 @@ import (
 	"github.com/layasugar/laya-template/controllers"
 )
 
-var Ctrl = &BaseAppCtrl{}
+var Ctrl = &controller{}
 
-type BaseAppCtrl struct {
-	controllers.BaseCtrl
+type controller struct {
+	*controllers.BaseCtrl
 }

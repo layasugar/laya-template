@@ -1,22 +1,19 @@
 package db
 
-import (
-	"time"
-)
-
 // User 声明模型
 type User struct {
-	ID            int64     `json:"id"`
-	Status        int64     `json:"status"` // 用户状态，2冻结,1正常
-	UserName      string    `json:"user_name"`
-	Zone          string    `json:"zone"` // 手机区号
-	Phone         string    `json:"phone"`
-	Email         string    `json:"email"`
-	Password      string    `json:"-"`
-	InviteCode    string    `json:"invite_code"`
-	CreatedAt     time.Time `json:"created_at"`
-	LastLoginIp   string    `json:"last_login_ip"`
-	LastLoginTime time.Time `json:"last_login_time"`
+	ID        uint64 `gorm:"column:id" json:"id"`
+	Username  string `gorm:"column:username" json:"username"` // 用户名
+	Nickname  string `gorm:"column:nickname" json:"nickname"` // 昵称
+	Avatar    string `gorm:"column:avatar" json:"avatar"`     // 头像
+	Password  string `gorm:"column:password" json:"-"`        // 密码
+	Salt      string `gorm:"column:salt" json:"-"`            // 盐
+	Mobile    string `gorm:"column:mobile" json:"mobile"`     // 手机号
+	Status    uint8  `gorm:"column:status" json:"status"`     // 状态
+	Channel   uint8  `gorm:"column:channel" json:"channel"`   // 注册渠道
+	CreatedAt string `gorm:"column:created_at" json:"created_at"`
+	UpdatedAt string `gorm:"column:updated_at" json:"updated_at"`
+	DeletedAt uint8  `gorm:"column:deleted_at" json:"deleted_at"`
 }
 
 // TableName 将 User 的表名设置为 `user`
