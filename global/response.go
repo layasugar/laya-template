@@ -1,11 +1,9 @@
 package global
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/layasugar/laya"
 	"github.com/layasugar/laya/gconf"
-	"github.com/layasugar/laya/genv"
 	"github.com/layasugar/laya/glogs"
 	"net/http"
 )
@@ -69,13 +67,6 @@ func (res *Resp) Suc(ctx *laya.WebContext, data interface{}, msg ...string) {
 	}
 	rr.Data = data
 	rr.RequestID = ctx.GetHeader(requestIDName)
-	if genv.ParamLog() {
-		if !CheckNoLogParams(ctx.Request.RequestURI) {
-			log, _ := json.Marshal(&rr)
-			ctx.Infof("出参", string(log))
-		}
-	}
-
 	ctx.JSON(http.StatusOK, &rr)
 }
 
@@ -89,24 +80,11 @@ func (res *Resp) Fail(ctx *laya.WebContext, err error) {
 		rr.Message = err.Error()
 	}
 	rr.RequestID = ctx.GetHeader(requestIDName)
-	if genv.ParamLog() {
-		if !CheckNoLogParams(ctx.Request.RequestURI) {
-			log, _ := json.Marshal(&rr)
-			ctx.Infof("出参", string(log))
-		}
-	}
-
 	ctx.JSON(http.StatusOK, &rr)
 }
 
 // RawJSONString json 数据返回
 func (res *Resp) RawJSONString(ctx *laya.WebContext, data string) {
-	if genv.ParamLog() {
-		if !CheckNoLogParams(ctx.Request.RequestURI) {
-			ctx.Infof("出参", data)
-		}
-	}
-
 	w := ctx.Writer
 	w.WriteHeader(200)
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
@@ -115,12 +93,6 @@ func (res *Resp) RawJSONString(ctx *laya.WebContext, data string) {
 
 // RawString raw 数据返回
 func (res *Resp) RawString(ctx *laya.WebContext, data string) {
-	if genv.ParamLog() {
-		if !CheckNoLogParams(ctx.Request.RequestURI) {
-			ctx.Infof("出参", data)
-		}
-	}
-
 	w := ctx.Writer
 	w.WriteHeader(200)
 	_, _ = w.Write([]byte(data))

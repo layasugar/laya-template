@@ -14,7 +14,7 @@ func (ctrl *controller) Login(ctx *laya.WebContext) {
 	}
 	data, err := admin.Login(ctx, &pm)
 	if err != nil {
-		ctx.Warnf("Login error,err:%s ", err.Error())
+		ctx.WarnF("Login error,err:%s ", err.Error())
 		ctrl.Fail(ctx, err)
 		return
 	}
@@ -25,7 +25,7 @@ func (ctrl *controller) Login(ctx *laya.WebContext) {
 func (ctrl *controller) Logout(ctx *laya.WebContext) {
 	err := admin.Logout(ctx)
 	if err != nil {
-		ctx.Warnf("Logout error, err: %s ", err.Error())
+		ctx.WarnF("Logout error, err: %s ", err.Error())
 		ctrl.Fail(ctx, err)
 		return
 	}

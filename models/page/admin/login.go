@@ -26,7 +26,7 @@ type LoginRsp = struct {
 func Login(ctx *laya.WebContext, request *LoginReq) (*LoginRsp, error) {
 	userinfo, err := admin.GetUserInfoByUsername(ctx, request.Username)
 	if err != nil {
-		ctx.Infof("Login get user info error: ", err)
+		ctx.InfoF("Login get user info error: ", err)
 		return nil, err
 	}
 	if userinfo == nil || userinfo.ID <= 0 {
@@ -37,7 +37,7 @@ func Login(ctx *laya.WebContext, request *LoginReq) (*LoginRsp, error) {
 	pwmd5 := fmt.Sprintf("%x", h.Sum(nil))
 
 	if userinfo.Password != pwmd5 {
-		ctx.Infof("Login password is wrong", nil)
+		ctx.InfoF("Login password is wrong", nil)
 		return nil, errno.UserNotFound
 	}
 

@@ -17,7 +17,7 @@ func UserVerifyToken() laya.WebHandlerFunc {
 		key := fmt.Sprintf(tokenRedisKey, ctx.GetHeader(global.UserAuth))
 		userData, err := dao.Rdb.Get(ctx, key).Result()
 		if err != nil {
-			ctx.Warnf("userVerifyToken rdb.Get fail,err:%s", err.Error())
+			ctx.WarnF("userVerifyToken rdb.Get fail,err:%s", err.Error())
 			ctx.AbortWithStatusJSON(200, map[string]interface{}{
 				"status_code": errno.ComUnauthorized,
 				"message":     "auth verify fail",

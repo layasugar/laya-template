@@ -35,7 +35,7 @@ func GetUserInfo(ctx *laya.WebContext) (*GetMyInfoRsp, error) {
 			return nil, err
 		}
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			ctx.Errorf("用户中心: %s", "用户不存在")
+			ctx.ErrorF("用户中心: %s", "用户不存在")
 			return nil, errno.UserNotFound
 		}
 		res := GetMyInfoRsp{

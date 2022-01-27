@@ -10,7 +10,7 @@ import (
 func (ctrl *controller) GetUserInfo(ctx *laya.WebContext) {
 	resp, err := app.GetUserInfo(ctx)
 	if err != nil {
-		ctx.Infof("获取用户信息", fmt.Sprintf("title=获取用户信息,err=%s", err.Error()))
+		ctx.InfoF("获取用户信息", fmt.Sprintf("title=获取用户信息,err=%s", err.Error()))
 		ctrl.Fail(ctx, err)
 		return
 	}

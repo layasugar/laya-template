@@ -5,12 +5,12 @@ name = "laya-template"
 run_mode = "debug"
 http_listen = "0.0.0.0:80"
 pbrpc_liten = "0.0.0.0:10082"
-params = true # 是否打印出入参
+params = true
 version = "1.0.0"
 
 ## 应用日志的配置(路径和保留天数和打印在控制台还是文件中)(默认开启7天, 最大日志保留30个, 单个日志大小是128M, 7天内日志最大到3.75G)
 [app.logger]
-type = "console"
+type = "file"
 path = "/home/logs/app"
 max_age = 7
 max_count = 30

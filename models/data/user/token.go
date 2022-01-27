@@ -17,12 +17,12 @@ func GetToken(ctx *laya.WebContext, userInfo *User) (string, error) {
 	key := fmt.Sprintf(tokenRedisKey, token)
 	userData, err := json.Marshal(userInfo)
 	if err != nil {
-		ctx.Warnf("GetToken json.Marshal user fail, err: %s", err.Error())
+		ctx.WarnF("GetToken json.Marshal user fail, err: %s", err.Error())
 		return "", err
 	}
 	err = dao.Rdb.SetEX(ctx, key, userData, global.TokenExpire).Err()
 	if err != nil {
-		ctx.Warnf("GetToken SetEx fail, err: %s", err.Error())
+		ctx.WarnF("GetToken SetEx fail, err: %s", err.Error())
 		return "", err
 	}
 
@@ -35,7 +35,7 @@ func DelToken(ctx *laya.WebContext, token string) error {
 	key := fmt.Sprintf(tokenRedisKey, token)
 	err := dao.Rdb.Del(ctx, key).Err()
 	if err != nil {
-		ctx.Warnf("Logout rdb.del fail, err: %s", err.Error())
+		ctx.WarnF("Logout rdb.del fail, err: %s", err.Error())
 		return err
 	}
 	return nil

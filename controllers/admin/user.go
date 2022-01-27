@@ -23,7 +23,7 @@ func (ctrl *controller) GetUserList(ctx *laya.WebContext) {
 
 	resp, err := admin.GetUserList(ctx, &param)
 	if err != nil {
-		ctx.Infof("获取用户列表, err: %s", err.Error())
+		ctx.InfoF("获取用户列表, err: %s", err.Error())
 		ctrl.Fail(ctx, err)
 		return
 	}

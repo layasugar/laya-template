@@ -17,7 +17,7 @@ type BaseCtrl struct {
 // Version version
 func (ctrl *BaseCtrl) Version(ctx *laya.WebContext) {
 	res := fmt.Sprintf("%s version: %s\napp_url: %s", genv.AppName(), genv.AppVersion(), genv.AppUrl())
-	ctx.Infof("测试日志%s", "hello world")
+	ctx.InfoF("测试日志%s", "hello world")
 	_, _ = ctx.Writer.Write([]byte(res))
 	return
 }

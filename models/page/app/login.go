@@ -26,7 +26,7 @@ func Login(ctx *laya.WebContext, pm *LoginParam) (*LoginResponse, error) {
 	// 验证验证码
 	err := checkSmsCode(ctx, pm)
 	if err != nil {
-		ctx.Warnf("Login checkSmsCode fail,err:%s", err.Error())
+		ctx.WarnF("Login checkSmsCode fail,err:%s", err.Error())
 		return nil, err
 	}
 
@@ -80,7 +80,7 @@ func userOperation(ctx *laya.WebContext, pm *LoginParam) (*user.User, error) {
 func checkSmsCode(ctx *laya.WebContext, pms *LoginParam) error {
 	smsCode, err := user.GetSmsCode(ctx, pms.Code, pms.Mobile)
 	if err != nil {
-		ctx.Warnf("checkSmsCode getSmsCode fail,err:%s", err.Error())
+		ctx.WarnF("checkSmsCode getSmsCode fail,err:%s", err.Error())
 		return err
 	}
 
@@ -92,7 +92,7 @@ func checkSmsCode(ctx *laya.WebContext, pms *LoginParam) error {
 	// 删除redis smsCode
 	err = user.DelSmsCode(ctx, pms.Code, pms.Mobile)
 	if err != nil {
-		ctx.Warnf("checkSmsCode delSmsCode fail,err:%s", err.Error())
+		ctx.WarnF("checkSmsCode delSmsCode fail,err:%s", err.Error())
 		return err
 	}
 
