@@ -1,14 +1,10 @@
 package global
 
 import (
-	"fmt"
 	"github.com/layasugar/laya"
 	"github.com/layasugar/laya/gconf"
-	"github.com/layasugar/laya/glogs"
 	"net/http"
 )
-
-var requestIDName = glogs.RequestIDName
 
 type Resp struct{}
 
@@ -45,13 +41,12 @@ func Err(code uint32) (err error) {
 }
 
 // Render 渲染
-func (re *rspError) render() (code uint32, msg string) {
-	key := fmt.Sprintf("err_code.%d", re.Code)
-	s := gconf.V.GetString(key)
-	if s == "" {
-		s = "sorry, system err"
+func (re *rspError) render() (uint32, string) {
+	msg := gconf.LoadErrMsg(re.Code)
+	if msg == "" {
+		msg = "sorry, system err"
 	}
-	re.Msg = s
+	re.Msg = msg
 	return re.Code, re.Msg
 }
 
@@ -66,7 +61,7 @@ func (res *Resp) Suc(ctx *laya.WebContext, data interface{}, msg ...string) {
 		}
 	}
 	rr.Data = data
-	rr.RequestID = ctx.GetHeader(requestIDName)
+	rr.RequestID = ctx.GetTraceId()
 	ctx.JSON(http.StatusOK, &rr)
 }
 
@@ -79,7 +74,7 @@ func (res *Resp) Fail(ctx *laya.WebContext, err error) {
 		rr.StatusCode = 400
 		rr.Message = err.Error()
 	}
-	rr.RequestID = ctx.GetHeader(requestIDName)
+	rr.RequestID = ctx.GetTraceId()
 	ctx.JSON(http.StatusOK, &rr)
 }
 
