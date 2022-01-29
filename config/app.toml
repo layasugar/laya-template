@@ -15,16 +15,18 @@ path = "/home/logs/app"
 max_age = 7
 max_count = 30
 
-## 应用链路追踪上报(支持zipkin和jaeger), 采样率是0-1, 0是关闭链路追踪, zipkin的地址应该包含/api/v2/spans
+## 应用链路追踪上报(支持zipkin和jaeger), 采样率是0-1, 0是关闭链路追踪,
+## zipkin_addr参考设置http://127.0.0.1:9411/api/v2/spans
+## jaeger_addr参考设置127.0.0.1:6831
 [app.trace]
-type = "zipkin"
-addr = "http://127.0.0.1:9411/api/v2/spans"
-mod = 0
+type = "jaeger"
+addr = "127.0.0.1:6831"
+mod = 1
 
 ## service name是唯一值, 对应服务名, 默认连接超时时间是(1500ms), 必须带上协议头(http,https,pbrpc)
 [[services]]
-name = "laya-template-1"
-addr = "http://127.0.0.1:30082"
+name = "trace_test"
+addr = "http://127.0.0.1:10082"
 retry = 3
 conn_time_out = 1500
 write_time_out = 1500

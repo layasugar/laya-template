@@ -64,3 +64,7 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gorm.io/driver/mysql v1.1.2 // indirect
 )
+
+replace (
+	github.com/layasugar/laya => ./../laya
+)

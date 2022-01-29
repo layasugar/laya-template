@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/controllers/rpc"
 	"github.com/layasugar/laya-template/models/dao"
 	"github.com/layasugar/laya-template/routes"
 )
@@ -21,7 +20,7 @@ func ServerSetup() *laya.App {
 	app.WebServer().RegisterRouter(routes.Register)
 
 	// rpc 路由
-	app.PbRPCServer().AddHandler(rpc.AddUser)
+	//app.PbRPCServer().AddHandler(rpc.AddUser)
 
 	// 屏蔽不需要打印出入参路由分组
 	app.SetNoLogParamsPrefix("/admin")

@@ -8,7 +8,7 @@ import (
 
 type Resp struct{}
 
-type response struct {
+type Response struct {
 	StatusCode uint32      `json:"status_code"`
 	Message    string      `json:"message"`
 	Data       interface{} `json:"data"`
@@ -51,7 +51,7 @@ func (re *rspError) render() (uint32, string) {
 }
 
 func (res *Resp) Suc(ctx *laya.WebContext, data interface{}, msg ...string) {
-	rr := new(response)
+	rr := new(Response)
 	rr.StatusCode = http.StatusOK
 	if len(msg) == 0 {
 		rr.Message = "success"
@@ -66,7 +66,7 @@ func (res *Resp) Suc(ctx *laya.WebContext, data interface{}, msg ...string) {
 }
 
 func (res *Resp) Fail(ctx *laya.WebContext, err error) {
-	rr := new(response)
+	rr := new(Response)
 	switch err.(type) {
 	case *rspError:
 		rr.StatusCode, rr.Message = err.(*rspError).render()
