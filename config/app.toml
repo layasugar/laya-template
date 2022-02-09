@@ -23,17 +23,19 @@ type = "jaeger"
 addr = "127.0.0.1:6831"
 mod = 1
 
-## service name是唯一值, 对应服务名, 默认连接超时时间是(1500ms), 必须带上协议头(http,https,pbrpc)
+## service name是唯一值, 对应服务名, 默认连接超时时间是(1500ms), 必须带上协议头(http,https,grpc)
 [[services]]
-name = "trace_test"
-addr = "http://127.0.0.1:10082"
-retry = 3
-conn_time_out = 1500
-write_time_out = 1500
-read_time_out = 1500
+name = "http_to_http_test"
+addr = "http://127.0.0.1:10081"
 [[services]]
-name = "laya-template-2"
-addr = "pbrpc://127.0.0.1:30082"
+name = "http_to_grpc_test"
+addr = "grpc://127.0.0.1:10082"
+[[services]]
+name = "grpc_to_http_test"
+addr = "http://127.0.0.1:10083"
+[[services]]
+name = "grpc_to_grpc_test"
+addr = "http://127.0.0.1:10084"
 
 ## mysql配置, redis配置, mongo配置 自行合理配置, models/dao/base.go, 初始化配置
 [mysql]

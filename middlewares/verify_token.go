@@ -21,7 +21,7 @@ func UserVerifyToken() laya.WebHandlerFunc {
 			ctx.AbortWithStatusJSON(200, map[string]interface{}{
 				"status_code": errno.ComUnauthorized,
 				"message":     "auth verify fail",
-				"request_id":  ctx.GetTraceId(),
+				"request_id":  ctx.GetLogId(),
 				"data":        "",
 			})
 		}

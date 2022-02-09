@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-type Resp struct{}
+type HttpResp struct{}
 
 type Response struct {
 	StatusCode uint32      `json:"status_code"`
@@ -50,7 +50,7 @@ func (re *rspError) render() (uint32, string) {
 	return re.Code, re.Msg
 }
 
-func (res *Resp) Suc(ctx *laya.WebContext, data interface{}, msg ...string) {
+func (res *HttpResp) Suc(ctx *laya.WebContext, data interface{}, msg ...string) {
 	rr := new(Response)
 	rr.StatusCode = http.StatusOK
 	if len(msg) == 0 {
@@ -61,11 +61,11 @@ func (res *Resp) Suc(ctx *laya.WebContext, data interface{}, msg ...string) {
 		}
 	}
 	rr.Data = data
-	rr.RequestID = ctx.GetTraceId()
+	rr.RequestID = ctx.GetLogId()
 	ctx.JSON(http.StatusOK, &rr)
 }
 
-func (res *Resp) Fail(ctx *laya.WebContext, err error) {
+func (res *HttpResp) Fail(ctx *laya.WebContext, err error) {
 	rr := new(Response)
 	switch err.(type) {
 	case *rspError:
@@ -74,12 +74,12 @@ func (res *Resp) Fail(ctx *laya.WebContext, err error) {
 		rr.StatusCode = 400
 		rr.Message = err.Error()
 	}
-	rr.RequestID = ctx.GetTraceId()
+	rr.RequestID = ctx.GetLogId()
 	ctx.JSON(http.StatusOK, &rr)
 }
 
 // RawJSONString json 数据返回
-func (res *Resp) RawJSONString(ctx *laya.WebContext, data string) {
+func (res *HttpResp) RawJSONString(ctx *laya.WebContext, data string) {
 	w := ctx.Writer
 	w.WriteHeader(200)
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
@@ -87,7 +87,7 @@ func (res *Resp) RawJSONString(ctx *laya.WebContext, data string) {
 }
 
 // RawString raw 数据返回
-func (res *Resp) RawString(ctx *laya.WebContext, data string) {
+func (res *HttpResp) RawString(ctx *laya.WebContext, data string) {
 	w := ctx.Writer
 	w.WriteHeader(200)
 	_, _ = w.Write([]byte(data))

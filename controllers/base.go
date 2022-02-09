@@ -11,7 +11,8 @@ import (
 var Ctrl = &BaseCtrl{}
 
 type BaseCtrl struct {
-	global.Resp
+	global.HttpResp
+	global.RpcResp
 }
 
 // Version version

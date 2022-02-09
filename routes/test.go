@@ -6,5 +6,10 @@ import (
 )
 
 func RegisterTest(r *laya.WebServer) {
-	r.POST("/trace-test", test.Ctrl.TraceTest)
+	r.POST("/trace-http-test", test.Ctrl.HttpTraceTest)
+}
+
+// RegisterRpcRoutes 注册一组rpc路由
+func RegisterRpcRoutes(s *laya.PbRPCServer) {
+	s.AddHandler(test.Ctrl.RpcTraceTest)
 }
