@@ -3,13 +3,10 @@
 package http_test
 
 import (
-	"context"
 	"errors"
-	"fmt"
 	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/models/dao/cal/http_test/pb_test"
+	"github.com/layasugar/laya-template/pb"
 	"github.com/layasugar/laya/gcal"
-	"google.golang.org/grpc"
 	"net/http"
 )
 
@@ -36,12 +33,12 @@ type (
 )
 
 var path = "/server-b/fast"
-var serviceName1 = "http_to_http_test"
-var serviceName2 = "http_to_grpc_test"
+var serviceName1 = "http_test"
+var serviceName2 = "grpc_test"
 
 // HttpToHttpTraceTest Http测试, body是interface可以发送任何类型的数据
 func HttpToHttpTraceTest(ctx *laya.WebContext) (*Data, error) {
-	ctx.InfoF("开始请求了, %s","aaaa")
+	ctx.InfoF("开始请求了, %s", "aaaa")
 	req := gcal.HTTPRequest{
 		Method: "POST",
 		Path:   path,
@@ -60,25 +57,24 @@ func HttpToHttpTraceTest(ctx *laya.WebContext) (*Data, error) {
 	if response.Head.StatusCode != http.StatusOK {
 		return &response.Body.Data, errors.New("NETWORK_ERROR")
 	}
-	ctx.InfoF("结束请求了, %s","bbbb")
+	ctx.InfoF("结束请求了, %s", "bbbb")
 	return &response.Body.Data, err
 }
 
 // HttpToGrpcTraceTest grpc测试
 func HttpToGrpcTraceTest(ctx *laya.WebContext) (*RpcData, error) {
-	// 连接服务器
-	conn, err := grpc.Dial(":10082")
-	if err != nil {
-		fmt.Printf("faild to connect: %v", err)
+	conn := gcal.GetRpcConn(serviceName2)
+	if conn == nil {
+		return nil, errors.New("连接不存在")
 	}
-	defer conn.Close()
 
-	c := pb_test.NewGreeterClient(conn)
-	// 调用服务端的SayHello
-	r, err := c.SayHello(context.Background(), &pb_test.HelloRequest{Name: "q1mi"})
+	c := pb.NewGreeterClient(conn)
+
+	res, err := c.SayHello(ctx, &pb.HelloRequest{Name: "q1mi"})
 	if err != nil {
-		fmt.Printf("could not greet: %v", err)
+		return nil, err
 	}
-	fmt.Printf("Greeting: %s !\n", r.Message)
-	return nil, err
+	return &RpcData{
+		Message: res.Message,
+	}, err
 }

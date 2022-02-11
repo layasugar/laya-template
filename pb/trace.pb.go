@@ -4,7 +4,7 @@
 // 	protoc        v3.19.3
 // source: trace.proto
 
-package pb_test
+package pb
 
 import (
 	context "context"
@@ -118,21 +118,73 @@ func (x *HelloReply) GetMessage() string {
 	return ""
 }
 
+type GrpcTraceTestReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Kind int32 `protobuf:"varint,1,opt,name=kind,proto3" json:"kind,omitempty"`
+}
+
+func (x *GrpcTraceTestReq) Reset() {
+	*x = GrpcTraceTestReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_trace_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GrpcTraceTestReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GrpcTraceTestReq) ProtoMessage() {}
+
+func (x *GrpcTraceTestReq) ProtoReflect() protoreflect.Message {
+	mi := &file_trace_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GrpcTraceTestReq.ProtoReflect.Descriptor instead.
+func (*GrpcTraceTestReq) Descriptor() ([]byte, []int) {
+	return file_trace_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GrpcTraceTestReq) GetKind() int32 {
+	if x != nil {
+		return x.Kind
+	}
+	return 0
+}
+
 var File_trace_proto protoreflect.FileDescriptor
 
 var file_trace_proto_rawDesc = []byte{
-	0x0a, 0x0b, 0x74, 0x72, 0x61, 0x63, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x09, 0x68,
-	0x74, 0x74, 0x70, 0x5f, 0x74, 0x65, 0x73, 0x74, 0x22, 0x22, 0x0a, 0x0c, 0x48, 0x65, 0x6c, 0x6c,
-	0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x26, 0x0a, 0x0a,
-	0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65,
-	0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73,
-	0x73, 0x61, 0x67, 0x65, 0x32, 0x47, 0x0a, 0x07, 0x47, 0x72, 0x65, 0x65, 0x74, 0x65, 0x72, 0x12,
-	0x3c, 0x0a, 0x08, 0x53, 0x61, 0x79, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x12, 0x17, 0x2e, 0x68, 0x74,
-	0x74, 0x70, 0x5f, 0x74, 0x65, 0x73, 0x74, 0x2e, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e, 0x68, 0x74, 0x74, 0x70, 0x5f, 0x74, 0x65, 0x73, 0x74,
-	0x2e, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x42, 0x06, 0x5a,
-	0x04, 0x2e, 0x3b, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x0a, 0x0b, 0x74, 0x72, 0x61, 0x63, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x02, 0x70,
+	0x62, 0x22, 0x22, 0x0a, 0x0c, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x26, 0x0a, 0x0a, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65,
+	0x70, 0x6c, 0x79, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x22, 0x26, 0x0a,
+	0x10, 0x47, 0x72, 0x70, 0x63, 0x54, 0x72, 0x61, 0x63, 0x65, 0x54, 0x65, 0x73, 0x74, 0x52, 0x65,
+	0x71, 0x12, 0x12, 0x0a, 0x04, 0x6b, 0x69, 0x6e, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x04, 0x6b, 0x69, 0x6e, 0x64, 0x32, 0x72, 0x0a, 0x07, 0x47, 0x72, 0x65, 0x65, 0x74, 0x65, 0x72,
+	0x12, 0x2e, 0x0a, 0x08, 0x53, 0x61, 0x79, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x12, 0x10, 0x2e, 0x70,
+	0x62, 0x2e, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0e,
+	0x2e, 0x70, 0x62, 0x2e, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00,
+	0x12, 0x37, 0x0a, 0x0d, 0x47, 0x72, 0x70, 0x63, 0x54, 0x72, 0x61, 0x63, 0x65, 0x54, 0x65, 0x73,
+	0x74, 0x12, 0x14, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x72, 0x70, 0x63, 0x54, 0x72, 0x61, 0x63, 0x65,
+	0x54, 0x65, 0x73, 0x74, 0x52, 0x65, 0x71, 0x1a, 0x0e, 0x2e, 0x70, 0x62, 0x2e, 0x48, 0x65, 0x6c,
+	0x6c, 0x6f, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x42, 0x06, 0x5a, 0x04, 0x2e, 0x3b, 0x70,
+	0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -147,16 +199,19 @@ func file_trace_proto_rawDescGZIP() []byte {
 	return file_trace_proto_rawDescData
 }
 
-var file_trace_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_trace_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_trace_proto_goTypes = []interface{}{
-	(*HelloRequest)(nil), // 0: http_test.HelloRequest
-	(*HelloReply)(nil),   // 1: http_test.HelloReply
+	(*HelloRequest)(nil),     // 0: pb.HelloRequest
+	(*HelloReply)(nil),       // 1: pb.HelloReply
+	(*GrpcTraceTestReq)(nil), // 2: pb.GrpcTraceTestReq
 }
 var file_trace_proto_depIdxs = []int32{
-	0, // 0: http_test.Greeter.SayHello:input_type -> http_test.HelloRequest
-	1, // 1: http_test.Greeter.SayHello:output_type -> http_test.HelloReply
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
+	0, // 0: pb.Greeter.SayHello:input_type -> pb.HelloRequest
+	2, // 1: pb.Greeter.GrpcTraceTest:input_type -> pb.GrpcTraceTestReq
+	1, // 2: pb.Greeter.SayHello:output_type -> pb.HelloReply
+	1, // 3: pb.Greeter.GrpcTraceTest:output_type -> pb.HelloReply
+	2, // [2:4] is the sub-list for method output_type
+	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -192,6 +247,18 @@ func file_trace_proto_init() {
 				return nil
 			}
 		}
+		file_trace_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GrpcTraceTestReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -199,7 +266,7 @@ func file_trace_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_trace_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -226,6 +293,7 @@ const _ = grpc.SupportPackageIsVersion6
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type GreeterClient interface {
 	SayHello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloReply, error)
+	GrpcTraceTest(ctx context.Context, in *GrpcTraceTestReq, opts ...grpc.CallOption) (*HelloReply, error)
 }
 
 type greeterClient struct {
@@ -238,7 +306,16 @@ func NewGreeterClient(cc grpc.ClientConnInterface) GreeterClient {
 
 func (c *greeterClient) SayHello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloReply, error) {
 	out := new(HelloReply)
-	err := c.cc.Invoke(ctx, "/http_test.Greeter/SayHello", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pb.Greeter/SayHello", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *greeterClient) GrpcTraceTest(ctx context.Context, in *GrpcTraceTestReq, opts ...grpc.CallOption) (*HelloReply, error) {
+	out := new(HelloReply)
+	err := c.cc.Invoke(ctx, "/pb.Greeter/GrpcTraceTest", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -248,6 +325,7 @@ func (c *greeterClient) SayHello(ctx context.Context, in *HelloRequest, opts ...
 // GreeterServer is the server API for Greeter service.
 type GreeterServer interface {
 	SayHello(context.Context, *HelloRequest) (*HelloReply, error)
+	GrpcTraceTest(context.Context, *GrpcTraceTestReq) (*HelloReply, error)
 }
 
 // UnimplementedGreeterServer can be embedded to have forward compatible implementations.
@@ -256,6 +334,9 @@ type UnimplementedGreeterServer struct {
 
 func (*UnimplementedGreeterServer) SayHello(context.Context, *HelloRequest) (*HelloReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SayHello not implemented")
+}
+func (*UnimplementedGreeterServer) GrpcTraceTest(context.Context, *GrpcTraceTestReq) (*HelloReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GrpcTraceTest not implemented")
 }
 
 func RegisterGreeterServer(s *grpc.Server, srv GreeterServer) {
@@ -272,7 +353,7 @@ func _Greeter_SayHello_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/http_test.Greeter/SayHello",
+		FullMethod: "/pb.Greeter/SayHello",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GreeterServer).SayHello(ctx, req.(*HelloRequest))
@@ -280,13 +361,35 @@ func _Greeter_SayHello_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Greeter_GrpcTraceTest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GrpcTraceTestReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GreeterServer).GrpcTraceTest(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.Greeter/GrpcTraceTest",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GreeterServer).GrpcTraceTest(ctx, req.(*GrpcTraceTestReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Greeter_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "http_test.Greeter",
+	ServiceName: "pb.Greeter",
 	HandlerType: (*GreeterServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "SayHello",
 			Handler:    _Greeter_SayHello_Handler,
+		},
+		{
+			MethodName: "GrpcTraceTest",
+			Handler:    _Greeter_GrpcTraceTest_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

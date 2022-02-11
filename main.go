@@ -4,12 +4,11 @@ import (
 	"github.com/layasugar/laya"
 	"github.com/layasugar/laya-template/models/dao"
 	"github.com/layasugar/laya-template/routes"
-	"runtime"
 )
 
-// ServerSetup 初始化服务设置
-func ServerSetup() *laya.App {
-	app := laya.DefaultApp()
+// webAppSetup 初始化服务设置
+func webAppSetup() *laya.App {
+	app := laya.WebApp()
 
 	// open db connection and global do before something
 	app.Use(dao.Init)
@@ -18,10 +17,7 @@ func ServerSetup() *laya.App {
 	//app.WebServer().Use()
 
 	// register routes
-	app.WebServer().RegisterRouter(routes.Register)
-
-	// rpc 路由
-	//routes.RegisterRpcRoutes(app.PbRPCServer())
+	app.WebServer().Register(routes.Register)
 
 	// 屏蔽不需要打印出入参路由分组
 	app.SetNoLogParamsPrefix("/admin")
@@ -29,10 +25,22 @@ func ServerSetup() *laya.App {
 	return app
 }
 
-func main() {
-	app := ServerSetup()
+// grpcAppSetup 初始化服务设置
+func grpcAppSetup() *laya.App {
+	app := laya.GrpcApp()
 
-	runtime.Gosched()
-	app.RunWebServer()
-	//app.RunPbRPCServer()
+	// open db connection and global do before something
+	app.Use(dao.Init)
+
+	// rpc 路由
+	app.GrpcServer().Register(routes.RegisterRpcRoutes)
+
+	return app
+}
+
+func main() {
+	//app := webAppSetup()
+	app := grpcAppSetup()
+
+	app.RunServer()
 }

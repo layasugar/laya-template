@@ -17,5 +17,5 @@ func Register(r *laya.WebServer) {
 
 	RegisterApp(r)
 	RegisterAdmin(r)
-	RegisterTest(r)
+	RegisterHttpTest(r)
 }

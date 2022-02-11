@@ -4,7 +4,7 @@ url = "http://127.0.0.1:80"
 name = "laya-template"
 run_mode = "debug"
 http_listen = "0.0.0.0:80"
-pbrpc_liten = "0.0.0.0:10082"
+grpc_listen = "0.0.0.0:81"
 params = true
 version = "1.0.0"
 
@@ -15,7 +15,7 @@ path = "/home/logs/app"
 max_age = 7
 max_count = 30
 
-## 应用链路追踪上报(支持zipkin和jaeger), 采样率是0-1, 0是关闭链路追踪,
+## 应用链路追踪上报(支持zipkin和jaeger), 采样率是0-1, 0是关闭链路追踪
 ## zipkin_addr参考设置http://127.0.0.1:9411/api/v2/spans
 ## jaeger_addr参考设置127.0.0.1:6831
 [app.trace]
@@ -25,17 +25,11 @@ mod = 1
 
 ## service name是唯一值, 对应服务名, 默认连接超时时间是(1500ms), 必须带上协议头(http,https,grpc)
 [[services]]
-name = "http_to_http_test"
+name = "http_test"
 addr = "http://127.0.0.1:10081"
 [[services]]
-name = "http_to_grpc_test"
+name = "grpc_test"
 addr = "grpc://127.0.0.1:10082"
-[[services]]
-name = "grpc_to_http_test"
-addr = "http://127.0.0.1:10083"
-[[services]]
-name = "grpc_to_grpc_test"
-addr = "http://127.0.0.1:10084"
 
 ## mysql配置, redis配置, mongo配置 自行合理配置, models/dao/base.go, 初始化配置
 [mysql]
