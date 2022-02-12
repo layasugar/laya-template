@@ -34,6 +34,7 @@ func (ctrl *controller) HttpTraceTest(ctx *laya.WebContext) {
 	ctrl.Suc(ctx, res)
 }
 
+// SayHello 基础测试使用
 func (ctrl *controller) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
 	return &pb.HelloReply{Message: in.Name}, nil
 }

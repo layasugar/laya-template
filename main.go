@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/layasugar/laya"
+	"github.com/layasugar/laya-template/middlewares"
 	"github.com/layasugar/laya-template/models/dao"
 	"github.com/layasugar/laya-template/routes"
 )
@@ -14,7 +15,7 @@ func webAppSetup() *laya.App {
 	app.Use(dao.Init)
 
 	// register global middlewares
-	//app.WebServer().Use()
+	app.WebServer().Use(middlewares.TestMiddleware())
 
 	// register routes
 	app.WebServer().Register(routes.Register)
@@ -28,6 +29,9 @@ func webAppSetup() *laya.App {
 // grpcAppSetup 初始化服务设置
 func grpcAppSetup() *laya.App {
 	app := laya.GrpcApp()
+
+	// 服务拦截器
+	app.GrpcServer().Use(middlewares.TestInterceptor)
 
 	// open db connection and global do before something
 	app.Use(dao.Init)
