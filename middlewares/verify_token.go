@@ -15,7 +15,7 @@ func UserVerifyToken() laya.WebHandlerFunc {
 		// 从header头里获取 auth  然后去redis里面获取数据对比
 		tokenRedisKey := genv.AppName() + global.TokenRedisKey
 		key := fmt.Sprintf(tokenRedisKey, ctx.GetHeader(global.UserAuth))
-		userData, err := dao.Rdb.Get(ctx, key).Result()
+		userData, err := dao.Rdb().Get(ctx, key).Result()
 		if err != nil {
 			ctx.WarnF("userVerifyToken rdb.Get fail,err:%s", err.Error())
 			ctx.AbortWithStatusJSON(200, map[string]interface{}{

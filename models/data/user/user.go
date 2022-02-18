@@ -30,7 +30,7 @@ func GetUserById(ctx *laya.WebContext, userId uint64) (*User, error) {
 
 func GetUserListByZone(ctx *laya.WebContext, Id int64) ([]User, error) {
 	var users []User
-	err := dao.DB.WithContext(ctx).Model(&User{}).Where("id = ?", Id).Find(&users).Error
+	err := dao.Orm(ctx).Model(&User{}).Where("id = ?", Id).Find(&users).Error
 	if err != nil {
 		ctx.WarnF("GetUserListByZone, err: %s", err.Error())
 		return nil, err
@@ -40,7 +40,7 @@ func GetUserListByZone(ctx *laya.WebContext, Id int64) ([]User, error) {
 
 func GetUserByMobile(ctx *laya.WebContext, mobile string) (*User, error) {
 	var u User
-	err := dao.DB.WithContext(ctx).Where("mobile = ?", mobile).First(&u).Error
+	err := dao.Orm(ctx).WithContext(ctx).Where("mobile = ?", mobile).First(&u).Error
 	if err != nil && errors.Is(err, gorm.ErrRecordNotFound) {
 		ctx.WarnF("GetUserByMobile, err: %s", err.Error())
 		return nil, err
@@ -49,7 +49,7 @@ func GetUserByMobile(ctx *laya.WebContext, mobile string) (*User, error) {
 }
 
 func CreateUser(ctx *laya.WebContext, u *User) error {
-	err := dao.DB.WithContext(ctx).Create(u).Error
+	err := dao.Orm(ctx).WithContext(ctx).Create(u).Error
 	if err != nil {
 		ctx.WarnF("CreateUser fail, err:%s", err.Error())
 		return err

@@ -1,6 +1,7 @@
 ## 应用名称, 运行模式, http端口, grpc端口, 应用外网地址, 是否开启入参出参打印, 应用版本号
 [app]
 url = "http://127.0.0.1:80"
+mod = "dev1"
 name = "laya-template"
 run_mode = "debug"
 http_listen = "0.0.0.0:80"
@@ -23,6 +24,13 @@ type = "jaeger"
 addr = "127.0.0.1:6831"
 mod = 1
 
+## 告警处理
+[app.alarm]
+type = "dingding"
+key = ""
+addr = ""
+
+
 ## service name是唯一值, 对应服务名, 默认连接超时时间是(1500ms), 必须带上协议头(http,https,grpc)
 [[services]]
 name = "http_test"
@@ -43,12 +51,17 @@ max_idle_conn = 1
 name = "laya_template"
 dsn = "root:123456@tcp(127.0.0.1:3306)/laya_template?charset=utf8&parseTime=True&loc=Local"
 
-## redis配置, mongo配置 自行合理配置, models/dao/base.go, 初始化配置
-[redis]
+## redis配置
+[[redis]]
+name = "default"
 addr = "127.0.0.1:6379"
 db = 0
 pwd = "123456"
+
+## mongo,es等其他数据库配置 自行合理配置, models/dao/base.go, 初始化客户端
 [mongo]
+[es]
+[kafka]
 
 ## extra其他配置
 [extra]

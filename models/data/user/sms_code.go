@@ -12,7 +12,7 @@ import (
 func GetSmsCode(ctx *laya.WebContext, scene, mobile string) (string, error) {
 	verifyCodeKey := genv.AppName() + global.VerifyCodeKey
 	key := fmt.Sprintf(verifyCodeKey, scene, mobile)
-	code, err := dao.Rdb.Get(ctx, key).Result()
+	code, err := dao.Rdb().Get(ctx, key).Result()
 	if err != nil {
 		return "", err
 	}
@@ -23,7 +23,7 @@ func GetSmsCode(ctx *laya.WebContext, scene, mobile string) (string, error) {
 func DelSmsCode(ctx *laya.WebContext, scene, mobile string) error {
 	verifyCodeKey := genv.AppName() + global.VerifyCodeKey
 	key := fmt.Sprintf(verifyCodeKey, scene, mobile)
-	err := dao.Rdb.Del(ctx, key).Err()
+	err := dao.Rdb().Del(ctx, key).Err()
 	if err != nil {
 		return err
 	}

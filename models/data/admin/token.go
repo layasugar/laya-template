@@ -20,7 +20,7 @@ func GetToken(ctx *laya.WebContext, userInfo *AdminUser) (string, error) {
 		ctx.WarnF("GetToken json.Marshal user fail, err: %s", err.Error())
 		return "", err
 	}
-	err = dao.Rdb.SetEX(ctx, key, userData, global.TokenExpire).Err()
+	err = dao.Rdb().SetEX(ctx, key, userData, global.TokenExpire).Err()
 	if err != nil {
 		ctx.WarnF("GetToken SetEx fail, err: %s", err.Error())
 		return "", err
@@ -33,7 +33,7 @@ func GetToken(ctx *laya.WebContext, userInfo *AdminUser) (string, error) {
 func DelToken(ctx *laya.WebContext, token string) error {
 	tokenRedisKey := genv.AppName() + global.AdminTokenKey
 	key := fmt.Sprintf(tokenRedisKey, token)
-	err := dao.Rdb.Del(ctx, key).Err()
+	err := dao.Rdb().Del(ctx, key).Err()
 	if err != nil {
 		ctx.WarnF("Logout rdb.del fail, err: %s", err.Error())
 		return err

@@ -52,5 +52,15 @@ func GetUserList(ctx *laya.WebContext, param *GetUserListReq) (*GetUserListRsp, 
 
 	res.Pagination = page.GetPagination(param.Page, param.PageSize, total)
 
+	// 测试redis
+	admin.GetUserListByRedis(ctx)
+
+	// 测试alarm
+	ctx.Alarm("测试alarm", "测试alarm", map[string]interface{}{
+		"laya": "sadas",
+	})
+
+	ctx.ErrorF("打印error的时候测试一下alarm")
+
 	return &res, nil
 }

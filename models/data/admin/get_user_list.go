@@ -4,6 +4,7 @@ import (
 	"github.com/layasugar/laya"
 	"github.com/layasugar/laya-template/models/dao"
 	"github.com/layasugar/laya-template/models/dao/db"
+	"log"
 )
 
 type (
@@ -46,4 +47,13 @@ func GetUserList(ctx *laya.WebContext, params GetUserListParams) ([]User, int64,
 
 	err = tx.Find(&users).Error
 	return users, total, err
+}
+
+func GetUserListByRedis(ctx *laya.WebContext) {
+	result, err := dao.Rdb().Get(ctx, "aksda").Result()
+	if err != nil {
+		ctx.InfoF("asdasd, err: %s", err.Error())
+	}
+
+	log.Print(result)
 }
