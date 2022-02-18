@@ -20,7 +20,7 @@ type (
 
 func GetUserList(ctx *laya.WebContext, params GetUserListParams) ([]User, int64, error) {
 	var users []User
-	tx := dao.DB.WithContext(ctx)
+	tx := dao.Orm(ctx)
 	if params.Id > 0 {
 		tx.Where("id = ?", params.Id)
 	}
@@ -35,7 +35,7 @@ func GetUserList(ctx *laya.WebContext, params GetUserListParams) ([]User, int64,
 	}
 
 	var total int64
-	err := tx.Count(&total).Error
+	err := tx.Model(&users).Count(&total).Error
 	if err != nil {
 		return nil, 0, err
 	}

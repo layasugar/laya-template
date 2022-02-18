@@ -3,9 +3,9 @@
 package dao
 
 import (
+	"context"
 	"github.com/go-redis/redis/v8"
-	"github.com/layasugar/laya/gconf"
-	"github.com/layasugar/laya/gstore"
+	"github.com/layasugar/laya/gstore/dbx"
 	"gorm.io/gorm"
 )
 
@@ -16,14 +16,20 @@ var DB *gorm.DB
 var Rdb *redis.Client
 
 func Init() {
-	// mysql
-	DB = gstore.InitDB(gconf.V.GetString("mysql.dsn"), gstore.LevelInfo)
+	//// mysql
+	//DB = gstore.InitDB(gconf.V.GetString("mysql.dsn"), gstore.LevelInfo)
+	//
+	//// redis
+	//rdbCfg := redis.Options{
+	//	Addr:     gconf.V.GetString("redis.addr"),
+	//	DB:       gconf.V.GetInt("redis.db"),
+	//	Password: gconf.V.GetString("redis.pwd"),
+	//}
+	//Rdb = gstore.InitRdb(rdbCfg)
+}
 
-	// redis
-	rdbCfg := redis.Options{
-		Addr:     gconf.V.GetString("redis.addr"),
-		DB:       gconf.V.GetInt("redis.db"),
-		Password: gconf.V.GetString("redis.pwd"),
-	}
-	Rdb = gstore.InitRdb(rdbCfg)
+// Orm orm
+func Orm(ctx context.Context, dbName ...string) *gorm.DB {
+	db := dbx.Wrap(ctx, dbName...)
+	return db.WithContext(ctx)
 }

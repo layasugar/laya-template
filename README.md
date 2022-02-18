@@ -1,6 +1,6 @@
 # laya-template
 
-- http框架模板, grpc框架模板
+- http框架模板, grpc框架模板, 默认服务模板
 - 使用 [laya](https://github.com/layasugar/laya) 搭建 旨在快速搭建中小型应用服务, restfulApi, rpc服务 ==
 
 > Please note that this repository is out-of-the-box template
@@ -21,6 +21,8 @@ go install github.com/layasugar/laya/laya@latest
 ```
 #### 初始化模板
 ```shell
+laya template init -name=laya-template
+
 laya template init-http -name=laya-template
 
 laya template init-grpc -name=laya-template

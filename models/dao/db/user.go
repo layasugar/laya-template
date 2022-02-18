@@ -16,7 +16,7 @@ type User struct {
 	DeletedAt uint8  `gorm:"column:deleted_at" json:"deleted_at"`
 }
 
-// TableName 将 User 的表名设置为 `user`
+// TableName 将 User 的表名设置为 user
 func (User) TableName() string {
 	return "user"
 }

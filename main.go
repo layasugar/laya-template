@@ -42,9 +42,20 @@ func grpcAppSetup() *laya.App {
 	return app
 }
 
+// defaultAppSetup 初始化基本服务器
+func defaultAppSetup() *laya.App {
+	app := laya.DefaultApp()
+
+	// 加载全局方法
+	//app.Use(dao.Init)
+
+	return app
+}
+
 func main() {
-	//app := webAppSetup()
-	app := grpcAppSetup()
+	app := webAppSetup()
+	//app := defaultAppSetup()
+	//app := grpcAppSetup()
 
 	app.RunServer()
 }

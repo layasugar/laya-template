@@ -11,7 +11,7 @@ func RegisterAdmin(r *laya.WebServer) {
 	adminGroup := r.Group("/admin/v1")
 	{
 		adminGroup.POST("/login", admin.Ctrl.Login)
-		adminGroup.POST("/logout", app.Ctrl.Logout).Use(middlewares.AdminVerifyToken())
+		adminGroup.POST("/logout", middlewares.AdminVerifyToken(), app.Ctrl.Logout)
 		adminGroup.POST("/user/list", admin.Ctrl.GetUserList)
 	}
 }

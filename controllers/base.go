@@ -12,7 +12,6 @@ var Ctrl = &BaseCtrl{}
 
 type BaseCtrl struct {
 	global.HttpResp
-	global.RpcResp
 }
 
 // Version version

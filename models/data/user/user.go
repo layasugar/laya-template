@@ -18,7 +18,9 @@ type (
 
 func GetUserById(ctx *laya.WebContext, userId uint64) (*User, error) {
 	var u User
-	err := dao.DB.WithContext(ctx).Model(&User{}).Where("id = ?", userId).First(&u).Error
+	var orm = dao.Orm(ctx)
+
+	err := orm.Model(&User{}).Where("id = ?", userId).First(&u).Error
 	if err != nil && errors.Is(err, gorm.ErrRecordNotFound) {
 		ctx.WarnF("GetUserById, err: %s", err.Error())
 		return nil, err
