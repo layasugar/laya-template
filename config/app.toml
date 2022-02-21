@@ -27,8 +27,8 @@ mod = 1
 ## 告警处理
 [app.alarm]
 type = "dingding"
-key = ""
-addr = ""
+key = "SEC1a82878eaff2feda60e828e7950269922f0507b32a87713baf3dc40ecd4ef699"
+addr = "https://oapi.dingtalk.com/robot/send?access_token=f5c1a139feca09534c58e5e136137f1fe5af4bde93a0d3883c5756c7f3741367"
 
 
 ## service name是唯一值, 对应服务名, 默认连接超时时间是(1500ms), 必须带上协议头(http,https,grpc)

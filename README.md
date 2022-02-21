@@ -34,18 +34,3 @@ go env -w GOPROXY=https://goproxy.io,direct
 go mod tidy
 go run .
 ```
-
-
-## 推荐工具
-
-### 数据库直接生成gorm的struct
-
-- [github链接](https://github.com/Shelnutt2/db2struct)
-- ```db2struct --host localhost -d database --package db -p 123456 --user root --guregu --gorm -t tableName --struct structName```
-
-### hey 压测工具
-
-- [github链接](https://github.com/rakyll/hey)
-- ```hey -n 100 -c 1000```
-
-### gorm外封装一层, 处理日志, 自动将gorm日志定向到logger
