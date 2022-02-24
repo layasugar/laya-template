@@ -6,7 +6,11 @@ import (
 	"context"
 	"github.com/go-redis/redis/v8"
 	"github.com/layasugar/laya/gstore/dbx"
+	"github.com/layasugar/laya/gstore/edbx"
+	"github.com/layasugar/laya/gstore/mdbx"
 	"github.com/layasugar/laya/gstore/rdbx"
+	"github.com/olivere/elastic/v6"
+	"go.mongodb.org/mongo-driver/mongo"
 	"gorm.io/gorm"
 )
 
@@ -19,4 +23,12 @@ func Orm(ctx context.Context, dbName ...string) *gorm.DB {
 // Rdb redis 连接
 func Rdb(dbName ...string) *redis.Client {
 	return rdbx.GetClient(dbName...)
+}
+
+func Mdb(dbName ...string) *mongo.Client {
+	return mdbx.GetClient(dbName...)
+}
+
+func Edb(dbName ...string) *elastic.Client {
+	return edbx.GetClient(dbName...)
 }

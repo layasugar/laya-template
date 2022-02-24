@@ -58,10 +58,17 @@ addr = "127.0.0.1:6379"
 db = 0
 pwd = "123456"
 
-## mongo,es等其他数据库配置 自行合理配置, models/dao/base.go, 初始化客户端
-[mongo]
-[es]
-[kafka]
+## mongo pool_max_open pool_max_idle conn_max_idle_time
+[[mongo]]
+name = "default"
+uri = "mongodb://root:123456@127.0.0.1:27017"
+
+## es
+[[es]]
+name = "default"
+host = "http://127.0.0.1:4711"
+user = ""
+pwd = ""
 
 ## extra其他配置
 [extra]
