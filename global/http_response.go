@@ -2,7 +2,7 @@ package global
 
 import (
 	"github.com/layasugar/laya"
-	"github.com/layasugar/laya/gconf"
+	"github.com/layasugar/laya/gcf"
 	"net/http"
 )
 
@@ -42,7 +42,7 @@ func Err(code uint32) (err error) {
 
 // Render 渲染
 func (re *rspError) render() (uint32, string) {
-	msg := gconf.LoadErrMsg(re.Code)
+	msg := gcf.LoadErrMsg(re.Code)
 	if msg == "" {
 		msg = "sorry, system err"
 	}

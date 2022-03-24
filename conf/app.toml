@@ -1,37 +1,70 @@
-## 应用名称, 运行模式, http端口, grpc端口, 应用外网地址, 是否开启入参出参打印, 应用版本号
+## app基础配置
+## url 标识该应用的访问地址 默认值是"http://127.0.0.1:80"
+## mod 标识该应用的运行环境 默认值是"dev" 不支持热重载
+## name 应用名 默认值是"default-app" 不支持热重载
+## run_mode gin框架的运行模式 "debug" "release" 默认值是"0.0.0.0:80" 不支持热重载
+## http_listen web服务的监听地址 默认值是"0.0.0.0:81" 不支持热重载
+## version 当前服务的版本号 默认值是"1.0.0" 支持热重载
 [app]
 url = "http://127.0.0.1:80"
-mod = "dev1"
+mod = "dev"
 name = "laya-template"
 run_mode = "debug"
 http_listen = "0.0.0.0:80"
 grpc_listen = "0.0.0.0:81"
-params = true
 version = "1.0.0"
 
-## 应用日志的配置(路径和保留天数和打印在控制台还是文件中)(默认开启7天, 最大日志保留30个, 单个日志大小是128M, 7天内日志最大到3.75G)
+## 应用控制开关
+## params_log 是否打印入参和出参 默认值是true
+## service_log 是否打印内部服务调用日志 默认值是true
+## mysql_log 是否打印mysql查询日志 默认值是true
+## mysql_trace 是否提交mysql链路追踪 默认值是true
+## redis_trace 是否提交redis链路追踪 默认值是true
+## mongo_trace 是否提交mongo链路追踪 默认值是true
+## es_trace 是否提交es链路追踪 默认值是true
+[app.console]
+params_log = true
+service_log = true
+mysql_log = true
+mysql_trace = true
+redis_trace = true
+mongo_trace = true
+es_trace = true
+
+## 应用日志的配置(单个日志大小是128M, 7天内日志最大到3.75G) 不支持热重载
+## type 日志类型 "file" "console" 默认值是"file"
+## path 日志路劲 "/home/logs/app" 默认值是"/home/logs/app" 最终路径是/home/logs/app/{{app_name}}/2022-03-21.log
+## max_age 配置保留天数 7 默认值是7 (日志保留最近7天)
+## max_count 配置保留文件个数 30 默认值是30 (保留最近的30个文件)
 [app.logger]
 type = "file"
 path = "/home/logs/app"
-max_age = 7
-max_count = 30
 
-## 应用链路追踪上报(支持zipkin和jaeger), 采样率是0-1, 0是关闭链路追踪
-## zipkin_addr参考设置http://127.0.0.1:9411/api/v2/spans
-## jaeger_addr参考设置127.0.0.1:6831
+## 应用链路追踪上报(支持zipkin和jaeger)
+## type 是链路追钟的类型 默认值是空 (默认值是空的时候表示没有告警处理)
+## addr 是链路追踪的上报地址 默认值是空 (zipkin_addr参考设置http://127.0.0.1:9411/api/v2/spans, jaeger_addr参考设置127.0.0.1:6831)
+## mod 采样率0-1 默认值是0
 [app.trace]
 type = "jaeger"
 addr = "127.0.0.1:6831"
 mod = 1
 
-## 告警处理
+## 告警处理(dingding和http)
+## type 表示告警处理的类型 默认值是空 (默认值是空的时候表示没有告警处理)
+## key 表示告警的密钥 默认值是空
+## addr 告警提交的地址 默认值是空
 [app.alarm]
 type = "dingding"
 key = "SEC1a82878eaff2feda60e828e7950269922f0507b32a87713baf3dc40ecd4ef699"
 addr = "https://oapi.dingtalk.com/robot/send?access_token=f5c1a139feca09534c58e5e136137f1fe5af4bde93a0d3883c5756c7f3741367"
 
-
-## service name是唯一值, 对应服务名, 默认连接超时时间是(1500ms), 必须带上协议头(http,https,grpc)
+## 内部服务连接池配置
+## name 服务名(唯一)
+## addr 服务地址 必须带上协议头(http,https,grpc)
+## retry 重试次数 默认值是0 (不重试)
+## conn_time_out 连接超时时间 默认值是1500ms
+## write_time_out 写入超时时间 默认值是1500ms
+## read_time_out 读取超时时间 默认值是1500ms
 [[services]]
 name = "http_test"
 addr = "http://127.0.0.1:10081"
@@ -40,37 +73,53 @@ name = "grpc_test"
 addr = "grpc://127.0.0.1:10082"
 
 ## mysql配置, name数据库连接唯一标识, 应用有多个库的时候使用
-## 支持设置max_idle_conn空闲连接数,max_open_conn最大连接数,max_life_time连接可重用的最大时间秒,max_idle_time在关闭连接之前连接可能处于空闲状态的最大时间秒
-## 支持设置日志等级, 默认info, 枚举(info,warn,error)
+## name 数据库标识唯一名 default 默认连接,在使用时没有传入表示使用默认连接
+## dsn 数据库连接dsn
+## max_idle_conn 空闲连接数 默认值是2
+## max_open_conn 最大连接数 默认值是cpu*2+5
+## max_life_time 连接可重用的最大时间秒 默认值是7200s
+## max_idle_time 在关闭连接之前连接可能处于空闲状态的最大时间秒 默认值是60s
 [[mysql]]
 name = "default"
 dsn = "root:123456@tcp(127.0.0.1:3306)/laya_template?charset=utf8&parseTime=True&loc=Local"
-level = "error"
-max_idle_conn = 1
 [[mysql]]
 name = "laya_template"
 dsn = "root:123456@tcp(127.0.0.1:3306)/laya_template?charset=utf8&parseTime=True&loc=Local"
 
 ## redis配置
+## name redis连接唯一标识
+## addr redis连接地址
+## db redis连接数据库
+## pwd redis密码
 [[redis]]
 name = "default"
 addr = "127.0.0.1:6379"
 db = 0
 pwd = "123456"
 
-## mongo pool_max_open pool_max_idle conn_max_idle_time
+## mongo 配置
+## name mongo连接唯一标识
+## dsn mongo连接地址
+## max_open_conn
+## max_idle_conn
+## max_idle_time
 [[mongo]]
 name = "default"
-uri = "mongodb://root:123456@127.0.0.1:27017"
+dsn = "mongodb://admin:123456@127.0.0.1:27017/?authSource=admin"
 
-## es
+## es 配置
+## name es连接唯一标识
+## host es连接地址
+## user 用户名
+## pwd 密码
 [[es]]
 name = "default"
-host = "http://127.0.0.1:4711"
+host = "http://127.0.0.1:9200"
 user = ""
 pwd = ""
 
 ## extra其他配置
+## 支持热重载(需要自己定义方法通过gcf获取)
 [extra]
 
 ## 错误码配置

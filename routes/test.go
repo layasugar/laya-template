@@ -8,7 +8,7 @@ import (
 
 // RegisterHttpTest 注册一组http路由
 func RegisterHttpTest(r *laya.WebServer) {
-	r.POST("/trace-http-test", test.Ctrl.HttpTraceTest)
+	r.POST("/full-test", test.Ctrl.FullTest)
 }
 
 // RegisterRpcRoutes 注册一组rpc路由

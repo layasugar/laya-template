@@ -34,3 +34,7 @@ go env -w GOPROXY=https://goproxy.io,direct
 go mod tidy
 go run .
 ```
+
+## laya-template 体验
+- 该模板本身就是一个demo, 覆盖laya所有功能的测试
+- [体验操作文档](https://github.com/layasugar/laya-template/blob/master/experience.md)

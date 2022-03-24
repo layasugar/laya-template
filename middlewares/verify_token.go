@@ -6,14 +6,14 @@ import (
 	"github.com/layasugar/laya-template/global"
 	"github.com/layasugar/laya-template/global/errno"
 	"github.com/layasugar/laya-template/models/dao"
-	"github.com/layasugar/laya/genv"
+	"github.com/layasugar/laya/env"
 )
 
 // UserVerifyToken Middlewares
 func UserVerifyToken() laya.WebHandlerFunc {
 	return func(ctx *laya.WebContext) {
 		// 从header头里获取 auth  然后去redis里面获取数据对比
-		tokenRedisKey := genv.AppName() + global.TokenRedisKey
+		tokenRedisKey := env.AppName() + global.TokenRedisKey
 		key := fmt.Sprintf(tokenRedisKey, ctx.GetHeader(global.UserAuth))
 		userData, err := dao.Rdb().Get(ctx, key).Result()
 		if err != nil {

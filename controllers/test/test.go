@@ -3,13 +3,15 @@ package test
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/layasugar/laya"
 	"github.com/layasugar/laya-template/models/page/test"
 	"github.com/layasugar/laya-template/pb"
+	"github.com/layasugar/laya-template/utils"
 )
 
-// HttpTraceTest 测试http请求和链路追踪(http_to_http http_to_grpc)
-func (ctrl *controller) HttpTraceTest(ctx *laya.WebContext) {
+// FullTest 测试http请求和链路追踪(http_to_http http_to_grpc)
+func (ctrl *controller) FullTest(ctx *laya.WebContext) {
 	// 参数绑定
 	var pm test.Req
 	err := ctx.ShouldBindJSON(&pm)
@@ -19,12 +21,13 @@ func (ctrl *controller) HttpTraceTest(ctx *laya.WebContext) {
 	}
 
 	// 参数校验
-	if pm.Kind != 1 && pm.Kind != 2 {
-		ctrl.Fail(ctx, errors.New("kind 只能是1,2"))
+	var kinds = []uint8{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	if !utils.InSliceUint8(pm.Kind, kinds) {
+		ctrl.Fail(ctx, errors.New(fmt.Sprintf("kind 只能是%v", kinds)))
 	}
 
 	// 业务处理
-	res, err := test.HttpTraceTest(ctx, pm)
+	res, err := test.FullTest(ctx, pm)
 	if err != nil {
 		ctrl.Fail(ctx, err)
 		return

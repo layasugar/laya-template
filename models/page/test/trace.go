@@ -16,7 +16,7 @@ type (
 	}
 )
 
-func HttpTraceTest(ctx *laya.WebContext, pm Req) (*Rsp, error) {
+func FullTest(ctx *laya.WebContext, pm Req) (*Rsp, error) {
 	var res Rsp
 	switch pm.Kind {
 	case 1:

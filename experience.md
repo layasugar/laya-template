@@ -1,0 +1,88 @@
+## 体验
+
+#### clone代码
+```
+git clone git@github.com:layasugar/laya-template.git
+```
+<hr>
+
+#### 存储配置(mysql,redis,mongo,es), 参照conf/app.toml
+- mysql 的表结构在script/test.sql, 创建laya_template数据库, 导入sql文件
+- 修改redis 连接配置
+- 修改mongo 连接配置
+- 修改es 连接配置
+##### 提供docker安装mysql, redis, mongo, es, zipkin, jaeger
+- mysql
+
+
+
+
+<hr>
+
+#### 测试实例one
+```
+- 切换main函数启动一个http server
+- POST JSON
+{
+    "kind": 1
+}
+- http://127.0.0.1:80/full-test
+```
+##### kind = 1 空转测试并发能力
+- [ ] 接口请求日志打印
+- [ ] 接口处理链路上报zipkin或者jaeger
+- [ ] pprof持续观测结果
+##### kind = 2 测试mysql
+- [ ] mysql的curd的正确性
+- [ ] mysql多连接的正确性
+- [ ] mysql执行sql日志打印
+- [ ] mysql链路上报zipkin或者jaeger
+- [ ] pprof持续观测结果
+- [ ] mysql日志开关
+- [ ] mysql链路开关
+##### kind = 3 测试redis
+- [ ] redis的curd正确性
+- [ ] redis多连接池的正确性
+- [ ] redis链路上报zipkin或者jaeger
+- [ ] redis链路上报开关
+##### kind = 4 测试mongo
+- [ ] mongo的curd正确性
+- [ ] mongo多连接池的正确性
+- [ ] mongo链路上报zipkin或者jaeger
+- [ ] mongo链路上报开关
+##### kind = 5 测试es
+- [ ] es的curd正确性
+- [ ] es多连接池的正确性
+- [ ] es链路上报zipkin或者jaeger
+- [ ] es链路上报开关
+##### kind = 6 测试http_to_http
+- [ ] 服务日志打印
+- [ ] 服务处理链路上报zipkin或者jaeger
+##### kind = 7 测试http_to_grpc
+- [ ] 服务日志打印
+- [ ] 服务处理链路上报zipkin或者jaeger
+<hr>
+
+#### 测试实例two
+```
+- 切换main函数启动一个grpc server
+- GRPC DATA
+{
+    "kind": 1
+}
+- grpc://127.0.0.1:80/SayHello
+- grpc://127.0.0.1:80/GrpcTraceTest
+```
+- [ ] kind = 1 空转grpc
+- [ ] kind = 2 测试grpc_to_http
+- [ ] kind = 2 测试grpc_to_grpc
+<hr>
+
+#### 测试实例three
+```
+- 切换main函数启动一个app server
+NODATA
+```
+- [ ] kind = 1 测试grpc_to_http
+- [ ] kind = 2 测试grpc_to_grpc
+<hr>

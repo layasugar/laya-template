@@ -37,3 +37,12 @@ func randomStr(length int) string {
 	}
 	return string(result) + strconv.FormatInt(time.Now().UnixNano(), 19)
 }
+
+func InSliceUint8(k uint8, s []uint8) bool {
+	for _, v := range s {
+		if k == v {
+			return true
+		}
+	}
+	return false
+}
