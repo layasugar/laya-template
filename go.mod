@@ -3,9 +3,8 @@ module github.com/layasugar/laya-template
 go 1.17
 
 require (
-	github.com/elastic/go-elasticsearch/v7 v7.17.1
 	github.com/go-redis/redis/v8 v8.11.5
-	github.com/layasugar/laya v0.4.5
+	github.com/layasugar/laya v0.4.6
 	github.com/olivere/elastic/v7 v7.0.32
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/uber/jaeger-client-go v2.30.0+incompatible
@@ -79,5 +78,3 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gorm.io/driver/mysql v1.3.2 // indirect
 )
-
-replace github.com/layasugar/laya => ./../laya
