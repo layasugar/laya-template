@@ -8,7 +8,7 @@ import (
 
 type (
 	Req struct {
-		Kind uint8 `json:"kind"` // 1表示发起http请求, 2表示发起rpc请求
+		Kind uint8 `json:"kind"`
 	}
 
 	Rsp struct {
@@ -20,13 +20,27 @@ func FullTest(ctx *laya.WebContext, pm Req) (*Rsp, error) {
 	var res Rsp
 	switch pm.Kind {
 	case 1:
+		res.Code = "success"
+	case 2:
+		mysqlTestCurd(ctx)
+		res.Code = "success"
+	case 3:
+		test.RedisTestCurd(ctx)
+		res.Code = "success"
+	case 4:
+		mongoTestCurd(ctx)
+		res.Code = "success"
+	case 5:
+		esTestCurd(ctx)
+		res.Code = "success"
+	case 6:
 		d, err := test.HttpToHttpTraceTest(ctx)
 		if err != nil {
 			return nil, err
 		}
 
 		res.Code = d.Code
-	case 2:
+	case 7:
 		d, err := test.HttpToRpcTraceTest(ctx)
 		if err != nil {
 			return nil, err

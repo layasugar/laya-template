@@ -4,12 +4,12 @@ package dao
 
 import (
 	"context"
-	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/go-redis/redis/v8"
 	"github.com/layasugar/laya/store/dbx"
 	"github.com/layasugar/laya/store/edbx"
 	"github.com/layasugar/laya/store/mdbx"
 	"github.com/layasugar/laya/store/rdbx"
+	"github.com/olivere/elastic/v7"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gorm.io/gorm"
 )
@@ -29,6 +29,6 @@ func Mdb(dbName ...string) *mongo.Client {
 	return mdbx.GetClient(dbName...)
 }
 
-func Edb(dbName ...string) *elasticsearch.Client {
+func Edb(dbName ...string) *elastic.Client {
 	return edbx.GetClient(dbName...)
 }

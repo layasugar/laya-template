@@ -45,7 +45,6 @@ func GetUserInfo(ctx *laya.WebContext) (*GetMyInfoRsp, error) {
 			Avatar:   u.Avatar,
 			Mobile:   u.Mobile,
 			Status:   u.Status,
-			Channel:  u.Channel,
 		}
 		return &res, nil
 	} else {

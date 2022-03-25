@@ -49,6 +49,7 @@ func HttpTraceTest(ctx *laya.GrpcContext) (*Data, error) {
 		Header: map[string][]string{
 			"Host": []string{"12312"},
 		},
+		Converter: gcal.JSONConverter,
 	}
 	response := CalResp{}
 	err := gcal.Do(serviceName1, req, &response, gcal.JSONConverter)

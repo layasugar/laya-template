@@ -1,10 +1,10 @@
 ## app基础配置
 ## url 标识该应用的访问地址 默认值是"http://127.0.0.1:80"
-## mod 标识该应用的运行环境 默认值是"dev" 不支持热重载
-## name 应用名 默认值是"default-app" 不支持热重载
-## run_mode gin框架的运行模式 "debug" "release" 默认值是"0.0.0.0:80" 不支持热重载
-## http_listen web服务的监听地址 默认值是"0.0.0.0:81" 不支持热重载
-## version 当前服务的版本号 默认值是"1.0.0" 支持热重载
+## mod 标识该应用的运行环境 默认值是"dev"
+## name 应用名 默认值是"default-app"
+## run_mode gin框架的运行模式 "debug" "release" 默认值是"0.0.0.0:80"
+## http_listen web服务的监听地址 默认值是"0.0.0.0:81"
+## version 当前服务的版本号 默认值是"1.0.0"
 [app]
 url = "http://127.0.0.1:80"
 mod = "dev"
@@ -16,6 +16,7 @@ version = "1.0.0"
 
 ## 应用控制开关
 ## params_log 是否打印入参和出参 默认值是true
+## trace_log 是否打印入参和出参 默认值是true
 ## service_log 是否打印内部服务调用日志 默认值是true
 ## mysql_log 是否打印mysql查询日志 默认值是true
 ## mysql_trace 是否提交mysql链路追踪 默认值是true
@@ -23,15 +24,16 @@ version = "1.0.0"
 ## mongo_trace 是否提交mongo链路追踪 默认值是true
 ## es_trace 是否提交es链路追踪 默认值是true
 [app.console]
-params_log = true
-service_log = true
+api_log = true
+api_trace = true
+sdk_log = true
 mysql_log = true
 mysql_trace = true
 redis_trace = true
 mongo_trace = true
 es_trace = true
 
-## 应用日志的配置(单个日志大小是128M, 7天内日志最大到3.75G) 不支持热重载
+## 应用日志的配置(单个日志大小是128M, 7天内日志最大到3.75G)
 ## type 日志类型 "file" "console" 默认值是"file"
 ## path 日志路劲 "/home/logs/app" 默认值是"/home/logs/app" 最终路径是/home/logs/app/{{app_name}}/2022-03-21.log
 ## max_age 配置保留天数 7 默认值是7 (日志保留最近7天)
@@ -41,7 +43,7 @@ type = "file"
 path = "/home/logs/app"
 
 ## 应用链路追踪上报(支持zipkin和jaeger)
-## type 是链路追钟的类型 默认值是空 (默认值是空的时候表示没有告警处理)
+## type 是链路追钟的类型 "zipkin" "jaeger" 默认值是空 (默认值是空的时候表示没有告警处理)
 ## addr 是链路追踪的上报地址 默认值是空 (zipkin_addr参考设置http://127.0.0.1:9411/api/v2/spans, jaeger_addr参考设置127.0.0.1:6831)
 ## mod 采样率0-1 默认值是0
 [app.trace]
@@ -114,9 +116,7 @@ dsn = "mongodb://admin:123456@127.0.0.1:27017/?authSource=admin"
 ## pwd 密码
 [[es]]
 name = "default"
-host = "http://127.0.0.1:9200"
-user = ""
-pwd = ""
+dsn = "http://127.0.0.1:9200"
 
 ## extra其他配置
 ## 支持热重载(需要自己定义方法通过gcf获取)

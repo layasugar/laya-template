@@ -38,3 +38,7 @@ go run .
 ## laya-template 体验
 - 该模板本身就是一个demo, 覆盖laya所有功能的测试
 - [体验操作文档](https://github.com/layasugar/laya-template/blob/master/experience.md)
+- [gorm文档](https://gorm.io/zh_CN/docs/index.html)
+- [go-redis](https://redis.uptrace.dev/)
+- [mongo文档](https://www.mongodb.com/docs/drivers/go/current/usage-examples/)
+- [es文档](https://olivere.github.io/elastic/)

@@ -7,6 +7,7 @@ import (
 	"github.com/layasugar/laya"
 	"github.com/layasugar/laya-template/pb"
 	"github.com/layasugar/laya/gcal"
+	"log"
 	"net/http"
 )
 
@@ -38,7 +39,7 @@ var serviceName2 = "grpc_test"
 
 // HttpToHttpTraceTest Http测试, body是interface可以发送任何类型的数据
 func HttpToHttpTraceTest(ctx *laya.WebContext) (*Data, error) {
-	ctx.InfoF("开始请求了, %s", "aaaa")
+	log.Printf("开始请求了, %s", "aaaa")
 	req := gcal.HTTPRequest{
 		Method: "POST",
 		Path:   path,
@@ -49,6 +50,7 @@ func HttpToHttpTraceTest(ctx *laya.WebContext) (*Data, error) {
 		Header: map[string][]string{
 			"Host": []string{"12312"},
 		},
+		Converter: gcal.JSONConverter,
 	}
 	response := CalResp{}
 	err := gcal.Do(serviceName1, req, &response, gcal.JSONConverter)
@@ -57,7 +59,7 @@ func HttpToHttpTraceTest(ctx *laya.WebContext) (*Data, error) {
 	if response.Head.StatusCode != http.StatusOK {
 		return &response.Body.Data, errors.New("NETWORK_ERROR")
 	}
-	ctx.InfoF("结束请求了, %s", "bbbb")
+	log.Printf("结束请求了, %s", "bbbb")
 	return &response.Body.Data, err
 }
 
