@@ -16,7 +16,6 @@
 ## 安装模板, 愉快编码
 #### 安装
 ```shell
-go get -u github.com/layasugar/laya
 go install github.com/layasugar/laya/laya@latest
 ```
 #### 初始化模板
@@ -30,7 +29,7 @@ laya template init-grpc -name=laya-template
 #### 运行
 ```shell
 cd xxx;
-go env -w GOPROXY=https://goproxy.io,direct
+go get -u github.com/layasugar/laya
 go mod tidy
 go run .
 ```

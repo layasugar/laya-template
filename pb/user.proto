@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+//格式："ypproto.服务目录名称.子目录名称"，禁止使用下划线(包名需和目录名称一致)
+package ypproto.example;
+
+option go_package = ".;pb";
+
+//示例User,和业务member没有关系
+service User {
+  rpc SayHello (HiUser) returns (HiReply) {}
+}
+
+//示例User,和业务member没有关系
+message HiUser {
+  string name = 1;
+  optional int32 sex = 2;
+}
+
+message HiReply {
+  string message = 1;
+  //示例User,和业务member没有关系
+  HiUser user = 2;
+}

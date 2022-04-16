@@ -16,8 +16,17 @@ git clone git@github.com:layasugar/laya-template.git
 - 修改es 连接配置
 
 ##### 提供docker安装mysql, redis, mongo, es, zipkin, jaeger
+```
+docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql --default-authentication-plugin=mysql_native_password
 
-- mysql
+docker run -d -p 6379:6379 --name redis redis --requirepass "123456"
+
+docker run -d --name mongo -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=123456 -p 27017:27017 mongo
+
+docker run -d --name elasticsearch -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.17.1
+
+docker run -d -p 9411:9411 --name zipkin openzipkin/zipkin
+```
 
 <hr>
 

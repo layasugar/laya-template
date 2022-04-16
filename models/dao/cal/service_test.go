@@ -72,7 +72,9 @@ func TestStartRpcx(t *testing.T) {
 	}
 }
 
-type sayHello struct{}
+type sayHello struct {
+	*pb.UnimplementedGreeterServer
+}
 
 func (ctrl *sayHello) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
 	tracer, closer, _ := NewJaeger("grpc_server")
@@ -93,8 +95,6 @@ func (ctrl *sayHello) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.He
 
 	return &pb.HelloReply{Message: in.Name}, nil
 }
-
-// GrpcTraceTest 测试http请求和链路追踪(grpc_to_http grpc_to_grpc)
 func (ctrl *sayHello) GrpcTraceTest(ctx context.Context, in *pb.GrpcTraceTestReq) (*pb.HelloReply, error) {
 	return &pb.HelloReply{Message: fmt.Sprintf("%d", in.Kind)}, nil
 }

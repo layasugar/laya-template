@@ -24,6 +24,7 @@ func (ctrl *controller) FullTest(ctx *laya.WebContext) {
 	var kinds = []uint8{1, 2, 3, 4, 5, 6, 7, 8, 9}
 	if !utils.InSliceUint8(pm.Kind, kinds) {
 		ctrl.Fail(ctx, errors.New(fmt.Sprintf("kind 只能是%v", kinds)))
+		return
 	}
 
 	// 业务处理

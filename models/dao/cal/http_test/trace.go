@@ -7,6 +7,8 @@ import (
 	"github.com/layasugar/laya"
 	"github.com/layasugar/laya-template/pb"
 	"github.com/layasugar/laya/gcal"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"log"
 	"net/http"
 )
@@ -65,18 +67,33 @@ func HttpToHttpTraceTest(ctx *laya.WebContext) (*Data, error) {
 
 // HttpToGrpcTraceTest grpc测试
 func HttpToGrpcTraceTest(ctx *laya.WebContext) (*RpcData, error) {
-	conn := gcal.GetRpcConn(serviceName2)
-	if conn == nil {
-		return nil, errors.New("连接不存在")
+	conn, errDial := grpc.Dial("127.0.0.1:9601", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if errDial != nil {
+		return nil, errDial
 	}
 
-	c := pb.NewGreeterClient(conn)
-
-	res, err := c.SayHello(ctx, &pb.HelloRequest{Name: "q1mi"})
+	var sex int32 = 100
+	d := pb.NewUserClient(conn)
+	res, err := d.SayHello(ctx, &pb.HiUser{Name: "xxxx", Sex: &sex})
 	if err != nil {
 		return nil, err
 	}
 	return &RpcData{
 		Message: res.Message,
 	}, err
+
+	//conn := gcal.GetRpcConn(serviceName2)
+	//if conn == nil {
+	//	return nil, errors.New("连接不存在")
+	//}
+	//
+	//c := pb.NewGreeterClient(conn)
+	//
+	//res, err := c.SayHello(ctx, &pb.HelloRequest{Name: "q1mi"})
+	//if err != nil {
+	//	return nil, err
+	//}
+	//return &RpcData{
+	//	Message: res.Message,
+	//}, err
 }
