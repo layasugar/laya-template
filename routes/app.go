@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/layasugar/laya"
+
 	"github.com/layasugar/laya-template/controllers/app"
 	"github.com/layasugar/laya-template/middlewares"
 )

@@ -1,10 +1,12 @@
 package routes
 
 import (
+	"net/http"
+
 	"github.com/layasugar/laya"
+
 	"github.com/layasugar/laya-template/controllers"
 	"github.com/layasugar/laya-template/controllers/file"
-	"net/http"
 )
 
 func Register(r *laya.WebServer) {

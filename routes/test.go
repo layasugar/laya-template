@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/layasugar/laya"
+
 	"github.com/layasugar/laya-template/controllers/test"
 	"github.com/layasugar/laya-template/pb"
 )
