@@ -15,7 +15,7 @@ grpc_listen = "0.0.0.0:81"
 version = "1.0.0"
 
 ## 应用控制开关
-## params_log 是否打印入参和出参 默认值是true
+## params_log 是否打印入参和出参 默认值是false, 默认关闭请求出入参
 ## trace_log 是否打印入参和出参 默认值是true
 ## service_log 是否打印内部服务调用日志 默认值是true
 ## mysql_log 是否打印mysql查询日志 默认值是true
