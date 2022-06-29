@@ -1,4 +1,4 @@
-package conf
+package config
 
 import "github.com/layasugar/laya/gcf"
 
