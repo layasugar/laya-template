@@ -1,0 +1,30 @@
+stages:
+  - build
+  - deploy
+variables:
+  PROJECT_NAME: $CI_PROJECT_NAME
+  BRANCH_NAME: $CI_COMMIT_REF_NAME
+  DEFAULT_DEPLOY_ENV: "dev"
+
+build_docker_image:
+  stage: build
+  only:
+    refs:
+      - tags
+      - /(addlog)|(test)|(dev).*$/
+    variables:
+      - $push_env !~ /(test)|(dev-admin).*$/
+  tags:
+    - dev-runner-3.99
+  script:
+    - build-docker-image PROJECT_NAME
+
+deploy_to_k8s:
+  stage: deploy
+  only:
+    - /(addlog)|dev.*$/
+  tags:
+    - dev-runner-3.99
+  script:
+    - deploy-to-k8s
+    - echo "current push env:${push_env} image_tag:${IMAGE_TAG}"

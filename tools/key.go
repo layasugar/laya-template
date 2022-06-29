@@ -1,4 +1,4 @@
-package global
+package tools
 
 const (
 	UserAuth      = "Authorization"

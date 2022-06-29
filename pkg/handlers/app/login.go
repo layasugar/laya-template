@@ -4,7 +4,6 @@ import (
 	"errors"
 	"github.com/layasugar/laya"
 	"github.com/layasugar/laya-template/models/page/app"
-	"github.com/layasugar/laya-template/utils"
 )
 
 // Login 登录
@@ -17,7 +16,7 @@ func (ctrl *controller) Login(ctx *laya.WebContext) {
 	}
 
 	// 参数校验
-	if is := utils.IsMobile(pm.Mobile); !is {
+	if is := tools.IsMobile(pm.Mobile); !is {
 		ctrl.Fail(ctx, errors.New("请输入正确的手机号码"))
 		return
 	}

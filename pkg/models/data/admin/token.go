@@ -1,4 +1,4 @@
-package user
+package admin
 
 import (
 	"encoding/json"
@@ -6,14 +6,13 @@ import (
 	"github.com/layasugar/laya"
 	"github.com/layasugar/laya-template/global"
 	"github.com/layasugar/laya-template/models/dao"
-	"github.com/layasugar/laya-template/utils"
 	"github.com/layasugar/laya/env"
 )
 
 // GetToken 获取token
-func GetToken(ctx *laya.WebContext, userInfo *User) (string, error) {
-	token := utils.RandToken()
-	tokenRedisKey := env.AppName() + global.TokenRedisKey
+func GetToken(ctx *laya.WebContext, userInfo *AdminUser) (string, error) {
+	token := tools.RandToken()
+	tokenRedisKey := env.AppName() + global.AdminTokenKey
 	key := fmt.Sprintf(tokenRedisKey, token)
 	userData, err := json.Marshal(userInfo)
 	if err != nil {
@@ -31,7 +30,7 @@ func GetToken(ctx *laya.WebContext, userInfo *User) (string, error) {
 
 // DelToken redis清理token
 func DelToken(ctx *laya.WebContext, token string) error {
-	tokenRedisKey := env.AppName() + global.TokenRedisKey
+	tokenRedisKey := env.AppName() + global.AdminTokenKey
 	key := fmt.Sprintf(tokenRedisKey, token)
 	err := dao.Rdb().Del(ctx, key).Err()
 	if err != nil {
