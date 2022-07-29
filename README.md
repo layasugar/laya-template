@@ -1,7 +1,7 @@
 # laya-template
 
 - http框架模板, grpc框架模板, 默认服务模板
-- 使用 [laya](https://github.com/layasugar/laya) 搭建 旨在快速搭建中小型应用服务, restfulApi, rpc服务 ==
+- 使用 [laya](https://github.com/layasugar/laya) 搭建 旨在快速搭建中小型应用服务, restfulApi, grpc服务 ==
 
 > Please note that this repository is out-of-the-box template
 
@@ -41,3 +41,13 @@ go run .
 - [go-redis](https://redis.uptrace.dev/)
 - [mongo文档](https://www.mongodb.com/docs/drivers/go/current/usage-examples/)
 - [es文档](https://olivere.github.io/elastic/)
+
+### License
+
+`laya-template` is under the Apache 2.0 license. See the [LICENSE](LICENSE) file for details.
+
+### 🔑 JetBrains OS licenses
+
+`laya-template` had been being developed with `GoLand` IDE under the **free JetBrains Open Source license(s)** granted by JetBrains s.r.o., hence I would like to express my thanks here.
+
+<a href="https://www.jetbrains.com/?from=gnet" target="_blank"><img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" width="250" align="middle"/></a>

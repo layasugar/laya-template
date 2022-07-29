@@ -11,9 +11,9 @@ build_docker_image:
   only:
     refs:
       - tags
-      - /(addlog)|(test)|(dev).*$/
+      - /test|dev/
     variables:
-      - $push_env !~ /(test)|(dev-admin).*$/
+      - $push_env !~ /(test)|(dev).*$/
   tags:
     - dev-runner-3.99
   script:
