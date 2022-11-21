@@ -8,7 +8,7 @@ RUN go env -w GOPROXY=https://goproxy.cn,direct \
 
 FROM debian:stretch-slim
 COPY --from=0 /app/laya-go /var/www/code/app/laya-go
-##COPY --from=0 /app/config /var/www/code/app/config
+COPY --from=0 /app/config /var/www/code/app/config
 
 WORKDIR /var/www/code/app
 CMD ["./laya-go"]

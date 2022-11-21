@@ -1,37 +1,14 @@
 ## app基础配置
-## url 标识该应用的访问地址 默认值是"http://127.0.0.1:80"
-## mod 标识该应用的运行环境 默认值是"dev"
+## mod 标识该应用的运行环境 默认值是"dev", "test", "pre"，"prod" 支持前缀例如: dev-1.0.0, 实际运行是dev
+## dev和test会自动开启pprof,gin是debug模式, pre，prod是release模式并且关闭了pprof
 ## name 应用名 默认值是"default-app"
-## run_mode gin框架的运行模式 "debug" "release" 默认值是"0.0.0.0:80"
-## http_listen web服务的监听地址 默认值是"0.0.0.0:81"
+## listen 服务的监听地址 默认值是"0.0.0.0:81"
 ## version 当前服务的版本号 默认值是"1.0.0"
 [app]
-url = "http://127.0.0.1:80"
 mod = "dev"
 name = "laya-template"
-run_mode = "debug"
-http_listen = "0.0.0.0:80"
-grpc_listen = "0.0.0.0:81"
+listen = "0.0.0.0:80"
 version = "1.0.0"
-
-## 应用控制开关
-## params_log 是否打印入参和出参 默认值是false, 默认关闭请求出入参
-## trace_log 是否打印入参和出参 默认值是true
-## service_log 是否打印内部服务调用日志 默认值是true
-## mysql_log 是否打印mysql查询日志 默认值是true
-## mysql_trace 是否提交mysql链路追踪 默认值是true
-## redis_trace 是否提交redis链路追踪 默认值是true
-## mongo_trace 是否提交mongo链路追踪 默认值是true
-## es_trace 是否提交es链路追踪 默认值是true
-[app.console]
-api_log = true
-api_trace = true
-sdk_log = true
-mysql_log = true
-mysql_trace = true
-redis_trace = true
-mongo_trace = true
-es_trace = true
 
 ## 应用日志的配置(单个日志大小是128M, 7天内日志最大到3.75G)
 ## type 日志类型 "file" "console" 默认值是"file"
@@ -60,19 +37,24 @@ type = "dingding"
 key = "SEC1a82878eaff2feda60e828e7950269922f0507b32a87713baf3dc40ecd4ef699"
 addr = "https://oapi.dingtalk.com/robot/send?access_token=f5c1a139feca09534c58e5e136137f1fe5af4bde93a0d3883c5756c7f3741367"
 
-## 内部服务连接池配置
-## name 服务名(唯一)
-## addr 服务地址 必须带上协议头(http,https,grpc)
-## retry 重试次数 默认值是0 (不重试)
-## conn_time_out 连接超时时间 默认值是1500ms
-## write_time_out 写入超时时间 默认值是1500ms
-## read_time_out 读取超时时间 默认值是1500ms
-[[services]]
-name = "http_test"
-addr = "http://127.0.0.1:10081"
-[[services]]
-name = "grpc_test"
-addr = "grpc://127.0.0.1:10082"
+## 应用控制开关
+## params_log 是否打印入参和出参 默认值是false, 默认关闭请求出入参
+## trace_log 是否打印入参和出参 默认值是true
+## service_log 是否打印内部服务调用日志 默认值是true
+## mysql_log 是否打印mysql查询日志 默认值是true
+## mysql_trace 是否提交mysql链路追踪 默认值是true
+## redis_trace 是否提交redis链路追踪 默认值是true
+## mongo_trace 是否提交mongo链路追踪 默认值是true
+## es_trace 是否提交es链路追踪 默认值是true
+[app.console]
+api_log = true
+api_trace = true
+sdk_log = true
+mysql_log = true
+mysql_trace = true
+redis_trace = true
+mongo_trace = true
+es_trace = true
 
 ## mysql配置, name数据库连接唯一标识, 应用有多个库的时候使用
 ## name 数据库标识唯一名 default 默认连接,在使用时没有传入表示使用默认连接
@@ -118,12 +100,21 @@ dsn = "mongodb://root:123456@127.0.0.1:27017/?authSource=admin"
 name = "default"
 dsn = "http://127.0.0.1:9200"
 
+## 内部服务连接池配置
+## name 服务名(唯一)
+## addr 服务地址 必须带上协议头(http,https,grpc)
+## retry 重试次数 默认值是0 (不重试)
+## conn_time_out 连接超时时间 默认值是1500ms
+## write_time_out 写入超时时间 默认值是1500ms
+## read_time_out 读取超时时间 默认值是1500ms
+[[services]]
+name = "http_test"
+addr = "http://127.0.0.1:10081"
+[[services]]
+name = "grpc_test"
+addr = "grpc://127.0.0.1:10082"
+
 ## extra其他配置
 ## 支持热重载(需要自己定义func通过gcf获取)
 [extra]
 auto_metrics = "prometheus"
-
-## 错误码配置
-[err_code]
-"400" = "system error"
-"4002" = "surprise"

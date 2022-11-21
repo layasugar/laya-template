@@ -1,9 +1,9 @@
-package routes
+package route
 
 import (
 	"github.com/layasugar/laya"
 
-	"github.com/layasugar/laya-template/controllers/test"
+	"github.com/layasugar/laya-template/handle/test"
 	"github.com/layasugar/laya-template/pb"
 )
 

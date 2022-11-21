@@ -1,6 +1,6 @@
 module github.com/layasugar/laya-template
 
-go 1.18
+go 1.19
 
 require (
 	github.com/go-redis/redis/v8 v8.11.5
@@ -17,10 +17,6 @@ require (
 require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
-	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
-	github.com/facebookgo/grace v0.0.0-20180706040059-75cf19382434 // indirect
-	github.com/facebookgo/httpdown v0.0.0-20180706035922-5979d39b15c2 // indirect
-	github.com/facebookgo/stats v0.0.0-20151006221625-1b76add642e4 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/gin-gonic/gin v1.7.7 // indirect

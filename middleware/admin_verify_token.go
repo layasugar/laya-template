@@ -1,4 +1,4 @@
-package middlewares
+package middleware
 
 import (
 	"fmt"
@@ -9,11 +9,11 @@ import (
 	"github.com/layasugar/laya/env"
 )
 
-// UserVerifyToken Middlewares
-func UserVerifyToken() laya.WebHandlerFunc {
+// AdminVerifyToken 验证登录
+func AdminVerifyToken() laya.WebHandlerFunc {
 	return func(ctx *laya.WebContext) {
 		// 从header头里获取 auth  然后去redis里面获取数据对比
-		tokenRedisKey := env.AppName() + global.TokenRedisKey
+		tokenRedisKey := env.AppName() + global.AdminTokenKey
 		key := fmt.Sprintf(tokenRedisKey, ctx.GetHeader(global.UserAuth))
 		userData, err := dao.Rdb().Get(ctx, key).Result()
 		if err != nil {
@@ -25,7 +25,7 @@ func UserVerifyToken() laya.WebHandlerFunc {
 				"data":        "",
 			})
 		}
-		ctx.Set(global.UserInfo, userData)
+		ctx.Set(global.AdminUserInfo, userData)
 		ctx.Next()
 	}
 }

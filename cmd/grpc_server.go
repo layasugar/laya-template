@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/middlewares"
 	"github.com/layasugar/laya-template/routes"
 )
 
@@ -11,7 +10,7 @@ func grpcAppSetup() *laya.App {
 	app := laya.GrpcApp()
 
 	// 服务拦截器
-	app.GrpcServer().Use(middlewares.TestInterceptor)
+	app.GrpcServer().Use(middleware.TestInterceptor)
 
 	// rpc 路由
 	app.GrpcServer().Register(routes.RegisterRpcRoutes)

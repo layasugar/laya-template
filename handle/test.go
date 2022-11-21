@@ -1,4 +1,4 @@
-package handlers
+package handle
 
 import (
 	"github.com/layasugar/laya"
