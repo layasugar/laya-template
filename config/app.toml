@@ -1,7 +1,7 @@
 ## app基础配置
 ## mod 标识该应用的运行环境 默认值是"dev", "test", "pre"，"prod" 支持前缀例如: dev-1.0.0, 实际运行是dev
 ## dev和test会自动开启pprof,gin是debug模式, pre，prod是release模式并且关闭了pprof
-## name 应用名 默认值是"default-app"
+## name 应用名 默认值是"normal"
 ## listen 服务的监听地址 默认值是"0.0.0.0:81"
 ## version 当前服务的版本号 默认值是"1.0.0"
 [app]
@@ -19,6 +19,17 @@ version = "1.0.0"
 type = "file"
 path = "/home/logs/app"
 
+## 应用出入参打印, 默认是全打印, 建议只开启核心业务
+## no_log和log互斥，配置了log, no_log就不会生效并且只会打印配置的log
+## prefix前缀，suffix后缀
+[app.logger.params]
+no_log = []
+no_log_prefix = []
+no_log_suffix = []
+log = []
+log_prefix = []
+log_suffix = []
+
 ## 应用链路追踪上报(支持zipkin和jaeger)
 ## type 是链路追钟的类型 "zipkin" "jaeger" 默认值是空 (默认值是空的时候表示没有告警处理)
 ## addr 是链路追踪的上报地址 默认值是空 (zipkin_addr参考设置http://127.0.0.1:9411/api/v2/spans, jaeger_addr参考设置127.0.0.1:6831)
@@ -28,7 +39,7 @@ type = "jaeger"
 addr = "127.0.0.1:6831"
 mod = 1
 
-## 告警处理(dingding和http)
+## 告警处理(dingding和http和飞书)
 ## type 表示告警处理的类型 默认值是空 (默认值是空的时候表示没有告警处理)
 ## key 表示告警的密钥 默认值是空
 ## addr 告警提交的地址 默认值是空
@@ -47,7 +58,6 @@ addr = "https://oapi.dingtalk.com/robot/send?access_token=f5c1a139feca09534c58e5
 ## mongo_trace 是否提交mongo链路追踪 默认值是true
 ## es_trace 是否提交es链路追踪 默认值是true
 [app.console]
-api_log = true
 api_trace = true
 sdk_log = true
 mysql_log = true

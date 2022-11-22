@@ -2,7 +2,6 @@ package admin
 
 import (
 	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/global/page"
 	"github.com/layasugar/laya-template/models/page/admin"
 )
 
@@ -15,10 +14,10 @@ func (ctrl *controller) GetUserList(ctx *laya.WebContext) {
 	}
 
 	if param.Page == 0 {
-		param.Page = page.DefaultPage
+		param.Page = pagination.DefaultPage
 	}
 	if param.PageSize == 0 {
-		param.PageSize = page.DefaultPageSize
+		param.PageSize = pagination.DefaultPageSize
 	}
 
 	resp, err := admin.GetUserList(ctx, &param)

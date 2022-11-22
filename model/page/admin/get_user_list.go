@@ -2,7 +2,6 @@ package admin
 
 import (
 	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/global/page"
 	"github.com/layasugar/laya-template/models/data/admin"
 )
 
@@ -16,8 +15,8 @@ type (
 		Mobile   string `json:"mobile"`
 	}
 	GetUserListRsp struct {
-		List       []User          `json:"list"`
-		Pagination page.Pagination `json:"pagination"`
+		List       []User                `json:"list"`
+		Pagination pagination.Pagination `json:"pagination"`
 	}
 	User struct {
 		Id       uint64 `json:"id"`
@@ -50,7 +49,7 @@ func GetUserList(ctx *laya.WebContext, param *GetUserListReq) (*GetUserListRsp, 
 		})
 	}
 
-	res.Pagination = page.GetPagination(param.Page, param.PageSize, total)
+	res.Pagination = pagination.GetPagination(param.Page, param.PageSize, total)
 
 	// 测试redis
 	admin.GetUserListByRedis(ctx)

@@ -2,17 +2,14 @@ package main
 
 import "github.com/layasugar/laya"
 
-// defaultAppSetup 初始化基本服务器
-func defaultAppSetup() *laya.App {
-	app := laya.DefaultApp()
-
+// normalAppSetup 初始化基本服务器
+func normalAppSetup() *laya.App {
+	app := laya.NormalApp()
 	return app
 }
 
 func main() {
-	app := webAppSetup()
-	//app := defaultAppSetup()
-	//app := grpcAppSetup()
+	app := normalAppSetup()
 
 	app.RunServer()
 }

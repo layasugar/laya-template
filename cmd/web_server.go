@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/layasugar/laya"
+
 	"github.com/layasugar/laya-template/middleware"
 	"github.com/layasugar/laya-template/route"
 )

@@ -1,9 +1,10 @@
-package utils
+package global
 
 import (
-	"github.com/layasugar/laya"
-	"github.com/layasugar/laya/gcf"
 	"net/http"
+
+	"github.com/layasugar/laya"
+	"github.com/layasugar/laya/gcnf"
 )
 
 type HttpResp struct{}
@@ -42,7 +43,7 @@ func Err(code uint32) (err error) {
 
 // Render 渲染
 func (re *rspError) render() (uint32, string) {
-	msg := gcf.LoadErrMsg(re.Code)
+	msg := gcnf.LoadErrMsg(re.Code)
 	if msg == "" {
 		msg = "sorry, system err"
 	}
@@ -50,7 +51,7 @@ func (re *rspError) render() (uint32, string) {
 	return re.Code, re.Msg
 }
 
-func (res *HttpResp) Suc(ctx *laya.WebContext, data interface{}, msg ...string) {
+func (res *HttpResp) Suc(ctx *laya.Context, data interface{}, msg ...string) {
 	rr := new(Response)
 	rr.StatusCode = http.StatusOK
 	if len(msg) == 0 {
@@ -61,11 +62,11 @@ func (res *HttpResp) Suc(ctx *laya.WebContext, data interface{}, msg ...string) 
 		}
 	}
 	rr.Data = data
-	rr.RequestID = ctx.GetLogId()
-	ctx.JSON(http.StatusOK, &rr)
+	rr.RequestID = ctx.LogID()
+	ctx.Gin().JSON(http.StatusOK, &rr)
 }
 
-func (res *HttpResp) Fail(ctx *laya.WebContext, err error) {
+func (res *HttpResp) Fail(ctx *laya.Context, err error) {
 	rr := new(Response)
 	switch err.(type) {
 	case *rspError:
@@ -74,21 +75,21 @@ func (res *HttpResp) Fail(ctx *laya.WebContext, err error) {
 		rr.StatusCode = 400
 		rr.Message = err.Error()
 	}
-	rr.RequestID = ctx.GetLogId()
-	ctx.JSON(http.StatusOK, &rr)
+	rr.RequestID = ctx.LogID()
+	ctx.Gin().JSON(http.StatusOK, &rr)
 }
 
 // RawJSONString json 数据返回
-func (res *HttpResp) RawJSONString(ctx *laya.WebContext, data string) {
-	w := ctx.Writer
+func (res *HttpResp) RawJSONString(ctx *laya.Context, data string) {
+	w := ctx.Gin().Writer
 	w.WriteHeader(200)
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
 	_, _ = w.Write([]byte(data))
 }
 
 // RawString raw 数据返回
-func (res *HttpResp) RawString(ctx *laya.WebContext, data string) {
-	w := ctx.Writer
+func (res *HttpResp) RawString(ctx *laya.Context, data string) {
+	w := ctx.Gin().Writer
 	w.WriteHeader(200)
 	_, _ = w.Write([]byte(data))
 }
