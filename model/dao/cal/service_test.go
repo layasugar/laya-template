@@ -5,6 +5,13 @@ package cal_test
 import (
 	"context"
 	"fmt"
+	"io"
+	"log"
+	"net"
+	"net/http"
+	"testing"
+	"time"
+
 	"github.com/layasugar/laya-template/pb"
 	"github.com/layasugar/laya/core/metautils"
 	"github.com/opentracing/opentracing-go"
@@ -14,12 +21,6 @@ import (
 	jaegerLog "github.com/uber/jaeger-client-go/log"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
-	"io"
-	"log"
-	"net"
-	"net/http"
-	"testing"
-	"time"
 )
 
 var RespSuc = []byte(`{
@@ -45,10 +46,10 @@ func TestStartHttp(t *testing.T) {
 		ext.HTTPMethod.Set(firstSpan, r.Method)
 		firstSpan.SetTag("is_debug", "1")
 		firstSpan.Finish()
-		w.Write(RespSuc)
+		_, _ = w.Write(RespSuc)
 	})
 
-	http.ListenAndServe("0.0.0.0:10081", serverMux)
+	_ = http.ListenAndServe("0.0.0.0:10081", serverMux)
 }
 
 func TestStartRpcx(t *testing.T) {

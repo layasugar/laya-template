@@ -4,9 +4,10 @@ package task_test
 
 import (
 	"errors"
+	"net/http"
+
 	"github.com/layasugar/laya"
 	"github.com/layasugar/laya/gcal"
-	"net/http"
 
 	"github.com/layasugar/laya-template/pb"
 )
@@ -39,7 +40,7 @@ var serviceName2 = "grpc_test"
 
 // TaskToHttpTest Http测试, body是interface可以发送任何类型的数据
 func TaskToHttpTest(ctx *laya.Context) (*Data, error) {
-	ctx.InfoF("开始请求了, %s", "aaaa")
+	ctx.Info("开始请求了, %s", "aaaa")
 	req := gcal.HTTPRequest{
 		Method: "POST",
 		Path:   path,
@@ -48,7 +49,7 @@ func TaskToHttpTest(ctx *laya.Context) (*Data, error) {
 		},
 		Ctx: ctx,
 		Header: map[string][]string{
-			"Host": []string{"12312"},
+			"Host": {"12312"},
 		},
 	}
 	response := CalResp{}
@@ -58,7 +59,7 @@ func TaskToHttpTest(ctx *laya.Context) (*Data, error) {
 	if response.Head.StatusCode != http.StatusOK {
 		return &response.Body.Data, errors.New("NETWORK_ERROR")
 	}
-	ctx.InfoF("结束请求了, %s", "bbbb")
+	ctx.Info("结束请求了, %s", "bbbb")
 	return &response.Body.Data, err
 }
 

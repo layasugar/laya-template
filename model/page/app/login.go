@@ -3,9 +3,11 @@ package app
 import (
 	"errors"
 	"fmt"
+
 	"github.com/layasugar/laya"
+
 	"github.com/layasugar/laya-template/global"
-	"github.com/layasugar/laya-template/models/data/user"
+	"github.com/layasugar/laya-template/model/data/user"
 )
 
 type LoginParam struct {
@@ -22,11 +24,11 @@ type LoginResponse struct {
 }
 
 // Login 用户登录
-func Login(ctx *laya.WebContext, pm *LoginParam) (*LoginResponse, error) {
+func Login(ctx *laya.Context, pm *LoginParam) (*LoginResponse, error) {
 	// 验证验证码
 	err := checkSmsCode(ctx, pm)
 	if err != nil {
-		ctx.WarnF("Login checkSmsCode fail,err:%s", err.Error())
+		ctx.Warn("Login checkSmsCode fail,err:%s", err.Error())
 		return nil, err
 	}
 
@@ -52,7 +54,7 @@ func Login(ctx *laya.WebContext, pm *LoginParam) (*LoginResponse, error) {
 }
 
 // userOperation 用户操作
-func userOperation(ctx *laya.WebContext, pm *LoginParam) (*user.User, error) {
+func userOperation(ctx *laya.Context, pm *LoginParam) (*user.User, error) {
 	userinfo, err := user.GetUserByMobile(ctx, pm.Mobile)
 	if err != nil {
 		return nil, err
@@ -77,10 +79,10 @@ func userOperation(ctx *laya.WebContext, pm *LoginParam) (*user.User, error) {
 }
 
 //checkSmsCode 检查验证码
-func checkSmsCode(ctx *laya.WebContext, pms *LoginParam) error {
+func checkSmsCode(ctx *laya.Context, pms *LoginParam) error {
 	smsCode, err := user.GetSmsCode(ctx, pms.Code, pms.Mobile)
 	if err != nil {
-		ctx.WarnF("checkSmsCode getSmsCode fail,err:%s", err.Error())
+		ctx.Warn("checkSmsCode getSmsCode fail,err:%s", err.Error())
 		return err
 	}
 
@@ -92,7 +94,7 @@ func checkSmsCode(ctx *laya.WebContext, pms *LoginParam) error {
 	// 删除redis smsCode
 	err = user.DelSmsCode(ctx, pms.Code, pms.Mobile)
 	if err != nil {
-		ctx.WarnF("checkSmsCode delSmsCode fail,err:%s", err.Error())
+		ctx.Warn("checkSmsCode delSmsCode fail,err:%s", err.Error())
 		return err
 	}
 
@@ -100,7 +102,7 @@ func checkSmsCode(ctx *laya.WebContext, pms *LoginParam) error {
 }
 
 // Logout 退出登录
-func Logout(ctx *laya.WebContext) error {
-	token := ctx.GetHeader(global.UserAuth)
+func Logout(ctx *laya.Context) error {
+	token := ctx.Gin().GetHeader(global.UserAuth)
 	return user.DelToken(ctx, token)
 }

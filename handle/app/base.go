@@ -1,11 +1,11 @@
 package app
 
 import (
-	"github.com/layasugar/laya-template/controllers"
+	"github.com/layasugar/laya-template/handle"
 )
 
 var Ctrl = &controller{}
 
 type controller struct {
-	controllers.BaseCtrl
+	handle.BaseCtrl
 }

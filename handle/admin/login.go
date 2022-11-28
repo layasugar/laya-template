@@ -2,19 +2,20 @@ package admin
 
 import (
 	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/models/page/admin"
+
+	"github.com/layasugar/laya-template/model/page/admin"
 )
 
 // Login 登录 middlewares.UserVerifyToken
-func (ctrl *controller) Login(ctx *laya.WebContext) {
+func (ctrl *controller) Login(ctx *laya.Context) {
 	var pm admin.LoginReq
-	if err := ctx.ShouldBind(&pm); err != nil {
+	if err := ctx.Gin().ShouldBind(&pm); err != nil {
 		ctrl.Fail(ctx, err)
 		return
 	}
 	data, err := admin.Login(ctx, &pm)
 	if err != nil {
-		ctx.WarnF("Login error,err:%s ", err.Error())
+		ctx.Warn("Login error,err:%s ", err.Error())
 		ctrl.Fail(ctx, err)
 		return
 	}
@@ -22,10 +23,10 @@ func (ctrl *controller) Login(ctx *laya.WebContext) {
 }
 
 // Logout 退出登录
-func (ctrl *controller) Logout(ctx *laya.WebContext) {
+func (ctrl *controller) Logout(ctx *laya.Context) {
 	err := admin.Logout(ctx)
 	if err != nil {
-		ctx.WarnF("Logout error, err: %s ", err.Error())
+		ctx.Warn("Logout error, err: %s ", err.Error())
 		ctrl.Fail(ctx, err)
 		return
 	}

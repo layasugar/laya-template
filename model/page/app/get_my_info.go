@@ -3,11 +3,13 @@ package app
 import (
 	"encoding/json"
 	"errors"
+
 	"github.com/layasugar/laya"
+	"gorm.io/gorm"
+
 	"github.com/layasugar/laya-template/global"
 	"github.com/layasugar/laya-template/global/errno"
-	"github.com/layasugar/laya-template/models/data/user"
-	"gorm.io/gorm"
+	"github.com/layasugar/laya-template/model/data/user"
 )
 
 type (
@@ -22,7 +24,7 @@ type (
 	}
 )
 
-func GetUserInfo(ctx *laya.WebContext) (*GetMyInfoRsp, error) {
+func GetUserInfo(ctx *laya.Context) (*GetMyInfoRsp, error) {
 	if userInfoStr := ctx.GetString(global.UserInfo); userInfoStr != "" {
 		var userInfo user.User
 		err := json.Unmarshal([]byte(userInfoStr), &userInfo)
@@ -35,7 +37,7 @@ func GetUserInfo(ctx *laya.WebContext) (*GetMyInfoRsp, error) {
 			return nil, err
 		}
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			ctx.ErrorF("用户中心: %s", "用户不存在")
+			ctx.Error("用户中心: %s", "用户不存在")
 			return nil, errno.UserNotFound
 		}
 		res := GetMyInfoRsp{

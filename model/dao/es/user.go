@@ -2,7 +2,7 @@ package es
 
 import (
 	"bytes"
-	"github.com/layasugar/laya/tools"
+	"encoding/json"
 	"io"
 	"log"
 	"time"
@@ -20,7 +20,7 @@ type User struct {
 }
 
 func (u User) Reader() io.Reader {
-	res, err := tools.CJson.Marshal(&u)
+	res, err := json.Marshal(&u)
 	if err != nil {
 		log.Print("cjson marshal err")
 		return nil

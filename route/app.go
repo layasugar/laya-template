@@ -2,9 +2,9 @@ package route
 
 import (
 	"github.com/layasugar/laya"
+	"github.com/layasugar/laya-template/middleware"
 
 	"github.com/layasugar/laya-template/handle/app"
-	"github.com/layasugar/laya-template/middleware"
 )
 
 func RegisterApp(r *laya.WebServer) {

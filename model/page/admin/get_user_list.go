@@ -2,7 +2,9 @@ package admin
 
 import (
 	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/models/data/admin"
+
+	"github.com/layasugar/laya-template/global/pagination"
+	"github.com/layasugar/laya-template/model/data/admin"
 )
 
 type (
@@ -26,9 +28,9 @@ type (
 	}
 )
 
-func GetUserList(ctx *laya.WebContext, param *GetUserListReq) (*GetUserListRsp, error) {
+func GetUserList(ctx *laya.Context, param *GetUserListReq) (*GetUserListRsp, error) {
 	var res GetUserListRsp
-	users, total, err := admin.GetUserList(ctx, admin.GetUserListParams{
+	users, _, err := admin.GetUserList(ctx, admin.GetUserListParams{
 		Page:     param.Page,
 		PageSize: param.PageSize,
 		Id:       param.Id,
@@ -49,17 +51,15 @@ func GetUserList(ctx *laya.WebContext, param *GetUserListReq) (*GetUserListRsp, 
 		})
 	}
 
-	res.Pagination = pagination.GetPagination(param.Page, param.PageSize, total)
-
 	// 测试redis
 	admin.GetUserListByRedis(ctx)
 
 	// 测试alarm
-	ctx.Alarm("测试alarm", "测试alarm", map[string]interface{}{
+	ctx.Push("测试alarm", "测试alarm", map[string]interface{}{
 		"laya": "sadas",
 	})
 
-	ctx.ErrorF("打印error的时候测试一下alarm")
+	ctx.Error("打印error的时候测试一下alarm")
 
 	return &res, nil
 }

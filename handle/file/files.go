@@ -1,21 +1,16 @@
 package file
 
 import (
-	"crypto/rand"
-	"fmt"
 	"github.com/layasugar/laya"
-	"os"
-	"path/filepath"
-	"strings"
 )
 
-type res struct {
-	ImgUrl string
-}
+//type res struct {
+//	ImgUrl string
+//}
 
-const uploadPath = "files"
+//const uploadPath = "files"
 
-func (ctrl *controller) Upload(ctx *laya.WebContext) {
+func (ctrl *controller) Upload(ctx *laya.Context) {
 	//file, _ := c.FormFile("File")
 	//if file == nil {
 	//	c.Set("$.Upload.NoFile.code", response.NoFile)
@@ -56,21 +51,22 @@ func (ctrl *controller) Upload(ctx *laya.WebContext) {
 	//return
 }
 
-func (ctrl *controller) getNewPath(fileType string, uid string, fileName string) string {
-	// initialize filepath
-	path := uploadPath
-	kv := strings.Split(fileName, ".")
-	mimeType := kv[len(kv)-1]
-	newName := randToken(12)
-	newPath := filepath.Join(path, newName+"."+mimeType)
-	path += "/admin"
-	_ = os.MkdirAll(path, 777)
-	newPath = filepath.Join(path, newName+"."+mimeType)
-	return newPath
-}
-
-func randToken(len int) string {
-	b := make([]byte, len)
-	_, _ = rand.Read(b)
-	return fmt.Sprintf("%x", b)
-}
+//
+//func (ctrl *controller) getNewPath(fileType string, uid string, fileName string) string {
+//	// initialize filepath
+//	path := uploadPath
+//	kv := strings.Split(fileName, ".")
+//	mimeType := kv[len(kv)-1]
+//	newName := randToken(12)
+//	newPath := filepath.Join(path, newName+"."+mimeType)
+//	path += "/admin"
+//	_ = os.MkdirAll(path, 777)
+//	newPath = filepath.Join(path, newName+"."+mimeType)
+//	return newPath
+//}
+//
+//func randToken(len int) string {
+//	b := make([]byte, len)
+//	_, _ = rand.Read(b)
+//	return fmt.Sprintf("%x", b)
+//}

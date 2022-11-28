@@ -17,16 +17,11 @@ func webAppSetup() *laya.App {
 	// register routes
 	app.WebServer().Register(route.Register)
 
-	// 屏蔽不需要打印出入参路由分组
-	app.SetNoLogParamsPrefix("/admin")
-
 	return app
 }
 
 func main() {
 	app := webAppSetup()
-	//app := defaultAppSetup()
-	//app := grpcAppSetup()
 
 	app.RunServer()
 }

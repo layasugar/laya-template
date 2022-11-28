@@ -1,7 +1,7 @@
 package config
 
-import "github.com/layasugar/laya/gcf"
+import "github.com/layasugar/laya/gcnf"
 
 func GetZkAddr() string {
-	return gcf.GetString("extra.auto_metrics")
+	return gcnf.GetString("extra.auto_metrics")
 }

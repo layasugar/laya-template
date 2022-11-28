@@ -10,18 +10,10 @@ import (
 type HttpResp struct{}
 
 type Response struct {
-	StatusCode uint32      `json:"status_code"`
-	Message    string      `json:"message"`
+	Code       uint32      `json:"code"`
+	Msg        string      `json:"msg"`
 	Data       interface{} `json:"data"`
-	RequestID  string      `json:"request_id"`
-}
-
-type Pagination struct {
-	Total       int64 `json:"total"`
-	Count       int64 `json:"count"`
-	PerPage     int64 `json:"per_page"`
-	CurrentPage int64 `json:"current_page"`
-	TotalPages  int64 `json:"total_pages"`
+	XRequestID string      `json:"x_request_id"`
 }
 
 // rspError 错误处理
@@ -53,29 +45,33 @@ func (re *rspError) render() (uint32, string) {
 
 func (res *HttpResp) Suc(ctx *laya.Context, data interface{}, msg ...string) {
 	rr := new(Response)
-	rr.StatusCode = http.StatusOK
+	rr.Code = http.StatusOK
 	if len(msg) == 0 {
-		rr.Message = "success"
+		rr.Msg = "success"
 	} else {
 		for _, v := range msg {
-			rr.Message += "," + v
+			if rr.Msg != "" {
+				rr.Msg += ", " + v
+			} else {
+				rr.Msg += v
+			}
 		}
 	}
 	rr.Data = data
-	rr.RequestID = ctx.LogID()
+	rr.XRequestID = ctx.LogId()
 	ctx.Gin().JSON(http.StatusOK, &rr)
 }
 
 func (res *HttpResp) Fail(ctx *laya.Context, err error) {
 	rr := new(Response)
-	switch err.(type) {
+	switch t := err.(type) {
 	case *rspError:
-		rr.StatusCode, rr.Message = err.(*rspError).render()
+		rr.Code, rr.Msg = t.render()
 	default:
-		rr.StatusCode = 400
-		rr.Message = err.Error()
+		rr.Code = 400
+		rr.Msg = err.Error()
 	}
-	rr.RequestID = ctx.LogID()
+	rr.XRequestID = ctx.LogId()
 	ctx.Gin().JSON(http.StatusOK, &rr)
 }
 

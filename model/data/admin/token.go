@@ -3,25 +3,28 @@ package admin
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/layasugar/laya"
+	"github.com/layasugar/laya/gcnf"
+
 	"github.com/layasugar/laya-template/global"
-	"github.com/layasugar/laya-template/models/dao"
-	"github.com/layasugar/laya/env"
+	"github.com/layasugar/laya-template/model/dao"
+	"github.com/layasugar/laya-template/utils"
 )
 
 // GetToken 获取token
-func GetToken(ctx *laya.WebContext, userInfo *AdminUser) (string, error) {
-	token := tools.RandToken()
-	tokenRedisKey := env.AppName() + global.AdminTokenKey
+func GetToken(ctx *laya.Context, userInfo *AdminUser) (string, error) {
+	token := utils.RandToken()
+	tokenRedisKey := gcnf.AppName() + global.AdminTokenKey
 	key := fmt.Sprintf(tokenRedisKey, token)
 	userData, err := json.Marshal(userInfo)
 	if err != nil {
-		ctx.WarnF("GetToken json.Marshal user fail, err: %s", err.Error())
+		ctx.Warn("GetToken json.Marshal user fail, err: %s", err.Error())
 		return "", err
 	}
 	err = dao.Rdb().SetEX(ctx, key, userData, global.TokenExpire).Err()
 	if err != nil {
-		ctx.WarnF("GetToken SetEx fail, err: %s", err.Error())
+		ctx.Warn("GetToken SetEx fail, err: %s", err.Error())
 		return "", err
 	}
 
@@ -29,12 +32,12 @@ func GetToken(ctx *laya.WebContext, userInfo *AdminUser) (string, error) {
 }
 
 // DelToken redis清理token
-func DelToken(ctx *laya.WebContext, token string) error {
-	tokenRedisKey := env.AppName() + global.AdminTokenKey
+func DelToken(ctx *laya.Context, token string) error {
+	tokenRedisKey := gcnf.AppName() + global.AdminTokenKey
 	key := fmt.Sprintf(tokenRedisKey, token)
 	err := dao.Rdb().Del(ctx, key).Err()
 	if err != nil {
-		ctx.WarnF("Logout rdb.del fail, err: %s", err.Error())
+		ctx.Warn("Logout rdb.del fail, err: %s", err.Error())
 		return err
 	}
 	return nil

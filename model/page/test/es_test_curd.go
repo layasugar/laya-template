@@ -1,12 +1,13 @@
 package test
 
 import (
-	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/models/data/test"
 	"log"
+
+	"github.com/layasugar/laya"
+	"github.com/layasugar/laya-template/model/data/test"
 )
 
-func esTestCurd(ctx *laya.WebContext) {
+func esTestCurd(ctx *laya.Context) {
 	eid, err := test.EsUserCreate(ctx)
 	if err != nil {
 		panic(err)

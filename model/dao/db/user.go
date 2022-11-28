@@ -1,7 +1,6 @@
 package db
 
 import (
-	"github.com/layasugar/laya/tools/timex"
 	"gorm.io/gorm"
 )
 
@@ -15,8 +14,8 @@ type User struct {
 	Salt      string         `gorm:"column:salt" json:"-"`            // 盐
 	Mobile    string         `gorm:"column:mobile" json:"mobile"`     // 手机号
 	Status    uint8          `gorm:"column:status" json:"status"`     // 状态
-	CreatedAt timex.Time     `gorm:"column:created_at" json:"created_at"`
-	UpdatedAt timex.Time     `gorm:"column:updated_at" json:"updated_at"`
+	CreatedAt uint64         `gorm:"column:created_at" json:"created_at"`
+	UpdatedAt uint64         `gorm:"column:updated_at" json:"updated_at"`
 	DeletedAt gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
 }
 

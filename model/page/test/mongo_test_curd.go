@@ -1,12 +1,14 @@
 package test
 
 import (
-	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/models/data/test"
 	"log"
+
+	"github.com/layasugar/laya"
+
+	"github.com/layasugar/laya-template/model/data/test"
 )
 
-func mongoTestCurd(ctx *laya.WebContext) {
+func mongoTestCurd(ctx *laya.Context) {
 	mid, err := test.MongoUserCreate(ctx)
 	if err != nil {
 		panic(err)

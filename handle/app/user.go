@@ -2,15 +2,17 @@ package app
 
 import (
 	"fmt"
+
 	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/models/page/app"
+
+	"github.com/layasugar/laya-template/model/page/app"
 )
 
 // GetUserInfo 获取用户信息
-func (ctrl *controller) GetUserInfo(ctx *laya.WebContext) {
+func (ctrl *controller) GetUserInfo(ctx *laya.Context) {
 	resp, err := app.GetUserInfo(ctx)
 	if err != nil {
-		ctx.InfoF("获取用户信息", fmt.Sprintf("title=获取用户信息,err=%s", err.Error()))
+		ctx.Info("获取用户信息", fmt.Sprintf("title=获取用户信息,err=%s", err.Error()))
 		ctrl.Fail(ctx, err)
 		return
 	}

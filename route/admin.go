@@ -2,10 +2,10 @@ package route
 
 import (
 	"github.com/layasugar/laya"
+	"github.com/layasugar/laya-template/middleware"
 
 	"github.com/layasugar/laya-template/handle/admin"
 	"github.com/layasugar/laya-template/handle/app"
-	"github.com/layasugar/laya-template/middleware"
 )
 
 func RegisterAdmin(r *laya.WebServer) {

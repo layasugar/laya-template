@@ -4,10 +4,12 @@ package rpc_test
 
 import (
 	"errors"
-	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/pb"
-	"github.com/layasugar/laya/gcal"
 	"net/http"
+
+	"github.com/layasugar/laya"
+	"github.com/layasugar/laya/gcal"
+
+	"github.com/layasugar/laya-template/pb"
 )
 
 type (
@@ -37,8 +39,8 @@ var serviceName1 = "http_test"
 var serviceName2 = "grpc_test"
 
 // HttpTraceTest Http测试, body是interface可以发送任何类型的数据
-func HttpTraceTest(ctx *laya.GrpcContext) (*Data, error) {
-	ctx.InfoF("开始请求了, %s", "aaaa")
+func HttpTraceTest(ctx *laya.Context) (*Data, error) {
+	ctx.Info("开始请求了, %s", "aaaa")
 	req := gcal.HTTPRequest{
 		Method: "POST",
 		Path:   path,
@@ -47,7 +49,7 @@ func HttpTraceTest(ctx *laya.GrpcContext) (*Data, error) {
 		},
 		Ctx: ctx,
 		Header: map[string][]string{
-			"Host": []string{"12312"},
+			"Host": {"12312"},
 		},
 		Converter: gcal.JSONConverter,
 	}
@@ -58,12 +60,12 @@ func HttpTraceTest(ctx *laya.GrpcContext) (*Data, error) {
 	if response.Head.StatusCode != http.StatusOK {
 		return &response.Body.Data, errors.New("NETWORK_ERROR")
 	}
-	ctx.InfoF("结束请求了, %s", "bbbb")
+	ctx.Info("结束请求了, %s", "bbbb")
 	return &response.Body.Data, err
 }
 
 // RpcTraceTest rpc测试
-func RpcTraceTest(ctx *laya.GrpcContext) (*RpcData, error) {
+func RpcTraceTest(ctx *laya.Context) (*RpcData, error) {
 	conn := gcal.GetRpcConn(serviceName2)
 	if conn == nil {
 		return nil, errors.New("连接不存在")

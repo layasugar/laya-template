@@ -2,21 +2,24 @@ package app
 
 import (
 	"errors"
+
 	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/models/page/app"
+
+	"github.com/layasugar/laya-template/model/page/app"
+	"github.com/layasugar/laya-template/utils"
 )
 
 // Login 登录
-func (ctrl *controller) Login(ctx *laya.WebContext) {
+func (ctrl *controller) Login(ctx *laya.Context) {
 	// 参数绑定
 	var pm app.LoginParam
-	if err := ctx.ShouldBindJSON(&pm); err != nil {
+	if err := ctx.Gin().ShouldBindJSON(&pm); err != nil {
 		ctrl.Fail(ctx, err)
 		return
 	}
 
 	// 参数校验
-	if is := tools.IsMobile(pm.Mobile); !is {
+	if is := utils.IsMobile(pm.Mobile); !is {
 		ctrl.Fail(ctx, errors.New("请输入正确的手机号码"))
 		return
 	}
@@ -24,7 +27,7 @@ func (ctrl *controller) Login(ctx *laya.WebContext) {
 	// 业务处理
 	data, err := app.Login(ctx, &pm)
 	if err != nil {
-		ctx.ErrorF("Login error, err: %s ", err.Error())
+		ctx.Error("Login error, err: %s ", err.Error())
 		ctrl.Fail(ctx, err)
 		return
 	}
@@ -34,10 +37,10 @@ func (ctrl *controller) Login(ctx *laya.WebContext) {
 }
 
 // Logout 退出登录
-func (ctrl *controller) Logout(ctx *laya.WebContext) {
+func (ctrl *controller) Logout(ctx *laya.Context) {
 	err := app.Logout(ctx)
 	if err != nil {
-		ctx.WarnF("Logout error, err: %s ", err.Error())
+		ctx.Warn("Logout error, err: %s ", err.Error())
 		ctrl.Fail(ctx, err)
 		return
 	}

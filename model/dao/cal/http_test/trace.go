@@ -4,13 +4,15 @@ package http_test
 
 import (
 	"errors"
+	"log"
+	"net/http"
+
 	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/pb"
 	"github.com/layasugar/laya/gcal"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"log"
-	"net/http"
+
+	"github.com/layasugar/laya-template/pb"
 )
 
 type (
@@ -37,10 +39,11 @@ type (
 
 var path = "/server-b/fast"
 var serviceName1 = "http_test"
-var serviceName2 = "grpc_test"
+
+//var serviceName2 = "grpc_test"
 
 // HttpToHttpTraceTest Http测试, body是interface可以发送任何类型的数据
-func HttpToHttpTraceTest(ctx *laya.WebContext) (*Data, error) {
+func HttpToHttpTraceTest(ctx *laya.Context) (*Data, error) {
 	log.Printf("开始请求了, %s", "aaaa")
 	req := gcal.HTTPRequest{
 		Method: "POST",
@@ -50,7 +53,7 @@ func HttpToHttpTraceTest(ctx *laya.WebContext) (*Data, error) {
 		},
 		Ctx: ctx,
 		Header: map[string][]string{
-			"Host": []string{"12312"},
+			"Host": {"12312"},
 		},
 		Converter: gcal.JSONConverter,
 	}
@@ -66,7 +69,7 @@ func HttpToHttpTraceTest(ctx *laya.WebContext) (*Data, error) {
 }
 
 // HttpToGrpcTraceTest grpc测试
-func HttpToGrpcTraceTest(ctx *laya.WebContext) (*RpcData, error) {
+func HttpToGrpcTraceTest(ctx *laya.Context) (*RpcData, error) {
 	conn, errDial := grpc.Dial("127.0.0.1:9601", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if errDial != nil {
 		return nil, errDial
@@ -94,6 +97,6 @@ func HttpToGrpcTraceTest(ctx *laya.WebContext) (*RpcData, error) {
 	//	return nil, err
 	//}
 	//return &RpcData{
-	//	Message: res.Message,
+	//	Msg: res.Msg,
 	//}, err
 }

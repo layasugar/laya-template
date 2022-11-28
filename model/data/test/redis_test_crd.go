@@ -1,27 +1,27 @@
 package test
 
 import (
-	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/models/dao"
-	"github.com/layasugar/laya-template/models/dao/rdb"
-	"github.com/layasugar/laya/tools/timex"
 	"log"
 	"time"
+
+	"github.com/layasugar/laya"
+
+	"github.com/layasugar/laya-template/model/dao"
+	"github.com/layasugar/laya-template/model/dao/rdb"
 )
 
 const redisTestPrefix = "test:prefix:"
 
 // RedisTestCurd 测试curd
-func RedisTestCurd(ctx *laya.WebContext) {
+func RedisTestCurd(ctx *laya.Context) {
 	redisKey := redisTestPrefix + "laya-template"
 	data := rdb.User{
-		ID:        1,
-		Username:  "laya",
-		Nickname:  "layasugar",
-		Avatar:    "https://layasugar.cn",
-		Mobile:    "12345678910",
-		Status:    1,
-		CreatedAt: timex.TimeFrom(time.Now()),
+		ID:       1,
+		Username: "laya",
+		Nickname: "layasugar",
+		Avatar:   "https://layasugar.cn",
+		Mobile:   "12345678910",
+		Status:   1,
 	}
 
 	err := dao.Rdb().Set(ctx, redisKey, data.String(), 100*time.Second).Err()

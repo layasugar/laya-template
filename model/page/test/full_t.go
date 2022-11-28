@@ -2,7 +2,7 @@ package test
 
 import (
 	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/models/data/test"
+	"github.com/layasugar/laya-template/model/data/test"
 	"github.com/layasugar/laya-template/pb"
 )
 
@@ -16,7 +16,7 @@ type (
 	}
 )
 
-func FullTest(ctx *laya.WebContext, pm Req) (*Rsp, error) {
+func FullTest(ctx *laya.Context, pm Req) (*Rsp, error) {
 	var res Rsp
 	switch pm.Kind {
 	case 1:
@@ -52,7 +52,7 @@ func FullTest(ctx *laya.WebContext, pm Req) (*Rsp, error) {
 	return &res, nil
 }
 
-func RpcTraceTest(ctx *laya.GrpcContext, pm *pb.GrpcTraceTestReq) (*Rsp, error) {
+func RpcTraceTest(ctx *laya.Context, pm *pb.GrpcTraceTestReq) (*Rsp, error) {
 	var res Rsp
 	switch pm.Kind {
 	case 1:

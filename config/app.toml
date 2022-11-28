@@ -7,36 +7,35 @@
 [app]
 mod = "dev"
 name = "laya-template"
-listen = "0.0.0.0:80"
+listen = "0.0.0.0:10080"
 version = "1.0.0"
 
 ## 应用日志的配置(单个日志大小是128M, 7天内日志最大到3.75G)
 ## type 日志类型 "file" "console" 默认值是"file"
-## path 日志路劲 "/home/logs/app" 默认值是"/home/logs/app" 最终路径是/home/logs/app/{{.app_name}}/2022-03-21.log
+## path 日志路劲 "/home/logs/app" 默认值是"/home/logs/" 最终路径是/home/logs/{{.app_name}}/2022-03-21.log
 ## max_age 配置保留天数 7 默认值是7 (日志保留最近7天)
 ## max_count 配置保留文件个数 30 默认值是30 (保留最近的30个文件)
+## max_size 单个文件最大多少byte
+## child_path 子目录, 默认值是"%Y-%m-%d.log"
+## 支持debug info warn error 4个日志等级
 [app.logger]
-type = "file"
-path = "/home/logs/app"
 
-## 应用出入参打印, 默认是全打印, 建议只开启核心业务
-## no_log和log互斥，配置了log, no_log就不会生效并且只会打印配置的log
-## prefix前缀，suffix后缀
+## 应用需要的出入参打印, 默认是全打印, 建议配置核心业务
+## sdk表示请求其他服务是否需要打印
+## prefix前缀，suffix后缀, 支持*，不支持正则和模糊
 [app.logger.params]
-no_log = []
-no_log_prefix = []
-no_log_suffix = []
-log = []
-log_prefix = []
-log_suffix = []
+sdk = true
+log_uri = ["*"]
+log_uri_prefix = []
+log_uri_suffix = []
 
 ## 应用链路追踪上报(支持zipkin和jaeger)
-## type 是链路追钟的类型 "zipkin" "jaeger" 默认值是空 (默认值是空的时候表示没有告警处理)
-## addr 是链路追踪的上报地址 默认值是空 (zipkin_addr参考设置http://127.0.0.1:9411/api/v2/spans, jaeger_addr参考设置127.0.0.1:6831)
+## type 是链路追钟的类型 "zipkin" "jaeger" 默认值是空 (默认值是空的时候表示没有链路处理)
+## addr 是链路追踪的上报地址 默认值是空 (zipkin_addr参考设置http://127.0.0.1:9411/api/v2/spans, jaeger_addr参考设置127.0.0.1:6831)http://localhost:14268/api/traces
 ## mod 采样率0-1 默认值是0
 [app.trace]
 type = "jaeger"
-addr = "127.0.0.1:6831"
+addr = "http://127.0.0.1:14268/api/traces"
 mod = 1
 
 ## 告警处理(dingding和http和飞书)
@@ -44,27 +43,9 @@ mod = 1
 ## key 表示告警的密钥 默认值是空
 ## addr 告警提交的地址 默认值是空
 [app.alarm]
-type = "dingding"
-key = "SEC1a82878eaff2feda60e828e7950269922f0507b32a87713baf3dc40ecd4ef699"
-addr = "https://oapi.dingtalk.com/robot/send?access_token=f5c1a139feca09534c58e5e136137f1fe5af4bde93a0d3883c5756c7f3741367"
-
-## 应用控制开关
-## params_log 是否打印入参和出参 默认值是false, 默认关闭请求出入参
-## trace_log 是否打印入参和出参 默认值是true
-## service_log 是否打印内部服务调用日志 默认值是true
-## mysql_log 是否打印mysql查询日志 默认值是true
-## mysql_trace 是否提交mysql链路追踪 默认值是true
-## redis_trace 是否提交redis链路追踪 默认值是true
-## mongo_trace 是否提交mongo链路追踪 默认值是true
-## es_trace 是否提交es链路追踪 默认值是true
-[app.console]
-api_trace = true
-sdk_log = true
-mysql_log = true
-mysql_trace = true
-redis_trace = true
-mongo_trace = true
-es_trace = true
+type = ""
+key = ""
+addr = ""
 
 ## mysql配置, name数据库连接唯一标识, 应用有多个库的时候使用
 ## name 数据库标识唯一名 default 默认连接,在使用时没有传入表示使用默认连接
@@ -125,6 +106,5 @@ name = "grpc_test"
 addr = "grpc://127.0.0.1:10082"
 
 ## extra其他配置
-## 支持热重载(需要自己定义func通过gcf获取)
 [extra]
 auto_metrics = "prometheus"

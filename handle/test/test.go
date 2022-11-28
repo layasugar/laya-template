@@ -4,17 +4,19 @@ import (
 	"context"
 	"errors"
 	"fmt"
+
 	"github.com/layasugar/laya"
+
+	"github.com/layasugar/laya-template/model/page/test"
 	"github.com/layasugar/laya-template/pb"
-	"github.com/layasugar/laya-template/pkg/models/page/test"
-	"github.com/layasugar/laya-template/tools"
+	"github.com/layasugar/laya-template/utils"
 )
 
 // FullTest 测试http请求和链路追踪(http_to_http http_to_grpc)
-func (ctrl *controller) FullTest(ctx *laya.WebContext) {
+func (ctrl *controller) FullTest(ctx *laya.Context) {
 	// 参数绑定
 	var pm test.Req
-	err := ctx.ShouldBindJSON(&pm)
+	err := ctx.Gin().ShouldBindJSON(&pm)
 	if err != nil {
 		ctrl.Fail(ctx, err)
 		return
@@ -22,8 +24,8 @@ func (ctrl *controller) FullTest(ctx *laya.WebContext) {
 
 	// 参数校验
 	var kinds = []uint8{1, 2, 3, 4, 5, 6, 7, 8, 9}
-	if !tools.InSliceUint8(pm.Kind, kinds) {
-		ctrl.Fail(ctx, errors.New(fmt.Sprintf("kind 只能是%v", kinds)))
+	if !utils.InSliceUint8(pm.Kind, kinds) {
+		ctrl.Fail(ctx, fmt.Errorf("kind 只能是%v", kinds))
 		return
 	}
 
@@ -46,7 +48,7 @@ func (ctrl *controller) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.
 // GrpcTraceTest 测试http请求和链路追踪(grpc_to_http grpc_to_grpc)
 func (ctrl *controller) GrpcTraceTest(ctx context.Context, in *pb.GrpcTraceTestReq) (*pb.HelloReply, error) {
 	// 转换ctx
-	newCtx := ctx.(*laya.GrpcContext)
+	newCtx := ctx.(*laya.Context)
 
 	// 参数验证
 	if in.Kind == 0 {

@@ -2,12 +2,13 @@ package admin
 
 import (
 	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/models/page/admin"
+	"github.com/layasugar/laya-template/global/pagination"
+	"github.com/layasugar/laya-template/model/page/admin"
 )
 
-func (ctrl *controller) GetUserList(ctx *laya.WebContext) {
+func (ctrl *controller) GetUserList(ctx *laya.Context) {
 	var param admin.GetUserListReq
-	err := ctx.ShouldBindJSON(&param)
+	err := ctx.Gin().ShouldBindJSON(&param)
 	if err != nil {
 		ctrl.Fail(ctx, err)
 		return
@@ -22,7 +23,7 @@ func (ctrl *controller) GetUserList(ctx *laya.WebContext) {
 
 	resp, err := admin.GetUserList(ctx, &param)
 	if err != nil {
-		ctx.InfoF("获取用户列表, err: %s", err.Error())
+		ctx.Info("获取用户列表, err: %s", err.Error())
 		ctrl.Fail(ctx, err)
 		return
 	}

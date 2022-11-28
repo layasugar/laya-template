@@ -1,14 +1,16 @@
 package test
 
 import (
-	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/models/dao"
-	"github.com/layasugar/laya-template/models/dao/es"
-	"github.com/layasugar/laya/tools"
+	"encoding/json"
 	"time"
+
+	"github.com/layasugar/laya"
+
+	"github.com/layasugar/laya-template/model/dao"
+	"github.com/layasugar/laya-template/model/dao/es"
 )
 
-func EsUserCreate(ctx *laya.WebContext) (string, error) {
+func EsUserCreate(ctx *laya.Context) (string, error) {
 	data := es.User{
 		ID:        1,
 		Username:  "laya",
@@ -27,7 +29,7 @@ func EsUserCreate(ctx *laya.WebContext) (string, error) {
 	return res.Id, nil
 }
 
-func EsUserUpdate(ctx *laya.WebContext, eid string) error {
+func EsUserUpdate(ctx *laya.Context, eid string) error {
 	var data = map[string]interface{}{
 		"username": "layasugar",
 	}
@@ -36,18 +38,18 @@ func EsUserUpdate(ctx *laya.WebContext, eid string) error {
 	return err
 }
 
-func EsUserSelect(ctx *laya.WebContext, eid string) (*es.User, error) {
+func EsUserSelect(ctx *laya.Context, eid string) (*es.User, error) {
 	var u es.User
 	res, err := dao.Edb().Get().Index("user").Id(eid).Do(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	err = tools.CJson.Unmarshal(res.Source, &u)
+	err = json.Unmarshal(res.Source, &u)
 	return &u, err
 }
 
-func EsUserDel(ctx *laya.WebContext, eid string) error {
+func EsUserDel(ctx *laya.Context, eid string) error {
 	_, err := dao.Edb().Delete().Index("user").Id(eid).Do(ctx)
 	return err
 }

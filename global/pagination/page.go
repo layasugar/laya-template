@@ -1,7 +1,5 @@
 package pagination
 
-import "math"
-
 const (
 	DefaultPageSize = 10
 	MaxPageSize     = 100
@@ -9,17 +7,15 @@ const (
 )
 
 type Pagination struct {
-	CurrentPage int   `json:"current_page"` // 当前页码
-	PerPage     int   `json:"per_page"`     // 当前页行数
-	TotalPage   int   `json:"total_page"`   // 总页码
-	Total       int64 `json:"total"`        // 总行数
+	Count  uint64 `json:"count"`
+	Offset uint64 `json:"offset"`
+	Limit  uint64 `json:"limit"`
 }
 
-func GetPagination(page, pageSize int, total int64) Pagination {
+func GetPagination(count, offset, limit uint64) Pagination {
 	return Pagination{
-		Total:       total,
-		CurrentPage: page,
-		PerPage:     pageSize,
-		TotalPage:   int(math.Ceil(float64(total) / float64(pageSize))),
+		Count:  count,
+		Offset: offset,
+		Limit:  limit,
 	}
 }

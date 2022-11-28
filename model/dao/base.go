@@ -3,32 +3,32 @@
 package dao
 
 import (
-	"context"
 	"github.com/go-redis/redis/v8"
-	"github.com/layasugar/laya/store/dbx"
-	"github.com/layasugar/laya/store/edbx"
-	"github.com/layasugar/laya/store/mdbx"
-	"github.com/layasugar/laya/store/rdbx"
+	"github.com/layasugar/laya"
+	"github.com/layasugar/laya/store/db"
+	"github.com/layasugar/laya/store/edb"
+	"github.com/layasugar/laya/store/mdb"
+	"github.com/layasugar/laya/store/rdb"
 	"github.com/olivere/elastic/v7"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gorm.io/gorm"
 )
 
 // Orm orm
-func Orm(ctx context.Context, dbName ...string) *gorm.DB {
-	db := dbx.Wrap(ctx, dbName...)
+func Orm(ctx *laya.Context, dbName ...string) *gorm.DB {
+	db := db.Wrap(ctx, dbName...)
 	return db.WithContext(ctx)
 }
 
 // Rdb redis 连接
 func Rdb(dbName ...string) *redis.Client {
-	return rdbx.GetClient(dbName...)
+	return rdb.GetClient(dbName...)
 }
 
 func Mdb(dbName ...string) *mongo.Client {
-	return mdbx.GetClient(dbName...)
+	return mdb.GetClient(dbName...)
 }
 
 func Edb(dbName ...string) *elastic.Client {
-	return edbx.GetClient(dbName...)
+	return edb.GetClient(dbName...)
 }

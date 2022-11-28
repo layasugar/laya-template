@@ -1,10 +1,12 @@
 package admin
 
 import (
-	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/models/dao"
-	"github.com/layasugar/laya-template/models/dao/db"
 	"log"
+
+	"github.com/layasugar/laya"
+
+	"github.com/layasugar/laya-template/model/dao"
+	"github.com/layasugar/laya-template/model/dao/db"
 )
 
 type (
@@ -19,7 +21,7 @@ type (
 	}
 )
 
-func GetUserList(ctx *laya.WebContext, params GetUserListParams) ([]User, int64, error) {
+func GetUserList(ctx *laya.Context, params GetUserListParams) ([]User, int64, error) {
 	var users []User
 	tx := dao.Orm(ctx)
 	if params.Id > 0 {
@@ -49,10 +51,10 @@ func GetUserList(ctx *laya.WebContext, params GetUserListParams) ([]User, int64,
 	return users, total, err
 }
 
-func GetUserListByRedis(ctx *laya.WebContext) {
+func GetUserListByRedis(ctx *laya.Context) {
 	result, err := dao.Rdb().Get(ctx, "aksda").Result()
 	if err != nil {
-		ctx.InfoF("asdasd, err: %s", err.Error())
+		ctx.Info("asdasd, err: %s", err.Error())
 	}
 
 	log.Print(result)

@@ -1,0 +1,22 @@
+linters-settings:
+  gocyclo:
+    min-complexity: 20
+linters:
+  disable-all: true
+  enable:
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - typecheck
+    - unused
+    - gocyclo
+    - misspell
+    - gofmt
+    - goimports
+output:
+  format: colored-line-number
+  print-issued-lines: true
+  print-linter-name: true
+  uniq-by-line: true

@@ -2,10 +2,12 @@ package user
 
 import (
 	"errors"
+
 	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/models/dao"
-	"github.com/layasugar/laya-template/models/dao/db"
 	"gorm.io/gorm"
+
+	"github.com/layasugar/laya-template/model/dao"
+	"github.com/layasugar/laya-template/model/dao/db"
 )
 
 type (
@@ -16,42 +18,42 @@ type (
 	}
 )
 
-func GetUserById(ctx *laya.WebContext, userId uint64) (*User, error) {
+func GetUserById(ctx *laya.Context, userId uint64) (*User, error) {
 	var u User
 	var orm = dao.Orm(ctx)
 
 	err := orm.Model(&User{}).Where("id = ?", userId).First(&u).Error
 	if err != nil && errors.Is(err, gorm.ErrRecordNotFound) {
-		ctx.WarnF("GetUserById, err: %s", err.Error())
+		ctx.Warn("GetUserById, err: %s", err.Error())
 		return nil, err
 	}
 	return &u, nil
 }
 
-func GetUserListByZone(ctx *laya.WebContext, Id int64) ([]User, error) {
+func GetUserListByZone(ctx *laya.Context, Id int64) ([]User, error) {
 	var users []User
 	err := dao.Orm(ctx).Model(&User{}).Where("id = ?", Id).Find(&users).Error
 	if err != nil {
-		ctx.WarnF("GetUserListByZone, err: %s", err.Error())
+		ctx.Warn("GetUserListByZone, err: %s", err.Error())
 		return nil, err
 	}
 	return users, err
 }
 
-func GetUserByMobile(ctx *laya.WebContext, mobile string) (*User, error) {
+func GetUserByMobile(ctx *laya.Context, mobile string) (*User, error) {
 	var u User
 	err := dao.Orm(ctx).WithContext(ctx).Where("mobile = ?", mobile).First(&u).Error
 	if err != nil && errors.Is(err, gorm.ErrRecordNotFound) {
-		ctx.WarnF("GetUserByMobile, err: %s", err.Error())
+		ctx.Warn("GetUserByMobile, err: %s", err.Error())
 		return nil, err
 	}
 	return &u, nil
 }
 
-func CreateUser(ctx *laya.WebContext, u *User) error {
+func CreateUser(ctx *laya.Context, u *User) error {
 	err := dao.Orm(ctx).WithContext(ctx).Create(u).Error
 	if err != nil {
-		ctx.WarnF("CreateUser fail, err:%s", err.Error())
+		ctx.Warn("CreateUser fail, err:%s", err.Error())
 		return err
 	}
 	return nil

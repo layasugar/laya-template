@@ -1,15 +1,16 @@
 package test
 
 import (
+	"time"
+
 	"github.com/layasugar/laya"
-	"github.com/layasugar/laya-template/models/dao"
-	"github.com/layasugar/laya-template/models/dao/mdb"
+	"github.com/layasugar/laya-template/model/dao"
+	"github.com/layasugar/laya-template/model/dao/mdb"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"time"
 )
 
-func MongoUserCreate(ctx *laya.WebContext) (string, error) {
+func MongoUserCreate(ctx *laya.Context) (string, error) {
 	data := mdb.User{
 		ID:        1,
 		Username:  "laya",
@@ -29,28 +30,28 @@ func MongoUserCreate(ctx *laya.WebContext) (string, error) {
 	return "", nil
 }
 
-func MongoUserUpdate(ctx *laya.WebContext, mid string) error {
+func MongoUserUpdate(ctx *laya.Context, mid string) error {
 	var data mdb.User
 	id, _ := primitive.ObjectIDFromHex(mid)
-	filter := bson.D{{"_id", id}}
-	update := bson.D{{"$set", bson.D{{"username", "layasugar"}}}}
+	filter := bson.E{Key: "_id", Value: id}
+	update := bson.E{Key: "$set", Value: bson.E{Key: "username", Value: "layasugar"}}
 	_, err := dao.Mdb().Database(data.Database()).Collection(data.Collection()).UpdateMany(ctx, filter, update)
 	return err
 }
 
-func MongoUserSelect(ctx *laya.WebContext, mid string) (*mdb.User, error) {
+func MongoUserSelect(ctx *laya.Context, mid string) (*mdb.User, error) {
 	var data mdb.User
 	id, _ := primitive.ObjectIDFromHex(mid)
-	filter := bson.D{{"_id", id}}
+	filter := bson.E{Key: "_id", Value: id}
 	res := dao.Mdb().Database(data.Database()).Collection(data.Collection()).FindOne(ctx, filter)
 	err := res.Decode(&data)
 	return &data, err
 }
 
-func MongoUserDel(ctx *laya.WebContext, mid string) error {
+func MongoUserDel(ctx *laya.Context, mid string) error {
 	var data mdb.User
 	id, _ := primitive.ObjectIDFromHex(mid)
-	filter := bson.D{{"_id", id}}
+	filter := bson.E{Key: "_id", Value: id}
 	_, err := dao.Mdb().Database(data.Database()).Collection(data.Collection()).DeleteOne(ctx, filter)
 	return err
 }
