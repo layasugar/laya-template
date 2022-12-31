@@ -2,9 +2,7 @@ package main
 
 import (
 	"github.com/layasugar/laya"
-
-	"github.com/layasugar/laya-template/middleware"
-	"github.com/layasugar/laya-template/route"
+	"github.com/layasugar/laya-template/handle/middleware"
 )
 
 // webAppSetup 初始化服务设置
@@ -15,7 +13,7 @@ func webAppSetup() *laya.App {
 	app.WebServer().Use(middleware.TestMiddleware())
 
 	// register routes
-	app.WebServer().Register(route.Register)
+	app.WebServer().Register(routes.Register)
 
 	return app
 }
