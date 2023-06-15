@@ -78,7 +78,7 @@ func userOperation(ctx *laya.Context, pm *LoginParam) (*user2.User, error) {
 	return userinfo, nil
 }
 
-//checkSmsCode 检查验证码
+// checkSmsCode 检查验证码
 func checkSmsCode(ctx *laya.Context, pms *LoginParam) error {
 	smsCode, err := user2.GetSmsCode(ctx, pms.Code, pms.Mobile)
 	if err != nil {
