@@ -9,15 +9,6 @@ BUILDDATE=$(shell date +"%Y%m%d-%H:%M.%S")
 PNAME=$(shell basename $(shell pwd))
 APIPATH=../../api/$(PNAME)
 
-ifeq ($(GOHOSTOS), windows)
-	Git_Bash= $(subst cmd\,bin\bash.exe,$(dir $(shell where git)))
-	INTERNAL_PROTO_FILES=$(shell $(Git_Bash) -c "find internal -name *.proto")
-	API_PROTO_FILES=$(shell $(Git_Bash) -c "find api -name *.proto")
-else
-	INTERNAL_PROTO_FILES=$(shell find ./internal -name *.proto)
-	API_PROTO_FILES=$(shell find $(APIPATH) -name *.proto)
-endif
-
 .PHONY: build
 # build
 build:
@@ -34,8 +25,4 @@ build:
 
 .PHONY: build
 build:
-	make build
-
-.PHONY: build-test
-build-test:
 	make build
