@@ -5,30 +5,18 @@ package dao
 import (
 	"github.com/go-redis/redis/v8"
 	"github.com/layasugar/laya"
-	"github.com/layasugar/laya/store/db"
-	"github.com/layasugar/laya/store/edb"
-	"github.com/layasugar/laya/store/mdb"
-	"github.com/layasugar/laya/store/rdb"
-	"github.com/olivere/elastic/v7"
-	"go.mongodb.org/mongo-driver/mongo"
+	"github.com/layasugar/laya-template/store/db"
+	"github.com/layasugar/laya-template/store/rdb"
 	"gorm.io/gorm"
 )
 
-// Orm orm
+// Orm mysql 连接池
 func Orm(ctx *laya.Context, dbName ...string) *gorm.DB {
-	db := db.Wrap(ctx, dbName...)
-	return db.WithContext(ctx)
+	conn := db.Wrap(ctx, dbName...)
+	return conn.WithContext(ctx)
 }
 
-// Rdb redis 连接
+// Rdb redis 连接池
 func Rdb(dbName ...string) *redis.Client {
 	return rdb.GetClient(dbName...)
-}
-
-func Mdb(dbName ...string) *mongo.Client {
-	return mdb.GetClient(dbName...)
-}
-
-func Edb(dbName ...string) *elastic.Client {
-	return edb.GetClient(dbName...)
 }

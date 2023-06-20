@@ -10,7 +10,8 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-var defaultPoolMaxOpen = runtime.NumCPU()*2 + 5 // 连接池最大连接数量4c*2+4只读副本+1主实例
+// 连接池最大连接数量4c*2+4只读副本+1主实例
+var defaultPoolMaxOpen = runtime.NumCPU()*2 + 5
 
 const (
 	defaultPoolMaxIdle     = 2                                 // 连接池空闲连接数量
@@ -58,7 +59,7 @@ func initDB(cfg dbConfig) *gorm.DB {
 
 	Db, err := gorm.Open(mysql.Open(cfg.dsn), cfg.gormCfg)
 	if err != nil {
-		log.Printf("[app.db] mysql open fail, err:%s", err)
+		log.Printf("[db] mysql open fail, err:%s", err)
 		panic(err)
 	}
 
@@ -66,18 +67,18 @@ func initDB(cfg dbConfig) *gorm.DB {
 
 	registerCallbacks(Db)
 
-	err = DbSurvive(Db)
+	err = Survive(Db)
 	if err != nil {
-		log.Printf("[app.db] mysql survive fail, err:%s", err)
+		log.Printf("[db] mysql survive fail, err:%s", err)
 		panic(err)
 	}
 
-	log.Printf("[app.db] mysql success, name: %s", cfg.name)
+	log.Printf("[db] mysql success, name: %s", cfg.name)
 	return Db
 }
 
-// DbSurvive mysql survive
-func DbSurvive(db *gorm.DB) error {
+// Survive mysql survive
+func Survive(db *gorm.DB) error {
 	sqlDB, err := db.DB()
 	if err != nil {
 		return err
@@ -93,7 +94,7 @@ func DbSurvive(db *gorm.DB) error {
 func (c *dbConfig) setDefaultPoolConfig(db *gorm.DB) {
 	d, err := db.DB()
 	if err != nil {
-		log.Printf("[app.dbx] mysql db fail, err: %s", err.Error())
+		log.Printf("[db] mysql db fail, err: %s", err.Error())
 		panic(err)
 	}
 	var cfg = c.poolCfg

@@ -50,6 +50,7 @@ addr = ""
 ## mysql配置, name数据库连接唯一标识, 应用有多个库的时候使用
 ## name 数据库标识唯一名 default 默认连接,在使用时没有传入表示使用默认连接
 ## dsn 数据库连接dsn
+## level 数据库日志等级，默认值info
 ## max_idle_conn 空闲连接数 默认值是2
 ## max_open_conn 最大连接数 默认值是cpu*2+5
 ## max_life_time 连接可重用的最大时间秒 默认值是7200s

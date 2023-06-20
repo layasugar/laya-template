@@ -50,9 +50,9 @@ type gormLogger struct {
 
 // LogMode logger mode
 func (l *gormLogger) LogMode(level logger.LogLevel) logger.Interface {
-	newlogger := *l
-	newlogger.LogLevel = level
-	return &newlogger
+	keylogger := *l
+	keylogger.LogLevel = level
+	return &keylogger
 }
 
 // Info print info

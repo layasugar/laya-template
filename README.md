@@ -2,6 +2,7 @@
 
 - http框架模板, grpc框架模板, 默认服务模板
 - 使用 [laya](https://github.com/layasugar/laya) 搭建 旨在快速搭建中小型应用服务, restfulApi, grpc服务 ==
+- 非必要无须grpc连接池
 
 > Please note that this repository is out-of-the-box template
 
