@@ -8,9 +8,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/layasugar/laya/core/constants"
-	"github.com/layasugar/laya/core/metautils"
-	"github.com/layasugar/laya/core/util"
+	"github.com/layasugar/laya-template/pkg/core/constants"
+	"github.com/layasugar/laya-template/pkg/core/metautils"
+	"github.com/layasugar/laya-template/pkg/core/util"
 	"go.uber.org/zap"
 )
 

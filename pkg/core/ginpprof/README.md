@@ -6,7 +6,7 @@
 package main
 
 import (
-	"github.com/layasugar/laya/core/pprofx"
+	"github.com/layasugar/laya-template/pkg/core/pprof"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,7 +19,7 @@ func main() {
 
 	// automatically add routers for net/http/pprofx
 	// e.g. /debug/pprofx, /debug/pprofx/heap, etc.
-	pprofx.Wrap(router)
+	pprof.Wrap(router)
 
 	// pprofx also plays well with *gin.RouterGroup
 	// group := router.Group("/debug/pprofx")

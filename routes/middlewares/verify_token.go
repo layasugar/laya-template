@@ -2,10 +2,12 @@ package middlewares
 
 import (
 	"fmt"
+
 	"github.com/layasugar/laya-template/app/models/dao"
 	"github.com/layasugar/laya-template/global"
 	"github.com/layasugar/laya-template/global/errno"
 	"github.com/layasugar/laya-template/pkg/core"
+	"github.com/layasugar/laya-template/pkg/gcnf"
 )
 
 // UserVerifyToken Middlewares

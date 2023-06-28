@@ -4,12 +4,12 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	a "github.com/layasugar/laya/core/alarm"
-	"github.com/layasugar/laya/core/constants"
-	d "github.com/layasugar/laya/core/data"
-	l "github.com/layasugar/laya/core/logger"
-	"github.com/layasugar/laya/core/metautils"
-	t "github.com/layasugar/laya/core/trace"
+	a "github.com/layasugar/laya-template/pkg/core/alarm"
+	"github.com/layasugar/laya-template/pkg/core/constants"
+	d "github.com/layasugar/laya-template/pkg/core/data"
+	l "github.com/layasugar/laya-template/pkg/core/logger"
+	"github.com/layasugar/laya-template/pkg/core/metautils"
+	t "github.com/layasugar/laya-template/pkg/core/trace"
 )
 
 // Context is the carrier of request and response

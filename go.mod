@@ -5,7 +5,6 @@ go 1.20
 require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/layasugar/laya v1.0.0
-	github.com/olivere/elastic/v7 v7.0.32
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/uber/jaeger-client-go v2.30.0+incompatible
 	go.mongodb.org/mongo-driver v1.9.1

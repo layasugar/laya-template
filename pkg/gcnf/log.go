@@ -4,7 +4,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/layasugar/laya/core/constants"
+	"github.com/layasugar/laya-template/pkg/core/constants"
 )
 
 // logParams

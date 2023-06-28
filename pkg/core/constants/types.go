@@ -1,10 +1,10 @@
 package constants
 
-// SERVERTYPE 服务类型
-type SERVERTYPE int
+// ServerType 服务类型
+type ServerType int
 
-// RUNMODE
-type RUNMODE string
+// RunMode 运行模式
+type RunMode string
 
 type RequestLog struct {
 	URL     string              `json:"url"`

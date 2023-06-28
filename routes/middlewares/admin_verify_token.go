@@ -2,17 +2,16 @@ package middlewares
 
 import (
 	"fmt"
+
 	"github.com/layasugar/laya-template/app/models/dao"
-
-	"github.com/layasugar/laya"
-	"github.com/layasugar/laya/gcnf"
-
 	"github.com/layasugar/laya-template/global"
 	"github.com/layasugar/laya-template/global/errno"
+	"github.com/layasugar/laya-template/pkg/core"
+	"github.com/layasugar/laya-template/pkg/gcnf"
 )
 
 // AdminVerifyToken 验证登录
-func AdminVerifyToken() laya.WebHandlerFunc {
+func AdminVerifyToken() core.WebHandlerFunc {
 	return func(ctx *core.Context) {
 		// 从header头里获取 auth  然后去redis里面获取数据对比
 		tokenRedisKey := gcnf.AppName() + global.AdminTokenKey

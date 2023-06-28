@@ -1,10 +1,9 @@
 package routes
 
 import (
-	"github.com/layasugar/laya-template/handle/pb"
+	"github.com/layasugar/laya-template/app/handler/test"
 	"github.com/layasugar/laya-template/pkg/core"
-
-	"github.com/layasugar/laya-template/handle/test"
+	"github.com/layasugar/laya-template/routes/pb"
 )
 
 // RegisterHttpTest 注册一组http路由

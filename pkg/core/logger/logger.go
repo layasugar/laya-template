@@ -8,8 +8,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/layasugar/laya/core/constants"
-	"github.com/layasugar/laya/core/rotatelog"
+	"github.com/layasugar/laya-template/pkg/core/constants"
+	"github.com/layasugar/laya-template/pkg/core/rotatelog"
 	"github.com/sirupsen/logrus"
 )
 

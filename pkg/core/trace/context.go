@@ -3,8 +3,8 @@ package trace
 import (
 	"context"
 
-	"github.com/layasugar/laya/core/metautils"
-	"github.com/layasugar/laya/core/util"
+	"github.com/layasugar/laya-template/pkg/core/metautils"
+	"github.com/layasugar/laya-template/pkg/core/util"
 	uuid "github.com/satori/go.uuid"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/propagation"

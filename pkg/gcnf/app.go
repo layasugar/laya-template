@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/layasugar/laya/core/constants"
+	"github.com/layasugar/laya-template/pkg/core/constants"
 )
 
 // AppName 返回当前app名称

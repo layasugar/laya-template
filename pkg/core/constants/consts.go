@@ -70,14 +70,14 @@ const (
 )
 
 const (
-	SERVERGIN SERVERTYPE = iota + 1
+	SERVERGIN ServerType = iota + 1
 	SERVERGRPC
 	SERVERNORMAL
 )
 
 const (
-	RUNMODEDEV  RUNMODE = "dev"
-	RUNMODETEST RUNMODE = "test"
-	RUNMODEPRE  RUNMODE = "pre"
-	RUNMODEPROD RUNMODE = "prod"
+	RUNMODEDEV  RunMode = "dev"
+	RUNMODETEST RunMode = "test"
+	RUNMODEPRE  RunMode = "pre"
+	RUNMODEPROD RunMode = "prod"
 )

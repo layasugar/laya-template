@@ -1,8 +1,8 @@
 package trace
 
 import (
-	"github.com/layasugar/laya/core/logger"
-	"github.com/layasugar/laya/core/trace/b3propagator"
+	"github.com/layasugar/laya-template/pkg/core/logger"
+	"github.com/layasugar/laya-template/pkg/core/trace/b3propagator"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/zipkin"

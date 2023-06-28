@@ -7,10 +7,10 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/layasugar/laya/core/constants"
-	"github.com/layasugar/laya/core/metautils"
-	"github.com/layasugar/laya/core/pprof"
-	"github.com/layasugar/laya/core/util"
+	"github.com/layasugar/laya-template/pkg/core/constants"
+	"github.com/layasugar/laya-template/pkg/core/ginpprof"
+	"github.com/layasugar/laya-template/pkg/core/metautils"
+	"github.com/layasugar/laya-template/pkg/core/util"
 	"github.com/layasugar/laya/gcnf"
 )
 
@@ -24,7 +24,7 @@ type WebServer struct {
 	*gin.Engine
 }
 
-// newWebServer 创建WebServer
+// newWebServer 创建web server
 func newWebServer(mode string) *WebServer {
 	gin.SetMode(mode)
 
@@ -38,7 +38,7 @@ func newWebServer(mode string) *WebServer {
 	server.WebRoute.RouterGroup = &server.Engine.RouterGroup
 
 	if mode == "debug" {
-		pprof.Wrap(server.Engine)
+		ginpprof.Wrap(server.Engine)
 	}
 
 	return server

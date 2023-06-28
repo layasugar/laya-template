@@ -1,8 +1,8 @@
 package trace
 
 import (
-	"github.com/layasugar/laya/core/logger"
-	"github.com/layasugar/laya/core/trace/jaegerpropagetor"
+	"github.com/layasugar/laya-template/pkg/core/logger"
+	"github.com/layasugar/laya-template/pkg/core/trace/jaegerpropagetor"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/jaeger"

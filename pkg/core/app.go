@@ -13,7 +13,7 @@ import (
 )
 
 type App struct {
-	serverType constants.SERVERTYPE // serverType
+	serverType constants.ServerType // serverType
 	webServer  *WebServer           // webServer 目前web引擎使用gin
 	grpcServer *GrpcServer          // grpcServer
 }

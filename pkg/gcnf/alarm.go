@@ -1,6 +1,6 @@
 package gcnf
 
-import "github.com/layasugar/laya/core/constants"
+import "github.com/layasugar/laya-template/pkg/core/constants"
 
 func AlarmType() string {
 	if IsSet(constants.KEY_APPALARMTYPE) {

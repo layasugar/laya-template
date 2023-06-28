@@ -4,8 +4,8 @@ import (
 	"context"
 	"strings"
 
-	"github.com/layasugar/laya/core/constants"
-	"github.com/layasugar/laya/core/metautils"
+	"github.com/layasugar/laya-template/pkg/core/constants"
+	"github.com/layasugar/laya-template/pkg/core/metautils"
 	"github.com/layasugar/laya/gcal/converter"
 	"github.com/layasugar/laya/gcal/pool"
 	"github.com/layasugar/laya/gcal/protocol"

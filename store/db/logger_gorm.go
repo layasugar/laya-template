@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/layasugar/laya/core/constants"
-	l "github.com/layasugar/laya/core/logger"
+	"github.com/layasugar/laya-template/pkg/core/constants"
+	l "github.com/layasugar/laya-template/pkg/core/logger"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/utils"
 )

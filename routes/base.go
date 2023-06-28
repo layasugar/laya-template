@@ -1,15 +1,15 @@
 package routes
 
 import (
-	"github.com/layasugar/laya-template/pkg/core"
 	"net/http"
 
-	"github.com/layasugar/laya-template/handle/file"
+	"github.com/layasugar/laya-template/app/handler/file"
+	"github.com/layasugar/laya-template/pkg/core"
 )
 
 func Register(r *core.WebServer) {
-	r.GET("/", handler.Ctrl.Version)   // version
-	r.POST("/test", handler.Ctrl.Test) // 测试接口
+	r.GET("/", file.Ctrl.Version)   // version
+	r.POST("/test", file.Ctrl.Test) // 测试接口
 
 	// 文件服务器
 	r.POST("/app/files/upload", file.Ctrl.Upload)

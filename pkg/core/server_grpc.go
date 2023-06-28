@@ -5,10 +5,10 @@ import (
 	"log"
 	"net"
 
-	grpcmiddleware "github.com/grpc-ecosystem/go-grpc-middleware"
-	"github.com/layasugar/laya/core/constants"
-	"github.com/layasugar/laya/core/metautils"
-	"github.com/layasugar/laya/core/util"
+	grpcMiddleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	"github.com/layasugar/laya-template/pkg/core/constants"
+	"github.com/layasugar/laya-template/pkg/core/metautils"
+	"github.com/layasugar/laya-template/pkg/core/util"
 	"github.com/layasugar/laya/gcnf"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -45,7 +45,7 @@ func (gs *GrpcServer) Register(f ...func(s *GrpcServer)) {
 func (gs *GrpcServer) Run(addr string) (err error) {
 	// 初始化server, 将多个拦截器构建成一个拦截器
 	gs.Server = grpc.NewServer(
-		grpc.UnaryInterceptor(grpcmiddleware.ChainUnaryServer(gs.opts...)),
+		grpc.UnaryInterceptor(grpcMiddleware.ChainUnaryServer(gs.opts...)),
 	)
 
 	// 注册路由

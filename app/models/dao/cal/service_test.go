@@ -5,7 +5,6 @@ package cal_test
 import (
 	"context"
 	"fmt"
-	pb2 "github.com/layasugar/laya-template/handle/pb"
 	"io"
 	"log"
 	"net"
@@ -13,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/layasugar/laya/core/metautils"
+	"github.com/layasugar/laya-template/pkg/core/metautils"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"github.com/uber/jaeger-client-go"
