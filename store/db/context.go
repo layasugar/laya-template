@@ -3,7 +3,6 @@ package db
 import (
 	"context"
 
-	"github.com/layasugar/laya"
 	"go.opentelemetry.io/otel/trace"
 	"gorm.io/gorm"
 )
@@ -14,7 +13,7 @@ const (
 	tSpanName  = "mysql:"
 )
 
-func Wrap(ctx *laya.Context, dbName ...string) *gorm.DB {
+func Wrap(ctx *core.Context, dbName ...string) *gorm.DB {
 	var db *gorm.DB
 	if len(dbName) > 0 {
 		db = getGormDB(dbName[0])
@@ -51,7 +50,7 @@ func newBefore(name string) func(*gorm.DB) {
 	return func(db *gorm.DB) {
 		if v, ok := db.Get(contextKey); ok {
 			switch ctx := v.(type) {
-			case *laya.Context:
+			case *core.Context:
 				_, span := ctx.Start(context.TODO(), tSpanName+name)
 				if nil != span {
 					db.Set(spanKey, span)

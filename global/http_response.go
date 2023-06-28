@@ -3,7 +3,6 @@ package global
 import (
 	"net/http"
 
-	"github.com/layasugar/laya"
 	"github.com/layasugar/laya/gcnf"
 )
 
@@ -43,7 +42,7 @@ func (re *rspError) render() (uint32, string) {
 	return re.Code, re.Msg
 }
 
-func (res *HttpResp) Suc(ctx *laya.Context, data interface{}, msg ...string) {
+func (res *HttpResp) Suc(ctx *core.Context, data interface{}, msg ...string) {
 	rr := new(Response)
 	rr.Code = http.StatusOK
 	if len(msg) == 0 {
@@ -62,7 +61,7 @@ func (res *HttpResp) Suc(ctx *laya.Context, data interface{}, msg ...string) {
 	ctx.Gin().JSON(http.StatusOK, &rr)
 }
 
-func (res *HttpResp) Fail(ctx *laya.Context, err error) {
+func (res *HttpResp) Fail(ctx *core.Context, err error) {
 	rr := new(Response)
 	switch t := err.(type) {
 	case *rspError:
@@ -76,7 +75,7 @@ func (res *HttpResp) Fail(ctx *laya.Context, err error) {
 }
 
 // RawJSONString json 数据返回
-func (res *HttpResp) RawJSONString(ctx *laya.Context, data string) {
+func (res *HttpResp) RawJSONString(ctx *core.Context, data string) {
 	w := ctx.Gin().Writer
 	w.WriteHeader(200)
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
@@ -84,7 +83,7 @@ func (res *HttpResp) RawJSONString(ctx *laya.Context, data string) {
 }
 
 // RawString raw 数据返回
-func (res *HttpResp) RawString(ctx *laya.Context, data string) {
+func (res *HttpResp) RawString(ctx *core.Context, data string) {
 	w := ctx.Gin().Writer
 	w.WriteHeader(200)
 	_, _ = w.Write([]byte(data))

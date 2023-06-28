@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/layasugar/laya"
 	"github.com/layasugar/laya/core/constants"
 	l "github.com/layasugar/laya/core/logger"
 	"gorm.io/gorm/logger"
@@ -118,7 +117,7 @@ func (l *gormLogger) Trace(ctx context.Context, begin time.Time, fc func() (stri
 
 func gormWriter(ctx context.Context, level, msg string) {
 	var logId string
-	if webCtx, okInterface := ctx.(*laya.Context); okInterface {
+	if webCtx, okInterface := ctx.(*core.Context); okInterface {
 		logId = webCtx.LogId()
 	}
 

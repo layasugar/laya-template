@@ -1,14 +1,13 @@
 package routes
 
 import (
+	"github.com/layasugar/laya-template/pkg/core"
 	"net/http"
-
-	"github.com/layasugar/laya"
 
 	"github.com/layasugar/laya-template/handle/file"
 )
 
-func Register(r *laya.WebServer) {
+func Register(r *core.WebServer) {
 	r.GET("/", handler.Ctrl.Version)   // version
 	r.POST("/test", handler.Ctrl.Test) // 测试接口
 

@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/go-redis/redis/v8"
-	"github.com/layasugar/laya"
 	"github.com/layasugar/laya/core/rdbstmt"
 	"github.com/layasugar/laya/store/cm"
 	"github.com/opentracing/opentracing-go"
@@ -28,7 +27,7 @@ type Hook struct{}
 
 func (h *Hook) BeforeProcess(ctx context.Context, cmd redis.Cmder) (spanctx context.Context, err error) {
 	var span trace.Span
-	layaCtx, ok := ctx.(*laya.Context)
+	layaCtx, ok := ctx.(*core.Context)
 	if ok {
 		spanctx, span = layaCtx.Start(context.TODO(), cmdToSpanName(cmd))
 	}

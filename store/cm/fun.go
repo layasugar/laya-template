@@ -3,13 +3,12 @@ package cm
 import (
 	"context"
 
-	"github.com/layasugar/laya"
 	"go.opentelemetry.io/otel/trace"
 )
 
 // ParseSpanByCtx 公共方法, 从ctx中获取
 func ParseSpanByCtx(ctx context.Context, spanName string) (context.Context, trace.Span) {
-	layaCtx, ok := ctx.(*laya.Context)
+	layaCtx, ok := ctx.(*core.Context)
 	if ok {
 		return layaCtx.Start(ctx, spanName)
 	}
@@ -19,7 +18,7 @@ func ParseSpanByCtx(ctx context.Context, spanName string) (context.Context, trac
 
 // ParseLogIdByCtx 从context中解析出logId
 func ParseLogIdByCtx(ctx context.Context) string {
-	if webCtx, okInterface := ctx.(*laya.Context); okInterface {
+	if webCtx, okInterface := ctx.(*core.Context); okInterface {
 		return webCtx.LogId()
 	}
 	return ""
