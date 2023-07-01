@@ -1,9 +1,9 @@
 package admin
 
 import (
-	"github.com/layasugar/laya-template/handle/model/data/admin"
-
+	"github.com/layasugar/laya-template/app/models/data/admin"
 	"github.com/layasugar/laya-template/global/pagination"
+	"github.com/layasugar/laya-template/pkg/core"
 )
 
 type (

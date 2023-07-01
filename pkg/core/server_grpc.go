@@ -9,7 +9,7 @@ import (
 	"github.com/layasugar/laya-template/pkg/core/constants"
 	"github.com/layasugar/laya-template/pkg/core/metautils"
 	"github.com/layasugar/laya-template/pkg/core/util"
-	"github.com/layasugar/laya/gcnf"
+	"github.com/layasugar/laya-template/pkg/gcnf"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )

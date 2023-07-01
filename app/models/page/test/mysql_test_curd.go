@@ -1,7 +1,8 @@
 package test
 
 import (
-	"github.com/layasugar/laya-template/handle/model/data/test"
+	"github.com/layasugar/laya-template/app/models/data/test"
+	"github.com/layasugar/laya-template/pkg/core"
 )
 
 func mysqlTestCurd(ctx *core.Context) {

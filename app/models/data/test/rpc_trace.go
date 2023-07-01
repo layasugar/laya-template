@@ -1,7 +1,8 @@
 package test
 
 import (
-	"github.com/layasugar/laya-template/handle/model/dao/cal/rpc_test"
+	"github.com/layasugar/laya-template/app/models/dao/cal/rpc_test"
+	"github.com/layasugar/laya-template/pkg/core"
 )
 
 func RpcToHttpTraceTest(ctx *core.Context) (*Rsp, error) {

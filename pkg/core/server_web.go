@@ -11,7 +11,7 @@ import (
 	"github.com/layasugar/laya-template/pkg/core/ginpprof"
 	"github.com/layasugar/laya-template/pkg/core/metautils"
 	"github.com/layasugar/laya-template/pkg/core/util"
-	"github.com/layasugar/laya/gcnf"
+	"github.com/layasugar/laya-template/pkg/gcnf"
 )
 
 // WebServer 基于http协议的服务

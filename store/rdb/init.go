@@ -2,7 +2,7 @@ package rdb
 
 import (
 	"github.com/layasugar/laya-template/pkg/core/constants"
-	"github.com/layasugar/laya/gcnf"
+	"github.com/layasugar/laya-template/pkg/gcnf"
 )
 
 func init() {

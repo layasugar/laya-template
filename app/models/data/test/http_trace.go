@@ -1,7 +1,8 @@
 package test
 
 import (
-	"github.com/layasugar/laya-template/handle/model/dao/cal/http_test"
+	"github.com/layasugar/laya-template/app/models/dao/cal/http_test"
+	"github.com/layasugar/laya-template/pkg/core"
 )
 
 func HttpToHttpTraceTest(ctx *core.Context) (*Rsp, error) {

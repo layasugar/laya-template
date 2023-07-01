@@ -1,7 +1,7 @@
 package alarm
 
 import (
-	"github.com/layasugar/laya/gcnf"
+	"github.com/layasugar/laya-template/pkg/gcnf"
 )
 
 const (

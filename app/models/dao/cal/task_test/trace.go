@@ -4,10 +4,11 @@ package task_test
 
 import (
 	"errors"
-	pb2 "github.com/layasugar/laya-template/handle/pb"
+	"github.com/layasugar/laya-template/pkg/core"
+	"github.com/layasugar/laya-template/routes/pb"
 	"net/http"
 
-	"github.com/layasugar/laya/gcal"
+	"github.com/layasugar/laya-template/pkg/gcal"
 )
 
 type (
@@ -68,9 +69,9 @@ func TaskToGrpcTest(ctx *core.Context) (*RpcData, error) {
 		return nil, errors.New("连接不存在")
 	}
 
-	c := pb2.NewGreeterClient(conn)
+	c := pb.NewGreeterClient(conn)
 
-	res, err := c.SayHello(ctx, &pb2.HelloRequest{Name: "q1mi"})
+	res, err := c.SayHello(ctx, &pb.HelloRequest{Name: "q1mi"})
 	if err != nil {
 		return nil, err
 	}

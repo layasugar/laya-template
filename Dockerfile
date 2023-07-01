@@ -1,4 +1,4 @@
-FROM go:1.18
+FROM go:1.20
 MAINTAINER laya
 COPY . /app
 RUN go env -w GOPROXY=https://goproxy.cn,direct \

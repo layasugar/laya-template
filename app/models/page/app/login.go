@@ -3,7 +3,8 @@ package app
 import (
 	"errors"
 	"fmt"
-	user2 "github.com/layasugar/laya-template/handle/model/data/user"
+	user2 "github.com/layasugar/laya-template/app/models/data/user"
+	"github.com/layasugar/laya-template/pkg/core"
 
 	"github.com/layasugar/laya-template/global"
 )

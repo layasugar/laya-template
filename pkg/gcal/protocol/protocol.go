@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/layasugar/laya/gcal/context"
-	"github.com/layasugar/laya/gcal/service"
+	"github.com/layasugar/laya-template/pkg/gcal/context"
+	"github.com/layasugar/laya-template/pkg/gcal/service"
 )
 
 // Protocoler 协议的接口

@@ -15,13 +15,14 @@ import (
 	"github.com/layasugar/laya-template/pkg/core/constants"
 	"github.com/layasugar/laya-template/pkg/core/metautils"
 	"github.com/layasugar/laya-template/pkg/core/util"
-	"github.com/layasugar/laya/gcal/context"
-	"github.com/layasugar/laya/gcal/converter"
-	"github.com/layasugar/laya/gcal/service"
-	"github.com/layasugar/laya/version"
+	"github.com/layasugar/laya-template/pkg/gcal/context"
+	"github.com/layasugar/laya-template/pkg/gcal/converter"
+	"github.com/layasugar/laya-template/pkg/gcal/service"
+	"github.com/layasugar/laya-template/pkg/version"
 )
 
-const UA = "GCAL/" + version.VERSION + " (laya gcal http client)"
+var UA = "GCAL/" + version.Version + " (laya gcal http client)"
+
 const HttpClientAlive = 5 * time.Minute
 
 // HTTPRequest http request 对象

@@ -65,7 +65,7 @@ const ginFlag = "__gin__gin"
 // NewContext 初始化上下文
 // name uri或者spanName
 // md header参数
-func NewContext(st constants.SERVERTYPE, name string, md metautils.NiceMD, gin *gin.Context) *Context {
+func NewContext(st constants.ServerType, name string, md metautils.NiceMD, gin *gin.Context) *Context {
 	if st == constants.SERVERGIN {
 		obj, existed := gin.Get(ginFlag)
 		if existed {

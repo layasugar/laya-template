@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"github.com/layasugar/laya-template/pkg/core"
 
 	"go.opentelemetry.io/otel/trace"
 	"gorm.io/gorm"

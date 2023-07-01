@@ -4,13 +4,15 @@ package http_test
 
 import (
 	"errors"
-	pb2 "github.com/layasugar/laya-template/handle/pb"
 	"log"
 	"net/http"
 
-	"github.com/layasugar/laya/gcal"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+
+	"github.com/layasugar/laya-template/pkg/core"
+	"github.com/layasugar/laya-template/pkg/gcal"
+	"github.com/layasugar/laya-template/routes/pb"
 )
 
 type (
@@ -74,8 +76,8 @@ func HttpToGrpcTraceTest(ctx *core.Context) (*RpcData, error) {
 	}
 
 	var sex int32 = 100
-	d := pb2.NewUserClient(conn)
-	res, err := d.SayHello(ctx, &pb2.HiUser{Name: "xxxx", Sex: &sex})
+	d := pb.NewUserClient(conn)
+	res, err := d.SayHello(ctx, &pb.HiUser{Name: "xxxx", Sex: &sex})
 	if err != nil {
 		return nil, err
 	}

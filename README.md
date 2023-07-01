@@ -17,7 +17,7 @@
 ## 安装模板, 愉快编码
 #### 安装
 ```shell
-go install github.com/layasugar/laya/laya@latest
+go install github.com/layasugar/laya-template/pkg/laya@latest
 ```
 #### 初始化模板
 ```shell

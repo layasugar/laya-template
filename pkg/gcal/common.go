@@ -2,14 +2,15 @@ package gcal
 
 import (
 	"context"
+	"github.com/layasugar/laya-template/pkg/core"
 	"strings"
 
 	"github.com/layasugar/laya-template/pkg/core/constants"
 	"github.com/layasugar/laya-template/pkg/core/metautils"
-	"github.com/layasugar/laya/gcal/converter"
-	"github.com/layasugar/laya/gcal/pool"
-	"github.com/layasugar/laya/gcal/protocol"
-	"github.com/layasugar/laya/gcal/service"
+	"github.com/layasugar/laya-template/pkg/gcal/converter"
+	"github.com/layasugar/laya-template/pkg/gcal/pool"
+	"github.com/layasugar/laya-template/pkg/gcal/protocol"
+	"github.com/layasugar/laya-template/pkg/gcal/service"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )

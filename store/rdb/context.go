@@ -4,11 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/layasugar/laya-template/pkg/core"
 	"strings"
 
 	"github.com/go-redis/redis/v8"
 	"github.com/layasugar/laya-template/pkg/core/rdbstmt"
-	"github.com/layasugar/laya/store/cm"
+	"github.com/layasugar/laya-template/store/cm"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"go.opentelemetry.io/otel/attribute"

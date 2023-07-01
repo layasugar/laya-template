@@ -4,7 +4,7 @@ package trace
 
 import (
 	"github.com/layasugar/laya-template/pkg/core/constants"
-	"github.com/layasugar/laya/gcnf"
+	"github.com/layasugar/laya-template/pkg/gcnf"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/trace"
 )

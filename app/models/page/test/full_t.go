@@ -1,8 +1,9 @@
 package test
 
 import (
-	test2 "github.com/layasugar/laya-template/handle/model/data/test"
-	"github.com/layasugar/laya-template/handle/pb"
+	"github.com/layasugar/laya-template/app/models/data/test"
+	"github.com/layasugar/laya-template/pkg/core"
+	"github.com/layasugar/laya-template/routes/pb"
 )
 
 type (
@@ -24,23 +25,23 @@ func FullTest(ctx *core.Context, pm Req) (*Rsp, error) {
 		mysqlTestCurd(ctx)
 		res.Code = "success"
 	case 3:
-		test2.RedisTestCurd(ctx)
+		test.RedisTestCurd(ctx)
 		res.Code = "success"
 	case 4:
-		mongoTestCurd(ctx)
+		mysqlTestCurd(ctx)
 		res.Code = "success"
 	case 5:
-		esTestCurd(ctx)
+		mysqlTestCurd(ctx)
 		res.Code = "success"
 	case 6:
-		d, err := test2.HttpToHttpTraceTest(ctx)
+		d, err := test.HttpToHttpTraceTest(ctx)
 		if err != nil {
 			return nil, err
 		}
 
 		res.Code = d.Code
 	case 7:
-		d, err := test2.HttpToRpcTraceTest(ctx)
+		d, err := test.HttpToRpcTraceTest(ctx)
 		if err != nil {
 			return nil, err
 		}
@@ -55,14 +56,14 @@ func RpcTraceTest(ctx *core.Context, pm *pb.GrpcTraceTestReq) (*Rsp, error) {
 	var res Rsp
 	switch pm.Kind {
 	case 1:
-		d, err := test2.RpcToHttpTraceTest(ctx)
+		d, err := test.RpcToHttpTraceTest(ctx)
 		if err != nil {
 			return nil, err
 		}
 
 		res.Code = d.Code
 	case 2:
-		d, err := test2.RpcToRpcTraceTest(ctx)
+		d, err := test.RpcToRpcTraceTest(ctx)
 		if err != nil {
 			return nil, err
 		}

@@ -2,9 +2,10 @@ package user
 
 import (
 	"fmt"
-	"github.com/layasugar/laya-template/handle/model/dao"
+	"github.com/layasugar/laya-template/app/models/dao"
+	"github.com/layasugar/laya-template/pkg/core"
 
-	"github.com/layasugar/laya/gcnf"
+	"github.com/layasugar/laya-template/pkg/gcnf"
 
 	"github.com/layasugar/laya-template/global"
 )

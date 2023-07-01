@@ -1,8 +1,9 @@
 package test
 
 import (
-	"github.com/layasugar/laya-template/handle/model/dao"
-	"github.com/layasugar/laya-template/handle/model/dao/rdb"
+	"github.com/layasugar/laya-template/app/models/dao"
+	"github.com/layasugar/laya-template/app/models/dao/rdb"
+	"github.com/layasugar/laya-template/pkg/core"
 	"log"
 	"time"
 )

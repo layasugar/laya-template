@@ -1,8 +1,9 @@
 package admin
 
 import (
-	"github.com/layasugar/laya-template/handle/model/dao"
-	"github.com/layasugar/laya-template/handle/model/dao/db"
+	"github.com/layasugar/laya-template/app/models/dao"
+	"github.com/layasugar/laya-template/app/models/dao/db"
+	"github.com/layasugar/laya-template/pkg/core"
 )
 
 type (

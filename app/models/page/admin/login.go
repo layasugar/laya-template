@@ -3,9 +3,10 @@ package admin
 import (
 	"crypto/md5"
 	"fmt"
-	admin2 "github.com/layasugar/laya-template/handle/model/data/admin"
+	"github.com/layasugar/laya-template/pkg/core"
 	"io"
 
+	"github.com/layasugar/laya-template/app/models/data/admin"
 	"github.com/layasugar/laya-template/global"
 	"github.com/layasugar/laya-template/global/errno"
 )
@@ -24,7 +25,7 @@ type LoginRsp = struct {
 }
 
 func Login(ctx *core.Context, request *LoginReq) (*LoginRsp, error) {
-	userinfo, err := admin2.GetUserInfoByUsername(ctx, request.Username)
+	userinfo, err := admin.GetUserInfoByUsername(ctx, request.Username)
 	if err != nil {
 		ctx.Info("Login get user info error: ", err)
 		return nil, err
@@ -41,7 +42,7 @@ func Login(ctx *core.Context, request *LoginReq) (*LoginRsp, error) {
 		return nil, errno.UserNotFound
 	}
 
-	token, err := admin2.GetToken(ctx, userinfo)
+	token, err := admin.GetToken(ctx, userinfo)
 	if err != nil {
 		return nil, err
 	}
@@ -58,5 +59,5 @@ func Login(ctx *core.Context, request *LoginReq) (*LoginRsp, error) {
 // Logout 退出登录
 func Logout(ctx *core.Context) error {
 	token := ctx.Gin().GetHeader(global.UserAuth)
-	return admin2.DelToken(ctx, token)
+	return admin.DelToken(ctx, token)
 }

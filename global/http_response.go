@@ -1,9 +1,10 @@
 package global
 
 import (
+	"github.com/layasugar/laya-template/pkg/core"
 	"net/http"
 
-	"github.com/layasugar/laya/gcnf"
+	"github.com/layasugar/laya-template/pkg/gcnf"
 )
 
 type HttpResp struct{}

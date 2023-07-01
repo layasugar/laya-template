@@ -4,6 +4,7 @@ package dao
 
 import (
 	"github.com/go-redis/redis/v8"
+	"github.com/layasugar/laya-template/pkg/core"
 	"github.com/layasugar/laya-template/store/db"
 	"github.com/layasugar/laya-template/store/rdb"
 	"gorm.io/gorm"

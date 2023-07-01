@@ -10,11 +10,11 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/layasugar/laya/gcal/context"
-	"github.com/layasugar/laya/gcal/converter"
-	"github.com/layasugar/laya/gcal/protocol"
-	"github.com/layasugar/laya/gcal/service"
-	"github.com/layasugar/laya/gcnf"
+	"github.com/layasugar/laya-template/pkg/gcal/context"
+	"github.com/layasugar/laya-template/pkg/gcal/converter"
+	"github.com/layasugar/laya-template/pkg/gcal/protocol"
+	"github.com/layasugar/laya-template/pkg/gcal/service"
+	"github.com/layasugar/laya-template/pkg/gcnf"
 )
 
 // Do 发送网络请求，并对象化返回数据

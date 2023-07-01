@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/layasugar/laya/gcal/context"
-	"github.com/layasugar/laya/gcal/service"
+	"github.com/layasugar/laya-template/pkg/gcal/context"
+	"github.com/layasugar/laya-template/pkg/gcal/service"
 )
 
 type client struct {

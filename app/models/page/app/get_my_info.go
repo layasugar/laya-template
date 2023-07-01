@@ -3,7 +3,8 @@ package app
 import (
 	"encoding/json"
 	"errors"
-	"github.com/layasugar/laya-template/handle/model/data/user"
+	"github.com/layasugar/laya-template/app/models/data/user"
+	"github.com/layasugar/laya-template/pkg/core"
 
 	"gorm.io/gorm"
 
