@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/layasugar/laya-template/pkg/core/metautils"
+	"github.com/layasugar/laya-template/routes/pb"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"github.com/uber/jaeger-client-go"
@@ -62,7 +63,7 @@ func TestStartRpcx(t *testing.T) {
 	// 创建gRPC服务器
 	s := grpc.NewServer()
 	// 注册服务
-	pb2.RegisterGreeterServer(s, &sayHello{})
+	pb.RegisterGreeterServer(s, &sayHello{})
 	reflection.Register(s)
 
 	err = s.Serve(lis)
@@ -73,10 +74,10 @@ func TestStartRpcx(t *testing.T) {
 }
 
 type sayHello struct {
-	*pb2.UnimplementedGreeterServer
+	*pb.UnimplementedGreeterServer
 }
 
-func (ctrl *sayHello) SayHello(ctx context.Context, in *pb2.HelloRequest) (*pb2.HelloReply, error) {
+func (ctrl *sayHello) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
 	tracer, closer, _ := NewJaeger("grpc_server")
 	defer closer.Close()
 
@@ -93,10 +94,10 @@ func (ctrl *sayHello) SayHello(ctx context.Context, in *pb2.HelloRequest) (*pb2.
 	time.Sleep(50 * time.Millisecond)
 	firstSpan.Finish()
 
-	return &pb2.HelloReply{Message: in.Name}, nil
+	return &pb.HelloReply{Message: in.Name}, nil
 }
-func (ctrl *sayHello) GrpcTraceTest(ctx context.Context, in *pb2.GrpcTraceTestReq) (*pb2.HelloReply, error) {
-	return &pb2.HelloReply{Message: fmt.Sprintf("%d", in.Kind)}, nil
+func (ctrl *sayHello) GrpcTraceTest(ctx context.Context, in *pb.GrpcTraceTestReq) (*pb.HelloReply, error) {
+	return &pb.HelloReply{Message: fmt.Sprintf("%d", in.Kind)}, nil
 }
 
 func NewJaeger(serverName string) (opentracing.Tracer, io.Closer, error) {

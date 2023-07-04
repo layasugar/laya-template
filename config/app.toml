@@ -7,7 +7,7 @@
 [app]
 mod = "dev"
 name = "laya-template"
-listen = "0.0.0.0:10080"
+listen = "0.0.0.0:20080"
 version = "1.0.0"
 
 ## 应用日志的配置(单个日志大小是128M, 7天内日志最大到3.75G)
