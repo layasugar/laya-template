@@ -5,24 +5,21 @@ REVISION=$(shell git rev-parse HEAD)
 BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 TAG=$(shell git describe --tags --always --dirty)
 BUILDUSER="$(shell whoami)@$(shell hostname)"
-BUILDDATE=$(shell date +"%Y%m%d-%H:%M.%S")
-PNAME=$(shell basename $(shell pwd))
-APIPATH=../../api/$(PNAME)
+BUILDDATE=$(shell date +"%Y-%m-%d %H:%M:%S")
+MODELNAME=$(subst module ,, $(shell cat go.mod | grep "module"))
+
+run:
+	echo $(GOPATH)
 
 .PHONY: build
 # build
 build:
 	go build -ldflags \
-	"-s -w -X github.com/layasugar/laya-template/global/version.Version=$(VERSION) \
-	-X github.com/layasugar/laya-template/global/version.Tag=$(VCSTAG) \
-	-X github.com/layasugar/laya-template/global/version.Revision=$(VCSREVISION) \
-	-X github.com/layasugar/laya-template/global/version.Branch=$(VCSBRANCH) \
-	-X github.com/layasugar/laya-template/global/version.BuildUser=$(BUILDUSER) \
-	-X github.com/layasugar/laya-template/global/version.BuildDate=$(BUILDDATE)" \
+	"-s -w -X $(MODELNAME)/global/version.Version=$(VERSION) \
+	-X $(MODELNAME)/global/version.Tag=$(TAG) \
+	-X $(MODELNAME)/global/version.Revision=$(REVISION) \
+	-X $(MODELNAME)/global/version.Branch=$(BRANCH) \
+	-X $(MODELNAME)/global/version.BuildUser=$(BUILDUSER) \
+	-X $(MODELNAME)/global/version.BuildDate=$(BUILDDATE)" \
 	-trimpath \
-    -o ./ ./cmd/$(PNAME)
-
-
-.PHONY: build
-build:
-	make build
+    -o ./ $(MODELNAME)/cmd
