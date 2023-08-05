@@ -5,21 +5,21 @@ REVISION=$(shell git rev-parse HEAD)
 BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 TAG=$(shell git describe --tags --always --dirty)
 BUILDUSER="$(shell whoami)@$(shell hostname)"
-BUILDDATE=$(shell date +"%Y-%m-%d %H:%M:%S")
+BUILDDATE=$(shell date +"%Y-%m-%d^%H:%M:%S")
 MODELNAME=$(subst module ,, $(shell cat go.mod | grep "module"))
+PROJECTNAME=$(notdir $(MODELNAME))
 
 run:
-	echo $(GOPATH)
+	echo $(PROJECTNAME)
 
 .PHONY: build
 # build
 build:
-	go build -ldflags \
-	"-s -w -X $(MODELNAME)/global/version.Version=$(VERSION) \
-	-X $(MODELNAME)/global/version.Tag=$(TAG) \
-	-X $(MODELNAME)/global/version.Revision=$(REVISION) \
-	-X $(MODELNAME)/global/version.Branch=$(BRANCH) \
-	-X $(MODELNAME)/global/version.BuildUser=$(BUILDUSER) \
-	-X $(MODELNAME)/global/version.BuildDate=$(BUILDDATE)" \
+	go build -ldflags "-s -w -X $(MODELNAME)/pkg/version.Version=$(VERSION) \
+		-X $(MODELNAME)/pkg/version.Tag=$(TAG) \
+		-X $(MODELNAME)/pkg/version.Revision=$(REVISION) \
+		-X $(MODELNAME)/pkg/version.Branch=$(BRANCH) \
+		-X $(MODELNAME)/pkg/version.BuildUser=$(BUILDUSER) \
+		-X $(MODELNAME)/pkg/version.BuildDate=$(BUILDDATE)" \
 	-trimpath \
-    -o ./ $(MODELNAME)/cmd
+    -o $(PROJECTNAME) $(MODELNAME)/cmd

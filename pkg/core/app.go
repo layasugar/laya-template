@@ -6,38 +6,35 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/layasugar/laya-template/pkg/core/constants"
 	"github.com/layasugar/laya-template/pkg/core/logger"
 	"github.com/layasugar/laya-template/pkg/gcnf"
+	"github.com/layasugar/laya-template/pkg/version"
 )
 
 type App struct {
 	serverType constants.ServerType // serverType
 	webServer  *WebServer           // webServer 目前web引擎使用gin
 	grpcServer *GrpcServer          // grpcServer
+	v          bool                 // 是否打印版本信息
+	f          string               // 配置文件
 }
 
 // NormalApp 默认应用不带有web或者grpc, 可作为服务使用
-func NormalApp() *App {
-	app := new(App)
-	app.serverType = constants.SERVERNORMAL
-	app.initWithConfig()
-	return app
-}
+func NormalApp() *App { return generateApp(constants.SERVERNORMAL) }
 
 // WebApp web app
-func WebApp() *App {
-	app := new(App)
-	app.serverType = constants.SERVERGIN
-	app.initWithConfig()
-	return app
-}
+func WebApp() *App { return generateApp(constants.SERVERGIN) }
 
 // GrpcApp grpc app
-func GrpcApp() *App {
+func GrpcApp() *App { return generateApp(constants.SERVERGRPC) }
+
+// 根据服务类型初始化一个应用
+func generateApp(serverType constants.ServerType) *App {
 	app := new(App)
-	app.serverType = constants.SERVERGRPC
+	app.serverType = serverType
 	app.initWithConfig()
 	return app
 }
@@ -45,12 +42,18 @@ func GrpcApp() *App {
 // 初始化app
 func (app *App) initWithConfig() *App {
 	// 接收命令行参数
-	var f string
-	flag.StringVar(&f, "config", "", "set a config file")
+	flag.StringVar(&app.f, "config", "", "set a config file")
+	flag.BoolVar(&app.v, "version", false, "show application version.")
 	flag.Parse()
 
+	// 打印版本信息
+	if app.v {
+		_, _ = fmt.Fprintln(os.Stderr, version.Print(gcnf.AppName()))
+		os.Exit(0)
+	}
+
 	// 初始化配置
-	err := gcnf.InitConfig(f)
+	err := gcnf.InitConfig(app.f)
 	if err != nil {
 		panic(err)
 	}

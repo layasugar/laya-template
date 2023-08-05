@@ -4,8 +4,8 @@ import "time"
 
 // 配置文件的key
 const (
+	KEY_APPMODE                  = "app.mod"
 	KEY_APPNAME                  = "app.name"
-	KEY_APPMODE                  = "app.mode"
 	KEY_APPVERSION               = "app.version"
 	KEY_APPLISTEN                = "app.listen"
 	KEY_APPLOGGERPATH            = "app.logger.path"
