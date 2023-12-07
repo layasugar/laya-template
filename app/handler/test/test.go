@@ -7,8 +7,8 @@ import (
 
 	"github.com/layasugar/laya-template/app/models/page/test"
 	"github.com/layasugar/laya-template/pkg/core"
+	"github.com/layasugar/laya-template/pkg/utils"
 	"github.com/layasugar/laya-template/routes/pb"
-	"github.com/layasugar/laya-template/utils"
 )
 
 // FullTest 测试http请求和链路追踪(http_to_http http_to_grpc)

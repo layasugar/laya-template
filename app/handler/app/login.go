@@ -2,10 +2,11 @@ package app
 
 import (
 	"errors"
+
 	"github.com/layasugar/laya-template/app/models/page/app"
 	"github.com/layasugar/laya-template/pkg/core"
 
-	"github.com/layasugar/laya-template/utils"
+	"github.com/layasugar/laya-template/pkg/utils"
 )
 
 // Login 登录

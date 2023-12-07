@@ -9,7 +9,7 @@ import (
 	"github.com/layasugar/laya-template/pkg/gcnf"
 
 	"github.com/layasugar/laya-template/global"
-	"github.com/layasugar/laya-template/utils"
+	"github.com/layasugar/laya-template/pkg/utils"
 )
 
 // GetToken 获取token

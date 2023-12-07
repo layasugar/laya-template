@@ -9,9 +9,6 @@ BUILDDATE=$(shell date +"%Y-%m-%d^%H:%M:%S")
 MODELNAME=$(subst module ,, $(shell cat go.mod | grep "module"))
 PROJECTNAME=$(notdir $(MODELNAME))
 
-run:
-	echo $(PROJECTNAME)
-
 .PHONY: build
 # build
 build:
@@ -23,3 +20,17 @@ build:
 		-X $(MODELNAME)/pkg/version.BuildDate=$(BUILDDATE)" \
 	-trimpath \
     -o $(PROJECTNAME) $(MODELNAME)/cmd
+
+
+.PHONY: gen-env
+# docker容器调试确保环境一样, 制作调试镜像, 思路如下
+# 一般我们在docker容器里面进行调试, 这里生产用什么系统这里就用什么系统, 这里我们使用ubuntu22.04
+#
+gen-env:
+	docker run -itd --name gogenenv golang:1.20
+
+
+.PHONY: debug
+# debug
+debug:
+	docker

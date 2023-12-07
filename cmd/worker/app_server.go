@@ -1,4 +1,4 @@
-package main
+package worker
 
 import (
 	"testing"
@@ -12,7 +12,7 @@ func normalAppSetup() *core.App {
 	return app
 }
 
-func TestApp(t *testing.T) {
+func App(t *testing.T) {
 	app := normalAppSetup()
 
 	app.RunServer()

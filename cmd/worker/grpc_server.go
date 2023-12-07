@@ -1,4 +1,4 @@
-package main
+package worker
 
 import (
 	"testing"
@@ -21,7 +21,7 @@ func grpcAppSetup() *core.App {
 	return app
 }
 
-func TestGrpc(t *testing.T) {
+func Grpc(t *testing.T) {
 	app := grpcAppSetup()
 
 	app.RunServer()
