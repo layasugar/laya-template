@@ -1,4 +1,4 @@
-package utils
+package tools
 
 type HeaderParam struct {
 	AppName   string `header:"app-name"`

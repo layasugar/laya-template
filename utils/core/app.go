@@ -80,6 +80,7 @@ func (app *App) initWithConfig() *App {
 		}
 	case constants.SERVERGRPC:
 		app.grpcServer = newGrpcServer()
+	default:
 	}
 	return app
 }

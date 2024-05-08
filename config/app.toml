@@ -13,13 +13,12 @@
 ## 应用日志的配置(单个日志大小是128M, 7天内日志最大到3.75G，如果日志量比较大，那么需要保证至少3.75G+应用使用内存，否则日志满了会OOM，
 ## linux的buffer回收是由系统控制，但是日志文件占用的buffer依然会算到程序使用的，除非删除日志文件)
 ## type 日志类型 "file" "console" 默认值是"file"
-## level 日志类型 "file" "console" 默认值是"file"
+## level 日志等级 "debug" "info" "warn" "error" 默认是"info"
 ## path 日志路径 默认值是"/home/logs/" 最终路径是/home/logs/{{.app_name}}/2022-03-21.log
 ## max_age 配置保留天数 7 默认值是7 (日志保留最近7天)
 ## max_count 配置保留文件个数 30 默认值是30 (保留最近的30个文件)
 ## max_size 单个文件最大多少byte, 默认值是128M
 ## child_path 子目录, 默认值是"%Y-%m-%d.log"
-## 支持debug info warn error 4个日志等级
 [app.logger]
 # type = "file"
 # level = "info"
@@ -33,73 +32,53 @@
 ## sdk表示请求其他服务是否需要打印
 ## prefix前缀，suffix后缀, 支持*，不支持正则和模糊
 [app.logger.params]
-sdk = true
-log_uri = ["*"]
-log_uri_prefix = []
-log_uri_suffix = []
+# sdk = true
+# log_uri = ["*"]
+# log_uri_prefix = []
+# log_uri_suffix = []
 
 ## 应用链路追踪上报(支持zipkin和jaeger)
-## type 是链路追钟的类型 "zipkin" "jaeger" 默认值是空 (默认值是空的时候表示没有链路处理)
+## type 是链路追钟的类型 "zipkin" "jaeger" 默认值是空 (默认值是空的时候表示没有链路处理上报，但是日志可以追踪)
 ## addr 是链路追踪的上报地址 默认值是空 (zipkin_addr参考设置http://127.0.0.1:9411/api/v2/spans, jaeger_addr参考设置127.0.0.1:6831)http://localhost:14268/api/traces
 ## mod 采样率0-1 默认值是0
 [app.trace]
-type = "jaeger"
-addr = "http://127.0.0.1:14268/api/traces"
-mod = 1
+# type = ""
+# addr = "http://127.0.0.1:14268/api/traces"
+# mod = 1
 
 ## 告警处理(dingding和http和飞书)
 ## type 表示告警处理的类型 默认值是空 (默认值是空的时候表示没有告警处理)
 ## key 表示告警的密钥 默认值是空
 ## addr 告警提交的地址 默认值是空
 [app.alarm]
-type = ""
-key = ""
-addr = ""
+# type = ""
+# key = ""
+# addr = ""
 
-## mysql配置, name数据库连接唯一标识, 应用有多个库的时候使用
-## name 数据库标识唯一名 default 默认连接,在使用时没有传入表示使用默认连接
-## dsn 数据库连接dsn
-## level 数据库日志等级，默认值info
+## mysql配置, 只能配置一个mysql连接池，如果有多个需要自行实现
+## dsn 数据库连接dsn，默认值是空不开启mysql连接
+## level 数据库日志等级，默认值info, 支持的等级有"info" "warn" "error"
 ## max_idle_conn 空闲连接数 默认值是2
 ## max_open_conn 最大连接数 默认值是cpu*2+5
 ## max_life_time 连接可重用的最大时间秒 默认值是7200s
 ## max_idle_time 在关闭连接之前连接可能处于空闲状态的最大时间秒 默认值是60s
-[[mysql]]
-name = "default"
+[mysql]
 dsn = "root:123456@tcp(127.0.0.1:3306)/laya_template?charset=utf8&parseTime=True&loc=Local"
-[[mysql]]
-name = "laya_template"
-dsn = "root:123456@tcp(127.0.0.1:3306)/laya_template?charset=utf8&parseTime=True&loc=Local"
+# level = "info"
+# max_idle_conn = 2
+# max_open_conn = 4
+# max_life_time = 7200
+# max_idle_time = 60
 
-## redis配置
+## redis配置, 只能配置一个redis连接池，如果有多个需要自行实现
 ## name redis连接唯一标识
-## addr redis连接地址
-## db redis连接数据库
-## pwd redis密码
-[[redis]]
-name = "default"
+## addr redis连接地址，默认值是空不开启redis连接
+## db redis连接数据库，默认db是0
+## pwd redis密码，默认没有密码
+[redis]
 addr = "127.0.0.1:6379"
-db = 0
-pwd = ""
-
-## mongo 配置
-## name mongo连接唯一标识
-## dsn mongo连接地址
-## max_open_conn
-## max_idle_conn
-## max_idle_time
-[[mongo]]
-name = "default"
-dsn = "mongodb://root:123456@127.0.0.1:27017/?authSource=admin"
-
-## es 配置
-## name es连接唯一标识
-## host es连接地址
-## user 用户名
-## pwd 密码
-[[es]]
-name = "default"
-dsn = "http://127.0.0.1:9200"
+# db = 0
+# pwd = ""
 
 ## 内部服务连接池配置
 ## name 服务名(唯一)

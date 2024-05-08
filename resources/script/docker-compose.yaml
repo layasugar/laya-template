@@ -1,19 +1,5 @@
 version: "3"
 services:
-  postgres:
-    image: postgres:15.1
-    container_name: postgres
-    environment:
-      - TZ=GMT+8
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=123456
-    ports:
-      - "5432:5432"
-    volumes:
-      - "/software/data/postgres:/var/lib/postgresql/data"
-    networks:
-      - devops
-
   redis:
     image: redis:7.0.5
     container_name: redis
@@ -22,16 +8,6 @@ services:
     command: redis-server --save 20 1 --loglevel warning --requirepass 123456
     environment:
       - TZ=GMT+8
-    networks:
-      - devops
-
-  influxdb:
-    image: influxdb:2.5.0
-    container_name: influxdb
-    environment:
-      - TZ=GMT+8
-    ports:
-      - "8086:8086"
     networks:
       - devops
 
@@ -50,44 +26,6 @@ services:
     networks:
       - devops
 
-  mongo:
-    image: mongo:5.0.14
-    container_name: mongo
-    environment:
-      - TZ=GMT+8
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=123456
-    ports:
-      - "27017:27017"
-    networks:
-      - devops
-
-  elasticsearch:
-    image: elasticsearch:8.5.1
-    container_name: elasticsearch
-    environment:
-      - "discovery.type=single-node"
-      - "ES_JAVA_OPTS=-Xms128m -Xmx1024m"
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    networks:
-      - devops
-
-  kibana:
-    image: kibana:8.5.1
-    container_name: kibana
-    environment:
-      - TZ=GMT+8
-    ports:
-      - "5601:5601"
-    networks:
-      - devops
-    depends_on:
-      - elasticsearch
-    networks:
-      - devops
-
   jaeger:
     image: jaegertracing/all-in-one:latest
     container_name: jaeger
@@ -98,21 +36,6 @@ services:
       - "6831:6831"
       - "16686:16686"
       - "9411:9411"
-    networks:
-      - devops
-
-  confluence:
-    image: atlassian/confluence-server:7.9.0
-    container_name: confluence
-    environment:
-      - TZ=GMT+8
-      - JAVA_OPTS="-javaagent:/var/atlassian/atlassian-agent.jar"
-    volumes:
-      - /software/data/confluence:/var/atlassian/application-data/confluence
-      - /software/atlassian-agent.jar:/var/atlassian/atlassian-agent.jar
-      - /software/mysql-connector-java-8.0.22.jar:/opt/atlassian/confluence/confluence/WEB-INF/lib/mysql-connector-java-8.0.22.jar
-    ports:
-      - "8090:8090"
     networks:
       - devops
 

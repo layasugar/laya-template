@@ -2,6 +2,7 @@ package rdb
 
 import (
 	"context"
+	"errors"
 	"log"
 
 	"github.com/go-redis/redis/v8"
@@ -17,7 +18,7 @@ func connRdb(name string, options redis.Options) *redis.Client {
 	}
 	Rdb := redis.NewClient(&options)
 	_, err := Rdb.Ping(context.Background()).Result()
-	if err == redis.Nil {
+	if errors.Is(err, redis.Nil) {
 		log.Printf("[app.rdb] Nil reply returned by Rdb when key does not exist.")
 	} else if err != nil {
 		log.Printf("[app.rdb] redis fail, err: %s", err)
@@ -32,7 +33,7 @@ func connRdb(name string, options redis.Options) *redis.Client {
 // RdbSurvive redis存活检测
 func RdbSurvive(rdb *redis.Client) error {
 	err := rdb.Ping(context.Background()).Err()
-	if err == redis.Nil {
+	if errors.Is(err, redis.Nil) {
 		return nil
 	}
 	if err != nil {

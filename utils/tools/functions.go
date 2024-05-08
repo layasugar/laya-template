@@ -1,4 +1,4 @@
-package utils
+package tools
 
 import (
 	"crypto/md5"
@@ -26,7 +26,7 @@ func RandToken() string {
 	return hex.EncodeToString(ctx.Sum(nil))
 }
 
-//	RandomStr 随机生成字符串
+// RandomStr 随机生成字符串
 func randomStr(length int) string {
 	str := "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	byt := []byte(str)
