@@ -1,24 +1,33 @@
 ## app基础配置
-## mod 标识该应用的运行环境 默认值是"dev", "test", "pre"，"prod" 支持前缀例如: dev-1.0.0, 实际运行是dev
+## mod 标识该应用的运行环境 默认值是"dev", 支持 "dev"、"test"、 "pre"、"prod" 支持前缀例如: dev-1.0.0, 实际运行是dev
 ## dev和test会自动开启pprof,gin是debug模式, pre，prod是release模式并且关闭了pprof
 ## name 应用名 默认值是"normal"
-## listen 服务的监听地址 默认值是"0.0.0.0:81"
+## listen 服务的监听地址 默认值是"0.0.0.0:30080"
 ## version 当前服务的版本号 默认值是"1.0.0"
 [app]
-mod = "dev"
-name = "laya-template"
-listen = "0.0.0.0:20080"
-version = "1.0.0"
+# mod = "dev"
+# name = "laya-template"
+# listen = "0.0.0.0:30080"
+# version = "1.0.0"
 
-## 应用日志的配置(单个日志大小是128M, 7天内日志最大到3.75G)
+## 应用日志的配置(单个日志大小是128M, 7天内日志最大到3.75G，如果日志量比较大，那么需要保证至少3.75G+应用使用内存，否则日志满了会OOM，
+## linux的buffer回收是由系统控制，但是日志文件占用的buffer依然会算到程序使用的，除非删除日志文件)
 ## type 日志类型 "file" "console" 默认值是"file"
-## path 日志路劲 "/home/logs/app" 默认值是"/home/logs/" 最终路径是/home/logs/{{.app_name}}/2022-03-21.log
+## level 日志类型 "file" "console" 默认值是"file"
+## path 日志路径 默认值是"/home/logs/" 最终路径是/home/logs/{{.app_name}}/2022-03-21.log
 ## max_age 配置保留天数 7 默认值是7 (日志保留最近7天)
 ## max_count 配置保留文件个数 30 默认值是30 (保留最近的30个文件)
-## max_size 单个文件最大多少byte
+## max_size 单个文件最大多少byte, 默认值是128M
 ## child_path 子目录, 默认值是"%Y-%m-%d.log"
 ## 支持debug info warn error 4个日志等级
 [app.logger]
+# type = "file"
+# level = "info"
+# path = "/home/logs/"
+# max_age = 7
+# max_count = 30
+# max_size = 134217728
+# child_path = "%Y-%m-%d.log"
 
 ## 应用需要的出入参打印, 默认是全打印, 建议配置核心业务
 ## sdk表示请求其他服务是否需要打印

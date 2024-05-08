@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/layasugar/laya-template/pkg/core"
 	"github.com/layasugar/laya-template/routes"
 	"github.com/layasugar/laya-template/routes/middlewares"
-	"os"
 )
 
 // appSetup 初始化服务设置

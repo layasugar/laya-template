@@ -10,6 +10,7 @@
 - 这不是一个框架，是个人为简单编码整理的项目（服务）目录结构和代码结构
 - 适合中小型项目和应用程序
 - 不支持swagger，接口文档需要编码人员精心编写，代码保持干净整洁
+- 配置文件不支持热重载，更新配置文件需要重启服务，或者自己实现
 - 简单，快速，高效
 
 ## 约定
@@ -30,7 +31,8 @@ cd laya-template && go mod tidy
 go run .
 ```
 
-## laya-template 体验
+## 感谢以下开源仓库
+- [gin](https://github.com/gin-gonic/gin)
 - [gorm文档](https://gorm.io/zh_CN/docs/index.html)
 - [go-redis](https://redis.uptrace.dev/)
 - [mongo文档](https://www.mongodb.com/docs/drivers/go/current/usage-examples/)
